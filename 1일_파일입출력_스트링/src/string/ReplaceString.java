@@ -8,18 +8,18 @@ public class ReplaceString {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("원본 text 문자열");
+		System.out.print("원본 text 문자열: ");
 		String originText = sc.nextLine();
 		
-		System.out.println("치환 대상 문자열");
+		System.out.print("치환 대상 문자열: ");
 		String before = sc.nextLine();
 		
-		System.out.println("치환될 문자열");
+		System.out.print("치환될 문자열: ");
 		String after = sc.nextLine();
 		
-		originText = originText.replace(before, after);
+		String convertedString = originText.replace(before, after);
 		
-		System.out.println(originText);
+		System.out.println("=== 결과: " + convertedString + " ===");
 	}
 
 }
