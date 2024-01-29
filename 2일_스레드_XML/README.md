@@ -135,7 +135,7 @@ Queue 인터페이스와의 차이
 
 비교를 위한 LinkedList 테스트
 
-![image](![image-resize%20todoist](https://github.com/torpedoisu/Training-project/assets/157687140/086b7590-a906-4465-be08-16d06bf695de))
+![image](https://github.com/torpedoisu/Training-project/assets/157687140/f6ef77ad-e862-4757-90c7-8f5496152519)
 
 
 
