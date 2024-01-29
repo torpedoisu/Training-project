@@ -14,7 +14,7 @@ public class ManageDB {
 	private final String JDBC_URL = "jdbc:oracle:thin:@rain.torpedo.co.kr:1521:orcl";
 	private final String JDBC_USERNAME = "isu";
 	private final String JDBC_PASSWORD = "xhvleh";
-	private Connection jdbcConnection;
+	protected Connection jdbcConnection;
 	
 	public void connect() throws SQLException {
 		// 커넥션이 안되어 있는 상태라면 연결
@@ -37,7 +37,7 @@ public class ManageDB {
 		System.out.println("Commiting transaction to DB...");
 		
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-			jdbcConnection.commit(); // 트랜잭션 처리를 기본 상태로 되돌림
+			jdbcConnection.commit();
 		}
 	}
 	
