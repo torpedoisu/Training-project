@@ -16,7 +16,7 @@ public class ManageDB {
 	private final String JDBC_PASSWORD = "xhvleh";
 	protected Connection jdbcConnection;
 	
-	public void connect() throws SQLException {
+	private void connect() throws SQLException {
 		// 커넥션이 안되어 있는 상태라면 연결
 		System.out.println("Connecting with DB...");
 		
