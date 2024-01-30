@@ -34,7 +34,7 @@ public class CopyFile {
 				copyFile.copyDir(file, newFile);
 			}
 			
-			System.out.println("=== [Success] File Copy ===");
+			System.out.println("=== [Success] File Copy ===  ");
 			
 		} catch (NoSuchFileException e) {
 			e.printStackTrace();
@@ -46,7 +46,7 @@ public class CopyFile {
 		
 	}
 	
-	private void copyDir(File file, File newFile) throws IOException{
+	private void copyDir(File file, File newFile) throws IOException{ 
 		
 		if (!newFile.exists()) {
 			newFile.mkdir();
