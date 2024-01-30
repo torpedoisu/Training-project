@@ -170,3 +170,23 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 - 가장 안전하지만 트랜잭션이 순차적으로 처리되어야 하므로 동시 처리 성능이 매우 떨어짐
 
 
+
+<br>
+
+
+
+#### Java Docs
+
+[Connection (Java Platform SE 8 )](https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html#TRANSACTION_REPEATABLE_READ)
+
+```
+int TRANSACTION_NONE             = 0;
+
+int TRANSACTION_READ_UNCOMMITTED = 1;
+
+int TRANSACTION_READ_COMMITTED   = 2;
+
+int TRANSACTION_REPEATABLE_READ  = 4;
+```
+
+
