@@ -149,6 +149,20 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 
 
-#### Rollback 직접 테스트
+#### Rollback 테스트(`RollbackTest.java`)
+
+insert 쿼리 실행 
+
+![image-resize todoist](https://github.com/torpedoisu/Training-project/assets/157687140/ea961628-5ec4-4772-b036-f4b9c7e4a49a)
+
+![image-resize todoist](https://github.com/torpedoisu/Training-project/assets/157687140/61fd5fed-3737-4f01-8ee2-318713db1937)
+
+
+
+<br>
+
+테이블 변경 없음 확인
+
+![image-resize todoist](https://github.com/torpedoisu/Training-project/assets/157687140/d60eb2c7-d279-43ef-9db7-13ed17cbc828)
 
 
