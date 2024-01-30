@@ -12,7 +12,7 @@ public class RollbackTest {
 			db.insertEmployee("rollbacktest", "rollback", "rollback");
 			
 			System.out.println("Rollback...");
-			db.jdbcConnection.rollback();
+			db.getJdbcConnection().rollback();
 			
 			db.commit();
 			
