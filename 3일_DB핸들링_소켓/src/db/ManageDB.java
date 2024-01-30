@@ -14,7 +14,34 @@ public class ManageDB {
 	private final String JDBC_URL = "jdbc:oracle:thin:@rain.torpedo.co.kr:1521:orcl";
 	private final String JDBC_USERNAME = "isu";
 	private final String JDBC_PASSWORD = "xhvleh";
-	protected Connection jdbcConnection;
+	private Connection jdbcConnection;
+	private int connectionMethod = -1;
+	
+	public ManageDB() {}
+	
+	// 테스트를 위해 생성자로 connectionMethod 초기화 
+	public ManageDB(int connectionMethod) {
+		this.connectionMethod = connectionMethod;
+		
+		switch (connectionMethod) {
+			case 0:
+				System.out.println("Commit method set to \"TRANSACTION_NONE\"");
+				break;
+			
+			case 1:
+				System.out.println("Commit method set to \"READ_UNCOMMITTED\"");
+				break;
+			
+			case 2:
+				System.out.println("Commit method set to \"READ_COMMITTED\"");
+				break;
+				
+			case 4:
+				System.out.println("Commit method set to \"REPEATABLE_READ\"");
+				break;
+		}
+		
+	}
 	
 	private void connect() throws SQLException {
 		// 커넥션이 안되어 있는 상태라면 연결
@@ -25,6 +52,10 @@ public class ManageDB {
 				Class.forName(DRIVER_NAME);
 				jdbcConnection = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
 				jdbcConnection.setAutoCommit(false); // 트랜잭션 처리를 위한 AutoCommit 중지
+				if (connectionMethod != -1) {
+					jdbcConnection.setTransactionIsolation(connectionMethod); // 트랜잭션 격리 수준 설정); // 트랜잭션 격리 수준 설정
+				}
+	            
 			} catch (ClassNotFoundException e) {
 				System.out.println("=== [Error] Db access error ===");
 				throw new SQLException(e);
@@ -176,6 +207,10 @@ public class ManageDB {
         statement.executeUpdate();
         
         statement.close();
+	}
+	
+	public Connection getJdbcConnection() {
+		return jdbcConnection;
 	}
 	
 	public static void main(String[] args) {
