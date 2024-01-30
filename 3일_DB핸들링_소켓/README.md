@@ -12,44 +12,28 @@
 
 - 데이터 Insert/Update/Select/Delete
 
-
-
 ### 1.2. 3일차_소켓
 
 `SocketClient.java`, `SocketServer.java`
 
 - Socket Client Server 간 데이터(파일) 송수신 처리
 
-
-
 <br>
-
-
 
 ## 2. 신경 쓸 부분
 
 1. DB 조작 시 rollback, commit 옵션 생각하며 코드 짜기
 
-
-
 <br>
-
-
 
 ## 3. 관련 정보
 
 ### 3.1. PreparedStatement와 Statement 객체
 
-
-
 - SQL문을 실행할 수 있는 객체
 - **가장 큰 차이점은 캐시 사용 여부**
 
-
-
 <br>
-
-
 
 #### Statement 객체
 
@@ -63,11 +47,7 @@ Statement stmt = conn.createStatement();
 ResultSet rst = stmt.executeQuery(sqlstr);
 ```
 
-
-
 <br>
-
-
 
 #### Prepared Statement 객체
 
@@ -84,11 +64,7 @@ stmt.setInt(1, num);
 ResultSet rst = stmt.executeQuery(sqlstr);
 ```
 
-
-
 <br>
-
-
 
 #### Statement과 PreParedStatement의 가장 큰 차이
 
@@ -96,11 +72,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 - 동일 쿼리 반복적으로 수행하면 PreparedStatement가 Db에 훨씬 적은 부하를 주며 성능도 좋음
 
-
-
 <br>
-
-
 
 #### PreparedStatement 객체를 사용 해야하는 경우
 
@@ -109,13 +81,9 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 2. 쿼리 반복 수행할 경우
    - 캐시에 저장해서 사용하기에 효율 좋음
 
-
-
 <br>
 
-
-
-### 3.2. Rollback 테스트
+### 3.2. DB Rollback
 
 #### 트랜잭션 흐름
 
@@ -131,11 +99,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 4. 트랜잭션 종료 (End Transaction)
 
-
-
 <br>
-
-
 
 #### 커밋과 롤백
 
@@ -143,11 +107,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 - 트랜잭션이 성공적으로 모든 작업을 완료한 경우, 커밋을 수행하여 변경된 데이터를 영구적으로 저장
 
-
-
 <br>
-
-
 
 #### Rollback 테스트(`RollbackTest.java`)
 
@@ -157,5 +117,56 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 
 
+<br>
+
+
+
+### 3.3. 트랜잭션 격리 수준
+
+
+
+#### Read Uncommitted
+
+- 트랜잭션에서 처리 중인, 아직 커밋되지 않은 데이터를 다른 트랜잭션이 읽는 것을 허용
+- Dirty Read, Non-Repeatable Read, Phantom Read 현상 발생
+- **Oracle은 이 레벨을 지원하지 않음**
+
+
+
+<br>
+
+
+
+#### Read Committed
+
+- Dirty Read 방지 : 트랜잭션이 커밋되어 확정된 데이터만 읽는 것을 허용
+- Non-Repeatable Read, Phantom Read 현상은 여전히 발생
+- **오라클 같은 DBMS가 기본모드로 채택하고 있는 격리수준**
+- **Oracle은 Lock을 사용하지 않고 쿼리시작 시점의 Undo 데이터를 제공하는 방식으로 구현**
+
+
+
+<br>
+
+
+
+#### Repeatable Read
+
+- 선행 트랜잭션이 읽은 데이터는 트랜잭션이 종료될 때가지 후행 트랜잭션이 갱신하거나 삭제하는 것을 불허함으로써 같은 데이터를 두 번 쿼리했을 때 일관성 있는 결과를 리턴
+- Phantom Read 현상은 여전히 발생
+- **MySQL에서 기본으로 사용되는 격리 수준**
+- Oracle은 이 레벨을 명시적으로 지원하지 않지만 for update 절을 이용해 구현가능
+
+
+
+<br>
+
+
+
+#### Serializable Read
+
+- 가장 엄격한 격리 수준, 트랜잭션을 순차적으로 진행시킴
+- 신형 트랜잭션이 읽은 데이터를 후행 트랜잭션이 갱신하거나 삭제하지 못할 뿐만 아니라 중간에 새로운 레코드를 산입하는 것도 막아주는 격리수준 -> 여러 트랜잭션이 동일한 레코드에 동시 접근할 수 없으므로 어떤 데이터 부정홥 문제도 발생하지 않음
+- 가장 안전하지만 트랜잭션이 순차적으로 처리되어야 하므로 동시 처리 성능이 매우 떨어짐
 
 
