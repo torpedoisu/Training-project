@@ -6,6 +6,9 @@ public class RollbackTest {
 	public static void main (String[] args) {
 		ManageDB db = new ManageDB();
 		try {
+			
+			db.selectAllEmployee();
+			
 			db.insertEmployee("rollbacktest", "rollback", "rollback");
 			
 			System.out.println("Rollback...");
@@ -14,6 +17,8 @@ public class RollbackTest {
 			db.commit();
 			
 			System.out.println("=== [Success] Testing transaction rollback ===");
+		
+			db.selectAllEmployee();
 		} catch (SQLException e) {
 			System.out.println("=== [Error] While testing DB ===");
 			e.printStackTrace();
