@@ -140,11 +140,16 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 #### Read Committed
 
 - Dirty Read 방지 : 트랜잭션이 커밋되어 확정된 데이터만 읽는 것을 허용
-- Non-Repeatable Read, Phantom Read 현상은 여전히 발생
+
+- Non-Repeatable Read, Phantom Read 현상 발생
+
 - **오라클 같은 DBMS가 기본모드로 채택하고 있는 격리 수준**
+
 - **Oracle은 Lock을 사용하지 않고 쿼리시작 시점의 Undo 데이터를 제공하는 방식으로 구현**
 
-
+- `ReadCommitedTest.java`
+  
+  - 
 
 <br>
 
@@ -153,8 +158,8 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 #### Repeatable Read
 
 - 선행 트랜잭션이 읽은 데이터는 트랜잭션이 종료될 때가지 후행 트랜잭션이 갱신하거나 삭제하는 것을 불허함으로써 같은 데이터를 두 번 쿼리했을 때 일관성 있는 결과를 리턴
-- Phantom Read 현상은 여전히 발생
-- **MySQL에서 기본으로 사용되는 격리 수준**
+- Phantom Read 현상 발생
+- **MySQL에서 기본으로 사용되는 격리 수준 (락 사용하지 않으면 언두 로그 사용)**
 - Oracle은 이 레벨을 명시적으로 지원하지 않지만 for update 절을 이용해 구현가능
 
 
@@ -168,6 +173,8 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 - 가장 엄격한 격리 수준, 트랜잭션을 순차적으로 진행시킴
 - 신형 트랜잭션이 읽은 데이터를 후행 트랜잭션이 갱신하거나 삭제하지 못할 뿐만 아니라 중간에 새로운 레코드를 산입하는 것도 막아주는 격리 수준 -> 여러 트랜잭션이 동일한 레코드에 동시 접근할 수 없으므로 어떤 데이터 부정합 문제도 발생하지 않음
 - 가장 안전하지만 트랜잭션이 순차적으로 처리되어야 하므로 동시 처리 성능이 매우 떨어짐
+- `SerializableTest.java`
+- 
 
 
 
@@ -187,6 +194,8 @@ int TRANSACTION_READ_UNCOMMITTED = 1;
 int TRANSACTION_READ_COMMITTED   = 2;
 
 int TRANSACTION_REPEATABLE_READ  = 4;
+
+int TRANSACTION_ㄴ  = 4;
 ```
 
 
