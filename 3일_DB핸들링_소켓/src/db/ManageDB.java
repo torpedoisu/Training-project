@@ -24,20 +24,12 @@ public class ManageDB {
 		this.connectionMethod = connectionMethod;
 		
 		switch (connectionMethod) {
-			case 0:
-				System.out.println("Commit method set to \"TRANSACTION_NONE\"");
-				break;
-			
-			case 1:
-				System.out.println("Commit method set to \"READ_UNCOMMITTED\"");
-				break;
-			
 			case 2:
 				System.out.println("Commit method set to \"READ_COMMITTED\"");
 				break;
 				
-			case 4:
-				System.out.println("Commit method set to \"REPEATABLE_READ\"");
+			case 8:
+				System.out.println("Commit method set to \"SERIALIZABLE\"");
 				break;
 		}
 		
@@ -52,6 +44,7 @@ public class ManageDB {
 				Class.forName(DRIVER_NAME);
 				jdbcConnection = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
 				jdbcConnection.setAutoCommit(false); // 트랜잭션 처리를 위한 AutoCommit 중지
+				
 				if (connectionMethod != -1) {
 					jdbcConnection.setTransactionIsolation(connectionMethod); // 트랜잭션 격리 수준 설정); // 트랜잭션 격리 수준 설정
 				}
