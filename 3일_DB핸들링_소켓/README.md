@@ -175,6 +175,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 - 가장 엄격한 격리 수준, 트랜잭션을 순차적으로 진행시킴
 - 신형 트랜잭션이 읽은 데이터를 후행 트랜잭션이 갱신하거나 삭제하지 못할 뿐만 아니라 중간에 새로운 레코드를 산입하는 것도 막아주는 격리 수준 -> 여러 트랜잭션이 동일한 레코드에 동시 접근할 수 없으므로 어떤 데이터 부정합 문제도 발생하지 않음
 - 가장 안전하지만 트랜잭션이 순차적으로 처리되어야 하므로 동시 처리 성능이 매우 떨어짐
+- 
 `SerializableTest.java`
 
 ![image](https://github.com/torpedoisu/Training-project/assets/157687140/7e1aac70-2362-426b-833d-523040ea0773)
