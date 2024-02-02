@@ -115,15 +115,9 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 ![image](https://github.com/torpedoisu/Training-project/assets/157687140/342eb4c3-53f5-4c2d-bc0d-62aa3a80e4be)
 
-
-
 <br>
 
-
-
 ### 3.3. 커밋 옵션과 트랜잭션 격리 수준
-
-
 
 #### Read Uncommitted
 
@@ -131,11 +125,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 - Dirty Read, Non-Repeatable Read, Phantom Read 현상 발생
 - **Oracle은 이 레벨을 지원하지 않음**
 
-
-
 <br>
-
-
 
 #### Read Committed
 
@@ -148,14 +138,10 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 - **Oracle은 Lock을 사용하지 않고 쿼리시작 시점의 Undo 데이터를 제공하는 방식으로 구현**
 
 `ReadCommitedTest.java`
-  
 
 ![image](https://github.com/torpedoisu/Training-project/assets/157687140/7cecfab9-d884-474a-9e6a-3f923bd128af)
 
-
 <br>
-
-
 
 #### Repeatable Read
 
@@ -164,11 +150,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 - **MySQL에서 기본으로 사용되는 격리 수준 (락 사용하지 않으면 언두 로그 사용)**
 - Oracle은 이 레벨을 명시적으로 지원하지 않지만 for update 절을 이용해 구현가능
 
-
-
 <br>
-
-
 
 #### Serializable Read
 
@@ -180,11 +162,7 @@ ResultSet rst = stmt.executeQuery(sqlstr);
 
 ![image](https://github.com/torpedoisu/Training-project/assets/157687140/7e1aac70-2362-426b-833d-523040ea0773)
 
-
-
 <br>
-
-
 
 #### Java Docs
 
@@ -201,5 +179,3 @@ int TRANSACTION_REPEATABLE_READ  = 4;
 
 int TRANSACTION_SERIALIZABLE  = 8;
 ```
-
-

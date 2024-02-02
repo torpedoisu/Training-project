@@ -2,9 +2,9 @@
 
 <br>
 
-## 프로그램 설명
+## 1. 프로그램 설명
 
-### 2일차_스레드
+### 1.1 2일차_스레드
 
 **Producer-Consumer** 패턴 구현하는 프로그램 작성
 
@@ -24,13 +24,9 @@
 
 - Work 객체는 execute()라는 메서드가 일을 하는 것이며 이 메서드는 [1-3]초 사이 임의의 시간 동안 sleep 하는 기능을 포함
 
-
-
 <br/>
 
-
-
-### 2일차_XML 생성 및 파싱
+### 1.2. 2일차_XML 생성 및 파싱
 
 `CreateXML.java`
 
@@ -44,13 +40,9 @@
 
 - CreateXML.java에서 생성한 XML을 SAX 파서를 이용해 파싱하는 프로그램 작성
 
-
-
 <br/>
 
-
-
-## 신경 쓸 부분
+## 2. 신경 쓸 부분
 
 1. 새롭게 사용하는 자료구조나 기능은 개념적으로 이해 후 테스트
 
@@ -60,15 +52,11 @@
    
    - 요구 사항의 어떤 부분 때문에 해당 객체, 메서드 사용한 것인지 인지
 
-
-
 <br/>
 
+## 3. 관련 정보
 
-
-## 관련 정보
-
-### Blocking Queue
+### 3.1. Blocking Queue
 
 설명
 
@@ -80,11 +68,7 @@
 
 - 구현체 - ArrayBlockQueue, LinkedBlockingQueue, SynchronousQueue
 
-
-
 <br/>
-
-
 
 사용 목적
 
@@ -92,11 +76,7 @@
 
 - Producer Thread가 Work를 계속해서 생성하기에 큐의 크기가 동적인 LinkedBlockingQueue 구현체 사용
 
-
-
 <br/>
-
-
 
 Queue 인터페이스와의 차이
 
@@ -114,7 +94,7 @@ Queue 인터페이스와의 차이
 
 - 구현 예시
   
-  ``` 
+  ```
     public synchronized void enqueue(Object item)
     throws InterruptedException  {
       while(this.queue.size() == this.limit) {
@@ -127,27 +107,15 @@ Queue 인터페이스와의 차이
     }
   ```
 
-
-
 <br/>
-
-
 
 비교를 위한 LinkedList 테스트
 
 ![image](https://github.com/torpedoisu/Training-project/assets/157687140/f6ef77ad-e862-4757-90c7-8f5496152519)
 
-
-
-
-
 <br/>
 
-
-
-### DOM과 SAX의 장단점
-
-
+### 3.2. DOM과 SAX의 장단점
 
 DOM 파싱 방식의 장점
 
@@ -159,11 +127,7 @@ DOM 파싱 방식의 단점
 
 - 초기 로딩 시간이 문서 크기와 비례
 
-
-
 <br/>
-
-
 
 SAX 파싱 방식의 장점
 
@@ -180,7 +144,3 @@ SAX 파싱 방식의 단점
 - 전체 문서 구조 파악하기 어려움
 
 - 순차적으로 처리되기에 특정 요소를 참조해야 하는 경우 추가적인 로직 필요
-
-
-
-
