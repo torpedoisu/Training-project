@@ -1,5 +1,6 @@
 package servletpj;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +13,13 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
 public class XMLParser {
-    public List<Employee> parseXML(String filePath) {
+    public List<Employee> parseXML(InputStream inputStream) {
         List<Employee> employees = new ArrayList<>();
         
         try {
-            File inputFile = new File(filePath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
+            Document doc = dBuilder.parse(inputStream); // InputStream에서 XML 읽기
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("employee");

@@ -8,35 +8,36 @@
 </head>
 <body>
 
-    <form action="AddressBook" method="post">
-		<button id="openFile">파일 업로드</button>
-	    <input type="file" id="fileUploader" style="display: none" />
+    <form id="uploadForm" action="AddressBook" method="post" enctype="multipart/form-data">
+	    <input type="file" name="file" id="fileUploader" />
+   		<button id="sumbitFile">파일 제출</button>
     </form>
 
 
-    <script>
-        document.getElementById('openFile').addEventListener('click', function(){
-            document.getElementById('fileUploader').click();
-        });
+    <script language="JavaScript">
+	    var fileUploaded = false;
 
         document.getElementById('fileUploader').addEventListener('change', function(e){
         	
         	console.log("파일 업로드 확인 - " + e);
+        	
             var file = e.target.files[0];
             if(file.type !== "text/xml"){
                 alert("XML 파일을 업로드해주세요.");
+                document.getElementById('fileUploader').value = '';
             } else {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    var contents = e.target.result;
-                    var parser = new DOMParser();
-                    var xmlDoc = parser.parseFromString(contents, "text/xml");
-                    console.log(xmlDoc);
-                };
-                reader.readAsText(file);
+                fileUploaded = true;
             }
         });
         
+        document.getElementById('submitFile').addEventListener('click', function(e){
+            if(!fileUploaded){
+                e.preventDefault();
+                alert("XML 파일을 업로드해주세요.");
+            } else {
+                document.getElementById('uploadForm').submit();
+            }
+        });    
         
     </script>
 </body>

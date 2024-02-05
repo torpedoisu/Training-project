@@ -39,7 +39,7 @@
     </table>
     <button id="addRow">행 추가</button>
     
-    <script>
+    <script language="JavaScript">
         $(document).ready(function(){
             $("#addRow").click(function(){
                 var markup = "<tr><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><button class='deleteRow'>삭제</button></td></tr>";
