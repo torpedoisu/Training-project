@@ -17,8 +17,8 @@ public class XMLParser {
         List<Employee> employees = new ArrayList<>();
         
         try {
-        	System.out.println("Parsing XML...");
-        	
+            System.out.println("Parsing XML...");
+            
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputStream); // InputStream에서 XML 읽기
