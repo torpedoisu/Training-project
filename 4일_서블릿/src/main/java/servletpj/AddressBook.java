@@ -39,7 +39,7 @@ public class AddressBook extends HttpServlet {
 		XMLParser parser = new XMLParser();
         List<Employee> employees = parser.parseXML(filePath);
         request.setAttribute("employees", employees);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/addressBook.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/employeeTable.jsp");
         dispatcher.forward(request, response);
 	}
 

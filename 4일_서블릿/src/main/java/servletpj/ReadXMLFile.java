@@ -10,7 +10,8 @@ import java.io.File;
 public class ReadXMLFile {
   public static void main(String argv[]) {
     try {
-      File fXmlFile = new File("/path/to/your/xmlfile.xml");
+    	//  TODO: 생성자 추가
+      File fXmlFile = new File("");
       DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
       Document doc = dBuilder.parse(fXmlFile);
@@ -29,7 +30,6 @@ public class ReadXMLFile {
           String phone = eElement.getElementsByTagName("phone").item(0).getTextContent();
           String email = eElement.getElementsByTagName("email").item(0).getTextContent();
           
-          // 이제 이 정보를 사용하여 주소록 객체를 생성하고 목록에 추가할 수 있습니다.
         }
       }
     } catch (Exception e) {

@@ -29,11 +29,10 @@ public class XMLParser {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     Employee employee = new Employee();
-                    // Assuming each tag exists only once in each employee node
-                    employee.setDepartment(eElement.getElementsByTagName("dept").item(0).getTextContent());
+                    employee.setDepartment(eElement.getElementsByTagName("department").item(0).getTextContent());
                     employee.setName(eElement.getElementsByTagName("name").item(0).getTextContent());
                     employee.setPosition(eElement.getElementsByTagName("position").item(0).getTextContent());
-                    employee.setEnglishName(eElement.getElementsByTagName("engName").item(0).getTextContent());
+                    employee.setEnglishName(eElement.getElementsByTagName("englishName").item(0).getTextContent());
                     employee.setPhoneNumber(eElement.getElementsByTagName("phone").item(0).getTextContent());
                     employee.setEmail(eElement.getElementsByTagName("email").item(0).getTextContent());
                     employees.add(employee);
