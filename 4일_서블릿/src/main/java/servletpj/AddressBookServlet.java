@@ -19,7 +19,7 @@ import javax.servlet.http.Part;
 
 @WebServlet("/AddressBook")
 @MultipartConfig
-public class AddressBook extends HttpServlet {
+public class AddressBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,6 +35,7 @@ public class AddressBook extends HttpServlet {
 	    } catch (Exception e){
 	        e.printStackTrace(); // TODO: 형식 지키지 않은 xml의 경우 예외 처리 
 	    }
+	    
 	    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/employeeTable.jsp");
 	    dispatcher.forward(request, response);
 	}

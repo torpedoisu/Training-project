@@ -61,5 +61,5 @@ public class Employee {
     public void setEmail(String val) {
     	this.email = val;
     }
-    // getters and setters
+
 }
