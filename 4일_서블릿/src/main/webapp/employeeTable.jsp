@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ page import="servletpj.Employee" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
@@ -7,19 +7,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Address Book</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <table id="addressBook">
         <tr>
-            <th>∫Œº≠</th>
-            <th>¿Ã∏ß</th>
-            <th>¡˜√•</th>
-            <th>øµπÆ¿Ã∏ß</th>
-            <th>»ﬁ¥Î∆˘</th>
-            <th>∏ﬁ¿œ¡÷º“</th>
+            <th>Î∂ÄÏÑú</th>
+            <th>Ïù¥Î¶Ñ</th>
+            <th>ÏßÅÏ±Ö</th>
+            <th>ÏòÅÎ¨∏Ïù¥Î¶Ñ</th>
+            <th>Ìú¥ÎåÄÌè∞</th>
+            <th>Î©îÏùºÏ£ºÏÜå</th>
             <th></th>
         </tr>
         <% 
@@ -33,24 +33,31 @@
             <td><%= employee.getEnglishName()%></td>
             <td><%= employee.getPhoneNumber()%></td>
             <td><%= employee.getEmail()%></td>
-            <td><button class="deleteRow">ªË¡¶</button></td>
+            <td><button class="deleteRow">ÏÇ≠Ï†ú</button></td>
         </tr>
         <% } %>
 </table>
-    <button id="addRow">«‡ √ﬂ∞°</button>
-    <button id="saveToXML">XML∑Œ ¿˙¿Â</button>
-    <button id="saveRow">«‡ ¿˙¿Â</button>
+    <button id="addRow">Ìñâ Ï∂îÍ∞Ä</button>
+    <button id="saveRow">Ìñâ Ï†ÄÏû•</button>
+    <br/>
+    <button id="saveToXML">XMLÎ°ú Ï†ÄÏû•</button>
+    <button id="saveToDB">DBÏóê Ï†ÄÏû• (Î∏åÎùºÏö∞Ï†Ä -> DB)</button>
+    
     <script language="JavaScript">
     	
         $(document).ready(function(){
-            // «‡ √ﬂ∞°
+            var employees = []
+            // Ìñâ Ï∂îÍ∞Ä
             $("#addRow").click(function(){
-                var markup = "<tr id='row" + employees.length + "'><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><button class='deleteRow'>ªË¡¶</button></td></tr>";
+                console.log("Ìñâ Ï∂îÍ∞Ä");
+                var markup = "<tr id='row" + employees.length + "'><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><button class='deleteRow'>ÏÇ≠Ï†ú</button></td></tr>";
                 $("#addressBook").append(markup);
             });
 
-            // «‡ ¿˙¿Â
+            // Ìñâ Ï†ÄÏû•
             $("#saveRow").click(function(){
+                console.log("Ìñâ Ï†ÄÏû•");
+                
                 var newEmployee = {
                     department: $("#addressBook tr:last td:eq(0) input").val(),
                     name: $("#addressBook tr:last td:eq(1) input").val(),
@@ -58,24 +65,33 @@
                     englishName: $("#addressBook tr:last td:eq(3) input").val(),
                     phoneNumber: $("#addressBook tr:last td:eq(4) input").val(),
                     email: $("#addressBook tr:last td:eq(5) input").val(),
-                    id: 'row' + employees.length // «‡¿« id∏¶ ¿˙¿Â«’¥œ¥Ÿ.
+                    id: 'row' + employees.length // ÌñâÏùò idÎ•º Ï†ÄÏû•Ìï©ÎãàÎã§.
                     };
                 employees.push(newEmployee);
+                
+                $("#addressBook tr:last td:eq(0)").text(newEmployee.department);
+                $("#addressBook tr:last td:eq(1)").text(newEmployee.name);
+                $("#addressBook tr:last td:eq(2)").text(newEmployee.position);
+                $("#addressBook tr:last td:eq(3)").text(newEmployee.englishName);
+                $("#addressBook tr:last td:eq(4)").text(newEmployee.phoneNumber);
+                $("#addressBook tr:last td:eq(5)").text(newEmployee.email);
+                
             });
 	           
-            // «‡ ªË¡¶
+            // Ìñâ ÏÇ≠Ï†ú
             $(document).on("click", ".deleteRow", function(){
-                var id = $(this).closest('tr').attr('id'); // ªË¡¶«“ «‡¿« id∏¶ ∞°¡Æø…¥œ¥Ÿ.
-                employees = employees.filter(function(employee) { // employees πËø≠ø°º≠ «ÿ¥Á id∏¶ ∞°¡¯ «◊∏Ò¿ª ¡¶ø‹«’¥œ¥Ÿ.
+                console.log("Ìñâ ÏÇ≠Ï†ú");
+                var id = $(this).closest('tr').attr('id'); 
+                employees = employees.filter(function(employee) {
                     return employee.id !== id;
                     });
-                $(this).closest('tr').remove(); // ≈◊¿Ã∫Ìø°º≠ «ÿ¥Á «‡¿ª ªË¡¶«’¥œ¥Ÿ.
+                $(this).closest('tr').remove();
                 });
 
-            // XML∑Œ ¿˙¿Â
+            // XMLÎ°ú Ï†ÄÏû•
             $("#saveToXML").click(function(){
                 var employees = [];
-                $("#addressBook tr").each(function() {
+                $("#addressBook tr:gt(0)").each(function() {
                     var department = $(this).find("td:eq(0)").text();
                     var name = $(this).find("td:eq(1)").text();
                     var position = $(this).find("td:eq(2)").text();
@@ -92,23 +108,70 @@
                         email: email
                     };
                     employees.push(employee);
+                    
                 });
                 
                 $.ajax({
-                    url: '/SaveToXML', // º≠∫Ì∏¥ URL
+                    url: 'SaveToXML', // ÏÑúÎ∏îÎ¶ø URL
                     method: 'POST',
                     data: JSON.stringify(employees),
                     contentType: 'application/json',
                     success: function(data) {
-                        var blob = new Blob([data], {type: "text/xml"});
+                        var blob =  new Blob([new XMLSerializer().serializeToString(data)], {type: "text/xml"});
                         var link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = "employees.xml";
                         link.click();
-                        }
+                    },
+                    error: function(xhr, status, error) { 
+                        console.log("Error: " + error);
+                        console.log("Status: " + status);
+                        console.dir(xhr);
+                    }
                 });
+            });
+            
+            $("#saveToDB").click(function(){
+                var employees = [];
+                $("#addressBook tr:gt(0)").each(function() {
+                    var department = $(this).find("td:eq(0)").text();
+                    var name = $(this).find("td:eq(1)").text();
+                    var position = $(this).find("td:eq(2)").text();
+                    var englishName = $(this).find("td:eq(3)").text();
+                    var phoneNumber = $(this).find("td:eq(4)").text();
+                    var email = $(this).find("td:eq(5)").text();
+
+                    var employee = {
+                        department: department,
+                        name: name,
+                        position: position,
+                        englishName: englishName,
+                        phoneNumber: phoneNumber,
+                        email: email
+                    };
+                    employees.push(employee);
+                    
                 });
+                
+                $.ajax({
+                    url: 'SaveToDB', // ÏÑúÎ∏îÎ¶ø URL
+                    method: 'POST',
+                    data: JSON.stringify(employees),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        alert("Îç∞Ïù¥ÌÑ∞Í∞Ä ÏÑ±Í≥µÏ†ÅÏúºÎ°ú DBÏóê Ï†ÄÏû•ÎêòÏóàÏäµÎãàÎã§.");
+                    },
+                    error: function(xhr, status, error) { 
+                        console.log("Error: " + error);
+                        console.log("Status: " + status);
+                        console.dir(xhr);
+                    }
+                });
+            });
+            
         });
+        
+        
     </script>
 </body>
 </html>
