@@ -17,6 +17,8 @@ public class XMLParser {
         List<Employee> employees = new ArrayList<>();
         
         try {
+        	System.out.println("Parsing XML...");
+        	
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputStream); // InputStream에서 XML 읽기
@@ -38,6 +40,9 @@ public class XMLParser {
                     employees.add(employee);
                 }
             }
+            
+            System.out.println("Complete parsing XML");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
