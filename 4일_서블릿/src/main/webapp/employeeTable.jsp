@@ -154,7 +154,7 @@
                 });
                 
                 $.ajax({
-                    url: 'SaveToDB', // 서블릿 URL
+                    url: 'savetodb', // 서블릿 URL
                     method: 'POST',
                     data: JSON.stringify(employees),
                     contentType: 'application/json',

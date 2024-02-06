@@ -27,7 +27,7 @@
     <servlet-name>AddressBook</servlet-name>
     <url-pattern>/addressbook</url-pattern>
   </servlet-mapping>
-  
+
   <welcome-file-list>
     <welcome-file>uploadFile.jsp</welcome-file>
   </welcome-file-list>

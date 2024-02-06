@@ -2,6 +2,8 @@ package servletpj;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +26,12 @@ public class SaveToDBServlet extends HttpServlet {
         while ((line = reader.readLine()) != null) {
             sb.append(line);
         }
-
+        
+        XMLParser parser = new XMLParser(); 
+        List<Employee> employees = parser.makeEmployee(sb); // ÆÄ½Ì
+        
+        EmployeeDB db = new EmployeeDB();
+        db.syncToEmployeeTable(employees);
     }
 
 }

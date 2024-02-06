@@ -71,7 +71,7 @@ public class EmployeeDB {
         System.out.println("Complete sync");
     }
     
-    public List<Employee> selectAllEmployee() {
+    private List<Employee> selectAllEmployee() {
         dbManager.connect();
         
         System.out.println("Selecting all employee from db...");
@@ -91,8 +91,8 @@ public class EmployeeDB {
                 em_tmp.setDepartment(resultSet.getString("department"));
                 em_tmp.setName(resultSet.getString("name"));
                 em_tmp.setPosition(resultSet.getString("position"));
-                em_tmp.setEnglishName(resultSet.getString("englishName"));
-                em_tmp.setPhoneNumber(resultSet.getString("phoneNumber"));
+                em_tmp.setEnglishName(resultSet.getString("english_name"));
+                em_tmp.setPhoneNumber(resultSet.getString("phone_number"));
                 em_tmp.setEmail(resultSet.getString("email"));
                 
                 employees.add(em_tmp);
@@ -101,21 +101,25 @@ public class EmployeeDB {
             resultSet.close();
             statement.close();
             
-            System.out.println("Selecing all complete");
+            System.out.println("=== [SUCCESS] Selecing all complete ===");
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("=== [ERROR] while selecting all employee in db ===");
+            e.printStackTrace();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect();    
+            }
         }
        
         return employees;
     }
     
-    public void insertEmployee(Employee employee) {
+    private void insertEmployee(Employee employee) {
         dbManager.connect();
         
         System.out.println("Inserting to DB...");
         
-        String sql = "INSERT INTO employees_tb (department, name, position, englishName, phoneNumber, email) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO employees_tb (department, name, position, english_name, phone_number, email) VALUES (?, ?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement statement = dbManager.getJdbcConnection().prepareStatement(sql);
@@ -125,15 +129,17 @@ public class EmployeeDB {
             statement.setString(4, employee.getEnglishName());
             statement.setString(5, employee.getPhoneNumber());
             statement.setString(6, employee.getEmail());
+            
+            statement.executeUpdate();
             statement.close();
             
             dbManager.commit(); 
             
-            System.out.println("Employee insert complete");
+            System.out.println("=== [SUCCESS] Employee insert complete ===");
         } catch (SQLException e) {
-            // 롤백은 dbManager.commit() 함수 안에서 예외 처리 
-            e.printStackTrace();
             System.out.println("=== [ERROR] while inserting employee ===");
+            e.printStackTrace();
+            dbManager.rollback();
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect();    
@@ -142,7 +148,7 @@ public class EmployeeDB {
 
     }
     
-    public void deleteEmployee(Employee employee) {
+    private void deleteEmployee(Employee employee) {
         dbManager.connect();
         
         System.out.println("Deleting from DB...");
@@ -152,15 +158,17 @@ public class EmployeeDB {
         try {
             PreparedStatement statement = dbManager.getJdbcConnection().prepareStatement(sql);
             statement.setString(1, employee.getPk());
+
+            statement.executeUpdate();
             statement.close();
             
             dbManager.commit(); 
             
-            System.out.println("employee delete complete");
+            System.out.println("=== [SUCCESS] employee delete complete ===");
         } catch (SQLException e) {
-            // 롤백은 dbManager.commit() 함수 안에서 예외 처리 
-            e.printStackTrace();
             System.out.println("=== [ERROR] while deleting employee ===");
+            e.printStackTrace();
+            dbManager.rollback();
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect();    
