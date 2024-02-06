@@ -112,7 +112,7 @@
                 });
                 
                 $.ajax({
-                    url: 'SaveToXML', // 서블릿 URL
+                    url: '/servlet/savetoxml', // 서블릿 URL
                     method: 'POST',
                     data: JSON.stringify(employees),
                     contentType: 'application/json',

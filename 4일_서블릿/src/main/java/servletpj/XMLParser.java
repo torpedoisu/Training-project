@@ -83,6 +83,6 @@ public class XMLParser {
     }
     
     public StringBuilder makeDBQuery(StringBuilder sb) {
-        sb
+        return new StringBuilder();
     }
 }
