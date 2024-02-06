@@ -6,18 +6,29 @@
     <servlet-name>SaveToXML</servlet-name>
     <servlet-class>servletpj.SaveToXMLServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SaveToDB</servlet-name>
+    <servlet-class>servletpj.SaveToDBServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddressBook</servlet-name>
+    <servlet-class>servletpj.AddressBookServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>SaveToXML</servlet-name>
     <url-pattern>/savetoxml</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SaveToDB</servlet-name>
+    <url-pattern>/savetodb</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddressBook</servlet-name>
+    <url-pattern>/addressbook</url-pattern>
+  </servlet-mapping>
   
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>uploadFile.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

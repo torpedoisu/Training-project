@@ -58,7 +58,7 @@ public class XMLParser {
            
         String[] employees = sb.toString().split("},");
         StringBuilder xml = new StringBuilder();
-        
+
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         xml.append("\n<employees>\n");
            
@@ -82,7 +82,55 @@ public class XMLParser {
         return xml;
     }
     
-    public StringBuilder makeDBQuery(StringBuilder sb) {
-        return new StringBuilder();
+    public List<Employee> makeEmployee(StringBuilder sb) {
+        System.out.println("Making data to Employee object...");
+        
+        List<Employee> employeeList = new ArrayList<Employee>();
+        String[] employees = sb.toString().split("},");
+        
+        for (String employee : employees) {
+            String[] attributes = employee.replaceAll("[\\[\\]{}\"]", "").split(",");
+            Employee em_tmp = new Employee();
+            
+            for (String attribute : attributes) {
+                String[] keyValue = attribute.split(":");
+                String key = keyValue[0].trim();
+                String value = keyValue.length > 1 ? keyValue[1].trim() : ""; // 값이 없는 경우 처리
+                
+                switch(key) {
+                    case "department":
+                        em_tmp.setDepartment(value);
+                        break;
+                        
+                    case "name":
+                        em_tmp.setName(value);
+                        break;
+                        
+                    case "position":
+                        em_tmp.setPosition(value);
+                        break;
+                        
+                    case "englishName":
+                        em_tmp.setEnglishName(value);
+                        break;
+                        
+                    case "phoneNumber":
+                        em_tmp.setPhoneNumber(value);
+                        break;
+                        
+                    case "email":
+                        em_tmp.setEmail(value);
+                        break;
+                    
+                    default:
+                        System.out.println("===[ERROR] cannot recognize properties of employee json ===");
+                }
+            }
+            
+            employeeList.add(em_tmp);
+        }
+        
+        return employeeList;
     }
+    
 }

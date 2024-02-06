@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <form id="uploadForm" action="AddressBook" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="addressbook" method="post" enctype="multipart/form-data">
         <input type="file" name="file" id="fileUploader" />
         <button id="sumbitFile">파일 제출</button>
     </form>

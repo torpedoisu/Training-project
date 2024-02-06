@@ -7,6 +7,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Employee {
+    private String pk;
     private String department;
     private String name;
     private String position;
@@ -14,6 +15,14 @@ public class Employee {
     private String phoneNumber;
     private String email;
 
+    public String getPk() {
+        return pk;
+    }
+    
+    public void setPk(String val) {
+        this.pk = val;
+    }
+    
     public String getDepartment() {
     	return department;
     }
