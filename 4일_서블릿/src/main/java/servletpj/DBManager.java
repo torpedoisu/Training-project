@@ -27,9 +27,7 @@ public class DBManager {
         try {
             System.out.println("Getting Db info...");
             
-//            InputStream reader = getClass().getResourceAsStream(propertiesName);
-            
-            properties.load(new FileInputStream("C:\\Users\\¡¯»Òºÿ\\Desktop\\Ω≈¿‘ ±≥¿∞\\4¿œ_º≠∫Ì∏¥\\src\\config\\db.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream("db.properties"));
             System.out.println("Complete getting db info");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
