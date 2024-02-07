@@ -26,6 +26,10 @@ public class XMLParser {
 
             NodeList nList = doc.getElementsByTagName("employee");
 
+            if (nList == null) {
+                // TODO:: XML 형식 맞지 않을시 예외 처리
+            }
+            
             for (int i = 0; i < nList.getLength(); i++) {
                 Node nNode = nList.item(i);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -49,6 +53,11 @@ public class XMLParser {
         return employees;
     }
     
+    /**
+     * JSON 데이터 -> xml 형식으로 문서를 만드는 메서드
+     * @param sb
+     * @return
+     */
     public StringBuilder makeXML(StringBuilder sb) {
         // XML 형태 잡기
         System.out.println("Making XML...");
@@ -82,6 +91,11 @@ public class XMLParser {
         return xml;
     }
     
+    /**
+     * JSON 데이터 -> Employee 객체로 변환해주는 메서드 
+     * @param sb
+     * @return
+     */
     public List<Employee> makeEmployee(StringBuilder sb) {
         System.out.println("Making data to Employee object...");
         

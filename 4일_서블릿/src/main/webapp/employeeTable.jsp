@@ -158,13 +158,14 @@
                     method: 'POST',
                     data: JSON.stringify(employees),
                     contentType: 'application/json',
-                    success: function(data) {
-                        alert("데이터가 성공적으로 DB에 저장되었습니다.");
-                    },
+                    success: function(data, status, xhr) {
+                        if (data.status == "SUCCESS") {
+                            alert("DB에 저장 성공");
+                        } else {
+                            alert("DB에 저장 실패");
+                        }                    },
                     error: function(xhr, status, error) { 
-                        console.log("Error: " + error);
-                        console.log("Status: " + status);
-                        console.dir(xhr);
+                        alert("DB에 저장 실패 - " + xhr.responseJSON.statusDescription);
                     }
                 });
             });
