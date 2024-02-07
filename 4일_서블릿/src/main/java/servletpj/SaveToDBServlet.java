@@ -39,7 +39,7 @@ public class SaveToDBServlet extends HttpServlet {
             }
             
             XMLParser parser = new XMLParser(); 
-            List<Employee> employees = parser.makeEmployee(sb); // 파싱
+            List<Employee> employees = parser.makeEmployee(sb, "axios"); // 파싱
             
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -60,7 +60,7 @@ public class SaveToDBServlet extends HttpServlet {
             
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//            responseData = new ResponseData(Status.FAIL, "서블릿 처리 도중 예외 발생");
+            responseData = new ResponseData(Status.FAIL, "서블릿 처리 도중 예외 발생");
         
             try {
                 out = response.getWriter();

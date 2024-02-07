@@ -41,7 +41,6 @@ public class AddressBookServlet extends HttpServlet {
 
         XMLParser parser = new XMLParser();
         List<Employee> employees;
-
         employees = parser.parseXML(fileContent); // 스트림을 XMLParser에 전달
         
         RequestDispatcher dispatcher;

@@ -58,7 +58,6 @@ public class XMLParser {
                     employee.setPhoneNumber(sPhoneNumber);
                     employee.setEmail(sEmail);
                     
-                    System.out.println(sDepartment.equals(null) + " " + ((sDepartment == null) ? true: false));
                     employees.add(employee);
                 }
             }
@@ -83,9 +82,6 @@ public class XMLParser {
     public String makeXML(StringBuilder sb) {
         // XML 형태 잡기
         System.out.println("Making XML...");
-        
-        // JSON 확인용 로그 
-        // System.out.println(sb.toString()); 
            
         String[] employees = sb.toString().split("},");
         StringBuilder xml = new StringBuilder();
@@ -113,16 +109,33 @@ public class XMLParser {
         return xml.toString();
     }
     
+    
     /**
-     * JSON 데이터 -> Employee 객체로 변환해주는 메서드 
+     * JSON 데이터 -> Employee 객체로 변환해주는 메서드
      * @param sb
+     * @param tool - axios or jquery
      * @return 성공 시 employee 리스트 반환
      */
-    public List<Employee> makeEmployee(StringBuilder sb) {
+    public List<Employee> makeEmployee(StringBuilder sb, String tool) {
         System.out.println("Making data to Employee object...");
-        
+
         List<Employee> employeeList = new ArrayList<Employee>();
-        String[] employees = sb.toString().split("},");
+        
+        String[] employees;
+        String jsonString = sb.toString();
+        if(tool.equals("axios")) {// axios 사용 시
+            
+            int startIndex = jsonString.indexOf("[");
+            int endIndex = jsonString.lastIndexOf("]");
+
+            String employeesString = jsonString.substring(startIndex + 1, endIndex);
+    
+            // 쉼표를 기준으로 문자열을 분리하여 배열로 만듦
+            employees = employeesString.split("\\},\\{");
+        } else { //jquery 사용 시 
+            employees = jsonString.split("},");
+        }
+
         
         for (String employee : employees) {
             String[] attributes = employee.replaceAll("[\\[\\]{}\"]", "").split(",");
@@ -134,6 +147,7 @@ public class XMLParser {
                 String value = keyValue.length > 1 ? keyValue[1].trim() : ""; // 값이 없는 경우 처리
                 
                 switch(key) {
+                
                     case "department":
                         em_tmp.setDepartment(value);
                         break;

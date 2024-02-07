@@ -101,6 +101,7 @@ public class EmployeeDB {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseData(Status.FAIL, "DB 처리 중 예외 발생");
         }
         

@@ -9,7 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Address Book</title>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -45,7 +44,7 @@
     <button id="saveToDB">DB에 저장 (브라우저 -> DB)</button>
     
     <script language="JavaScript">
-        
+    	
         $(document).ready(function(){
             var employees = []
             // 행 추가
@@ -78,7 +77,7 @@
                 $("#addressBook tr:last td:eq(5)").text(newEmployee.email);
                 
             });
-               
+	           
             // 행 삭제
             $(document).on("click", ".deleteRow", function(){
                 console.log("행 삭제");
@@ -112,26 +111,24 @@
                     
                 });
                 
-                axios({
-                    url: '/servlet/savetoxml',
+                $.ajax({
+                    url: '/servlet/savetoxml', // 서블릿 URL
                     method: 'POST',
-                    responseType: 'blob',
-                    data: {
-                        employees: employees
-                    }
-                }).then(response => {
-                        const blob = new Blob([response.data]);
+                    data: JSON.stringify(employees),
+                    contentType: 'application/json',
+                    success: function(data) {
+                        var blob =  new Blob([new XMLSerializer().serializeToString(data)], {type: "text/xml"});
                         var link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = "employees.xml";
                         link.click();
-                    })
-                    .catch(error => {
-                        alert("다운로드 실패 - " + error.response.data.statusDescription);
-                    });
+                    },
+                    error: function(xhr, status, error) { 
+                        alert("다운로드 실패 - " + xhr.responseJSON.statusDescription);
+                    }
+                });
             });
             
-            // DB에 저장
             $("#saveToDB").click(function(){
                 var employees = [];
                 $("#addressBook tr:gt(0)").each(function() {
@@ -154,23 +151,21 @@
                     
                 });
                 
-                axios({
-                    url: '/servlet/savetodb',
+                $.ajax({
+                    url: 'savetodb', // 서블릿 URL
                     method: 'POST',
-                    responseType: 'json',
-                    data: {
-                        employees: employees
-                    }
-                }).then(response => {
-                        if (response.data.status == "SUCCESS") {
+                    data: JSON.stringify(employees),
+                    contentType: 'application/json',
+                    success: function(data, status, xhr) {
+                        if (data.status == "SUCCESS") {
                             alert("DB에 저장 성공");
                         } else {
                             alert("DB에 저장 실패");
-                        }
-                    })
-                    .catch(error => {
-                        alert("DB에 저장 실패 - " + error.response.data.statusDescription);
-                    });
+                        }                    },
+                    error: function(xhr, status, error) { 
+                        alert("DB에 저장 실패 - " + xhr.responseJSON.statusDescription);
+                    }
+                });
             });
             
         });

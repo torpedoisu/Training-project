@@ -29,6 +29,14 @@
 
 - `employeeTable.jsp`
   
+  - axios 사용
+  
+  - Employee 정보를 표시하고, 추가 및 삭제를 할 수 있는 페이지
+
+- `jqueryEmployeeTable.jsp`
+  
+  - jquery 사용
+  
   - Employee 정보를 표시하고, 추가 및 삭제를 할 수 있는 페이지
 
 
