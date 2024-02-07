@@ -189,7 +189,7 @@ public class EmployeeDB {
             e.printStackTrace();
             dbManager.rollback();
             
-            return new ResponseData(Status.FAIL, "DB에 insert 도중 에러");
+            return new ResponseData(Status.FAIL, "DB에 insert 도중 에러 (행의 모든 값을 채워주세요)");
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect();    
