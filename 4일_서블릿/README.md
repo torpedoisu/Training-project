@@ -37,7 +37,7 @@
 
 
 
-2. 서블릿 관련 파일
+2. 서블릿 관련 파일 (servletpj 패키지)
 - `AddressBookServlet.java`
   
   - 파일 업로드 후 요청을 처리하는 서블릿
@@ -62,7 +62,7 @@
 
 
 
-3. DB 관련 파일
+3. DB 관련 파일 (db 패키지)
 - `DBManager.java`
   
   - DB 커넥션을 관리하는 클래스
@@ -82,19 +82,23 @@
 
 
 4. 기타
-- `Employee.java`
+- `Employee.java` (db 패키지)
   
   - 데이터베이스의 Employee 테이블과 일대일 매핑하여 데이터를 읽고 쓸 수 있도록 함
 
-- `XMLParser.java`
+- `XMLParser.java` (servletpj 패키지)
   
   - 파일 업로드 시 XML로 변환하거나, XML에서 값을 추출하는 유틸리티 클래스
   
   - 파일을 XML로 변환하거나, XML에서 값을 추출하여 사용 가능한 기능
 
-- `ResponseData.java`
+- `ResponseData.java` (response 패키지)
   
   - 에러와 성공에 관련된 응답을 처리하는 클래스
+
+- `Status.java` (response 패키지)
+  
+  - ResponseData에서 사용할 SUCCESS, FAIL을 Enum으로 정의한 클래스
 
 
 
@@ -158,3 +162,7 @@
 
 
 ## 3.2. 서블릿과 JSP
+
+
+
+## 
