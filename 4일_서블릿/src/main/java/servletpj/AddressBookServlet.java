@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import response.ResponseData;
+import response.Status;
+
 /**
  * Servlet implementation class AddressBook
  */
@@ -23,19 +26,35 @@ public class AddressBookServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    Part filePart = request.getPart("file");
+	    
+	    String fileName = filePart.getSubmittedFileName().trim();
+        // 파일이 업로드되지 않은 채로 채줄 된 경우
+        if (fileName == "") {
+            ResponseData responseData = new ResponseData(Status.FAIL, "파일이 업로드되지 않았습니다. 파일을 업로드 후 제출해주세요.");
+            request.setAttribute("responseData", responseData);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
+            dispatcher.forward(request, response);
+            return;
+        }
+        
 	    InputStream fileContent = filePart.getInputStream();
 
         XMLParser parser = new XMLParser();
         List<Employee> employees;
+
+        employees = parser.parseXML(fileContent); // 스트림을 XMLParser에 전달
         
-        try {
-            employees = parser.parseXML(fileContent); // 스트림을 XMLParser에 전달
+        RequestDispatcher dispatcher;
+        // 형식에 맞지 않는 XML 파일인 경우
+        if (employees == null) { 
+            ResponseData responseData = new ResponseData(Status.FAIL, "형식에 맞지 않는 XML 파일입니다. 파일 확인 후 업로드해주세요.");
+            request.setAttribute("responseData", responseData);
+            dispatcher = getServletContext().getRequestDispatcher("/");
+        } else {
             request.setAttribute("employees", employees);
-        } catch (Exception e){
-            e.printStackTrace(); // TODO: 형식 지키지 않은 xml의 경우 예외 처리 
+            dispatcher = getServletContext().getRequestDispatcher("/employeeTable.jsp");
         }
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/employeeTable.jsp");
         dispatcher.forward(request, response);
     }
 

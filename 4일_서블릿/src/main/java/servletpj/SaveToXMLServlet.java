@@ -32,12 +32,12 @@ public class SaveToXMLServlet extends HttpServlet {
         }
         
         XMLParser parser = new XMLParser();
-        StringBuilder xml = parser.makeXML(sb);
+        String xml = parser.makeXML(sb);
         
         response.setContentType("application/xml; charset=UTF-8");
         response.setHeader("Content-Disposition", "attachment; filename=employees.xml");
         PrintWriter out = response.getWriter();
-        out.print(xml.toString());
+        out.print(xml);
         out.close();
     }
 }

@@ -124,9 +124,7 @@
                         link.click();
                     },
                     error: function(xhr, status, error) { 
-                        console.log("Error: " + error);
-                        console.log("Status: " + status);
-                        console.dir(xhr);
+                        alert("다운로드 실패 - " + xhr.responseJSON.statusDescription);
                     }
                 });
             });

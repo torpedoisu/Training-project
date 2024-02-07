@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+    <employee>
+        <position>팀장</position>
+        <englishName>Gildong Hong</englishName>
+        <phone>010-1234-5678</phone>
+        <email>gildong.hong@example.com</email>
+    </employee>
+    <employee>
+        <department>영업부</department>
+        <name>김철cc</name>
+        <position>팀원</position>
+        <englishName>Chulsoo Kim</englishName>
+        <phone>010-2345-6789</phone>
+        <email>chulsoo.kim@example.com</email>
+    </employee> 
+</employees>
