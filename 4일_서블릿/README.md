@@ -104,8 +104,18 @@
 
 5. 테스트
 - `EmployTestXML.xml`
+  
+  - 다른 값을 가진 XML 
 
 - `EmployTestXML2.xml`
+  
+  - 다른 값을 가진 XML
+
+- `WrongTestXML.xml`
+  
+  - 형식을 지키지 않은 XML
+
+
 
 
 
