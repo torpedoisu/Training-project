@@ -68,7 +68,12 @@ public class SaveToDBServlet extends HttpServlet {
                 out.flush();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } 
+        } finally {
+            if (out != null) {
+                out.close();
             }
+        
         }
 
         
