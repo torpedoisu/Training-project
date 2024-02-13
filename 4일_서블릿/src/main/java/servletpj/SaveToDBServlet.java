@@ -65,7 +65,6 @@ public class SaveToDBServlet extends HttpServlet {
             try {
                 out = response.getWriter();
                 out.print(responseData.getResponseData());
-                out.flush();
             } catch (IOException ex) {
                 ex.printStackTrace();
             } 

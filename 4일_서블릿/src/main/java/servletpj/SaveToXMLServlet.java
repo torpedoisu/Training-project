@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import response.ResponseData;
+import response.Status;
+
 /**
  * Servlet implementation class SaveToXMLServlet
  */
@@ -18,26 +21,47 @@ import javax.servlet.http.HttpServletResponse;
 public class SaveToXMLServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 	
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         
-        System.out.println("Reading JSON...");
+        ResponseData responseData = null;
+        PrintWriter out = null;
         
-        // JSON 읽어오기
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-        BufferedReader reader = request.getReader();
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
+        try {
+            request.setCharacterEncoding("UTF-8");
+            
+            System.out.println("Reading JSON...");
+            
+            // JSON 읽어오기
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            XMLParser parser = new XMLParser();
+            String xml = parser.makeXML(sb);
+            
+            response.setContentType("application/xml; charset=UTF-8");
+            response.setHeader("Content-Disposition", "attachment; filename=employees.xml");
+            out = response.getWriter();
+            out.print(xml);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            responseData = new ResponseData(Status.FAIL, "서블릿 처리 도중 예외 발생");
+        
+            try {
+                out = response.getWriter();
+                out.print(responseData.getResponseData());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } 
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        
         }
         
-        XMLParser parser = new XMLParser();
-        String xml = parser.makeXML(sb);
-        
-        response.setContentType("application/xml; charset=UTF-8");
-        response.setHeader("Content-Disposition", "attachment; filename=employees.xml");
-        PrintWriter out = response.getWriter();
-        out.print(xml);
-        out.close();
     }
 }
