@@ -70,6 +70,7 @@ public class SaveToDBServlet extends HttpServlet {
             } 
         } finally {
             if (out != null) {
+                out.flush();
                 out.close();
             }
         

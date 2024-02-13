@@ -58,6 +58,7 @@ public class SaveToXMLServlet extends HttpServlet {
             } 
         } finally {
             if (out != null) {
+                out.flush();
                 out.close();
             }
         
