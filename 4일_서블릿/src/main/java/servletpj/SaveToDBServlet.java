@@ -28,8 +28,6 @@ public class SaveToDBServlet extends HttpServlet {
         PrintWriter out = null;
         
         try {
-            request.setCharacterEncoding("UTF-8");
-            
             
             StringBuilder sb = new StringBuilder();
             String line = null;
@@ -41,8 +39,7 @@ public class SaveToDBServlet extends HttpServlet {
             XMLParser parser = new XMLParser(); 
             List<Employee> employees = parser.makeEmployee(sb, "axios"); // ÆÄ½Ì
             
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json;charset=UTF-8");
             
             EmployeeDB db = new EmployeeDB();
             responseData = db.syncToEmployeeTable(employees);

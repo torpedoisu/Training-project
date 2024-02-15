@@ -28,6 +28,23 @@
     <url-pattern>/addressbook</url-pattern>
   </servlet-mapping>
 
+<!-- =============필터============ -->
+
+<filter>
+    <filter-name>koreanFilter</filter-name>
+    <filter-class>filter.KoreanFilter</filter-class>
+    <init-param>
+        <param-name>charset</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+</filter>
+
+<filter-mapping>
+    <filter-name>koreanFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+<!-- =============필터============ -->
   <welcome-file-list>
     <welcome-file>uploadFile.jsp</welcome-file>
   </welcome-file-list>

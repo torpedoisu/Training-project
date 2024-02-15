@@ -27,12 +27,14 @@ public class AddressBookServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    Part filePart = request.getPart("file");
 	    
+	    RequestDispatcher dispatcher = null;
+	    
 	    String fileName = filePart.getSubmittedFileName().trim();
         // 파일이 업로드되지 않은 채로 채줄 된 경우
-        if (fileName == "") {
+        if (fileName.isBlank()) {
             ResponseData responseData = new ResponseData(Status.FAIL, "파일이 업로드되지 않았습니다. 파일을 업로드 후 제출해주세요.");
             request.setAttribute("responseData", responseData);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/");
+            dispatcher = getServletContext().getRequestDispatcher("/");
             dispatcher.forward(request, response);
             return;
         }
@@ -43,7 +45,7 @@ public class AddressBookServlet extends HttpServlet {
         List<Employee> employees;
         employees = parser.parseXML(fileContent); // 스트림을 XMLParser에 전달
         
-        RequestDispatcher dispatcher;
+        
         // 형식에 맞지 않는 XML 파일인 경우
         if (employees == null) { 
             ResponseData responseData = new ResponseData(Status.FAIL, "형식에 맞지 않는 XML 파일입니다. 파일 확인 후 업로드해주세요.");

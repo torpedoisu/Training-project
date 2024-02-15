@@ -27,7 +27,6 @@ public class SaveToXMLServlet extends HttpServlet {
         PrintWriter out = null;
         
         try {
-            request.setCharacterEncoding("UTF-8");
             
             System.out.println("Reading JSON...");
             
@@ -42,7 +41,7 @@ public class SaveToXMLServlet extends HttpServlet {
             XMLParser parser = new XMLParser();
             String xml = parser.makeXML(sb);
             
-            response.setContentType("application/xml; charset=UTF-8");
+            response.setContentType("application/xml;charset=UTF-8");
             response.setHeader("Content-Disposition", "attachment; filename=employees.xml");
             out = response.getWriter();
             out.print(xml);
