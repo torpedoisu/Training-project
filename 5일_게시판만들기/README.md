@@ -8,7 +8,11 @@
 
 - 게시물 등록/수정/삭제/보기 기능 (파일 첨부 기능 포함)
 
+
+
 <br>
+
+# 
 
 #### 지켜야 하는 프로그램 설계 절차
 
@@ -104,35 +108,11 @@
 
 
 
-### 1.3.2. 데이터베이스 테이블 설계
+### 1.3.4. 화면 정의
 
-![데이터베이 테이블 설계](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/docs/DB_%ED%85%8C%EC%9D%B4%EB%B8%94_%EB%AA%85%EC%84%B8.png?raw=true)
+로그인 화면
 
-
-
-<br>
-
-
-
-### 1.3.3. 클래스 다이어그램
-
-![클래스다이어그램](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/docs/%ED%81%B4%EB%9E%98%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.jpg?raw=true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+![](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%99%94%EB%A9%B4.png?raw=true)
 
 
 
@@ -140,20 +120,61 @@
 
 
 
-### 1.3.4. 시퀀스 다이어그램
+게시판 화면
+
+![](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%ED%8C%90%ED%99%94%EB%A9%B4.png?raw=true)
 
 
 
 <br>
 
 
+
+게시글 화면 (작성자 본인 글)
+
+![](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%EA%B8%80%ED%99%94%EB%A9%B4_%EC%9E%91%EC%84%B1%EC%9E%90%EB%B3%B8%EC%9D%B8.png?raw=true)
+
+
+
+<br>
+
+
+
+게시글 화면 (타인 글)
+
+![](https://raw.githubusercontent.com/torpedoisu/Training-project/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%EA%B8%80%ED%99%94%EB%A9%B4_%EC%9E%91%EC%84%B1%EC%9E%90%ED%83%80%EC%9D%B8.png)
+
+
+
+<br>
+
+
+
+### 1.3.3. 데이터베이스 테이블 설계
+
+![데이터베이 테이블 설계](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/Db%ED%85%8C%EC%9D%B4%EB%B8%94_%EC%84%A4%EA%B3%84.png?raw=true)
+
+
+<br>
+
+
+
+### 1.3.4. 클래스 다이어그램
+
+![클래스다이어그램](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%81%B4%EB%9E%98%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.jpg?raw=true)
+
+
+
+<br>
+
+
+
+### 1.3.5. 시퀀스 다이어그램
+
+<br>
 
 # 2. 신경 써야 하는 부분
 
-
-
 <br>
-
-
 
 # 3. 관련 정보
