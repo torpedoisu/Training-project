@@ -31,7 +31,7 @@ public class AddressBookServlet extends HttpServlet {
 	    
 	    String fileName = filePart.getSubmittedFileName().trim();
         // 파일이 업로드되지 않은 채로 채줄 된 경우
-        if (fileName.isBlank()) {
+        if (fileName.isEmpty()) {
             ResponseData responseData = new ResponseData(Status.FAIL, "파일이 업로드되지 않았습니다. 파일을 업로드 후 제출해주세요.");
             request.setAttribute("responseData", responseData);
             dispatcher = getServletContext().getRequestDispatcher("/");

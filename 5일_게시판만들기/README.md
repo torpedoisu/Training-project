@@ -10,9 +10,7 @@
 
 
 
-<br>
 
-# 
 
 #### 지켜야 하는 프로그램 설계 절차
 
@@ -112,7 +110,7 @@
 
 로그인 화면
 
-![](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%99%94%EB%A9%B4.png?raw=true)
+<img src="https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%99%94%EB%A9%B4.png?raw=true" title="" alt="" width="464">
 
 
 
@@ -122,7 +120,7 @@
 
 게시판 화면
 
-![](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%ED%8C%90%ED%99%94%EB%A9%B4.png?raw=true)
+<img src="https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%ED%8C%90%ED%99%94%EB%A9%B4.png?raw=true" title="" alt="" width="470">
 
 
 
@@ -132,7 +130,7 @@
 
 게시글 화면 (작성자 본인 글)
 
-![](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%EA%B8%80%ED%99%94%EB%A9%B4_%EC%9E%91%EC%84%B1%EC%9E%90%EB%B3%B8%EC%9D%B8.png?raw=true)
+<img src="https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%EA%B8%80%ED%99%94%EB%A9%B4_%EC%9E%91%EC%84%B1%EC%9E%90%EB%B3%B8%EC%9D%B8.png?raw=true" title="" alt="" width="484">
 
 
 
@@ -142,7 +140,7 @@
 
 게시글 화면 (타인 글)
 
-![](https://raw.githubusercontent.com/torpedoisu/Training-project/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%EA%B8%80%ED%99%94%EB%A9%B4_%EC%9E%91%EC%84%B1%EC%9E%90%ED%83%80%EC%9D%B8.png)
+<img src="https://raw.githubusercontent.com/torpedoisu/Training-project/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%99%94%EB%A9%B4%EC%A0%95%EC%9D%98_%EC%9D%B4%EB%AF%B8%EC%A7%80/%EA%B2%8C%EC%8B%9C%EA%B8%80%ED%99%94%EB%A9%B4_%EC%9E%91%EC%84%B1%EC%9E%90%ED%83%80%EC%9D%B8.png" title="" alt="" width="488">
 
 
 
