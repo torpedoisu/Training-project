@@ -10,7 +10,7 @@ import java.util.List;
 
 import response.ResponseData;
 import response.Status;
-import servletpj.Employee;
+import servletpj.EmployeeVO;
 
 public class EmployeeDAO {
     private DBManager dbManager;
@@ -25,20 +25,20 @@ public class EmployeeDAO {
      * @param userTableEmployees
      * @return 
      */
-    public ResponseData syncToEmployeeTable(List<Employee> userTableEmployees) {
+    public ResponseData syncToEmployeeTable(List<EmployeeVO> userTableEmployees) {
         System.out.println("Start sync to table -> db...");
         
         try {
             // 1. selectAll로 존재하는 employee 전부 가져오기
-            List<Employee> dbEmployees = this.selectAllEmployee();
+            List<EmployeeVO> dbEmployees = this.selectAllEmployee();
             
             // selectAll은 employees 반환되지 않는 경우(null)인 경우 예외
             if (dbEmployees == null) {
                 return new ResponseData(Status.FAIL, "DB에서 값 가져오던 중 에러");
             }
             // 2.이름 기준 정렬 후 비교
-            Collections.sort(userTableEmployees, Comparator.comparing(Employee::getName));
-            Collections.sort(dbEmployees, Comparator.comparing(Employee::getName));
+            Collections.sort(userTableEmployees, Comparator.comparing(EmployeeVO::getName));
+            Collections.sort(dbEmployees, Comparator.comparing(EmployeeVO::getName));
             
             // 3. 사용자가 만든 표와 비교 
             int userIndex = 0;
@@ -47,8 +47,8 @@ public class EmployeeDAO {
             ResponseData response = null;
             
             while (userIndex < userTableEmployees.size() && dbIndex < dbEmployees.size()) {
-                Employee userEmployee = userTableEmployees.get(userIndex);
-                Employee dbEmployee = dbEmployees.get(dbIndex);
+                EmployeeVO userEmployee = userTableEmployees.get(userIndex);
+                EmployeeVO dbEmployee = dbEmployees.get(dbIndex);
     
                 int departComp = userEmployee.getDepartment().compareTo(dbEmployee.getDepartment());
                 int nameComp = userEmployee.getName().compareTo(dbEmployee.getName());
@@ -114,21 +114,21 @@ public class EmployeeDAO {
      * 테이블에 있는 레코드 다 가져오는 메서드
      * @return 성공시 employee 리스트 반환, 예외시 null 반환
      */
-    private List<Employee> selectAllEmployee() {
+    private List<EmployeeVO> selectAllEmployee() {
         dbManager.connect();
         
         System.out.println("Selecting all employee from db...");
         
         String sql = "SELECT * FROM employees_tb";
         
-        List<Employee> employees = new ArrayList<Employee>();
+        List<EmployeeVO> employees = new ArrayList<EmployeeVO>();
         
         try {
             PreparedStatement statement = dbManager.getJdbcConnection().prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             
             while (resultSet.next()) {
-                Employee em_tmp = new Employee();
+                EmployeeVO em_tmp = new EmployeeVO();
                 
                 em_tmp.setPk(String.valueOf(resultSet.getInt("id")));
                 em_tmp.setDepartment(resultSet.getString("department"));
@@ -163,7 +163,7 @@ public class EmployeeDAO {
      * @param employee
      * @return 예외 시 ResponseData 반환, 성공할 경우 null 반환 
      */
-    private ResponseData insertEmployee(Employee employee) {
+    private ResponseData insertEmployee(EmployeeVO employee) {
         dbManager.connect();
         
         System.out.println("Inserting to DB...");
@@ -205,7 +205,7 @@ public class EmployeeDAO {
      * @param employee
      * @return 예외 시 ReponseData 반환, 성공 시 null 반환
      */
-    private ResponseData deleteEmployee(Employee employee) {
+    private ResponseData deleteEmployee(EmployeeVO employee) {
         dbManager.connect();
         
         System.out.println("Deleting from DB...");

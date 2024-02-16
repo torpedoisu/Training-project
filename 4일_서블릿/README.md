@@ -74,7 +74,7 @@
 <br>
 
 4. 기타
-- `Employee.java` (db 패키지)
+- `EmployeeVO.java` (db 패키지)
   
   - 데이터베이스의 Employee 테이블과 일대일 매핑하여 데이터를 읽고 쓸 수 있도록 함
 

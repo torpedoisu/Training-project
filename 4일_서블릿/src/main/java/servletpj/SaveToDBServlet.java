@@ -37,7 +37,7 @@ public class SaveToDBServlet extends HttpServlet {
             }
             
             XMLParser parser = new XMLParser(); 
-            List<Employee> employees = parser.makeEmployee(sb, "axios"); // ÆÄ½Ì
+            List<EmployeeVO> employees = parser.makeEmployee(sb, "axios"); // ÆÄ½Ì
             
             response.setContentType("application/json;charset=UTF-8");
             
