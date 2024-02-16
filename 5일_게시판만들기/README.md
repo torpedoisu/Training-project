@@ -159,7 +159,7 @@
 
 ### 1.3.4. 클래스 다이어그램
 
-![클래스다이어그램](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%81%B4%EB%9E%98%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.jpg?raw=true)
+![클래스다이어그램](https://github.com/torpedoisu/Training-project/blob/main/5%EC%9D%BC_%EA%B2%8C%EC%8B%9C%ED%8C%90%EB%A7%8C%EB%93%A4%EA%B8%B0/assets/%ED%81%B4%EB%9E%98%EC%8A%A4_%EB%8B%A4%EC%9D%B4%EC%96%B4%EA%B7%B8%EB%9E%A8.png?raw=true)
 
 
 
