@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class EmployeeDAO {
+public class Employee {
     private String pk;
     private String department;
     private String name;

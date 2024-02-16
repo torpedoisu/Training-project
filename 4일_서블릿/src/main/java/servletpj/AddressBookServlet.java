@@ -42,7 +42,7 @@ public class AddressBookServlet extends HttpServlet {
 	    InputStream fileContent = filePart.getInputStream();
 
         XMLParser parser = new XMLParser();
-        List<EmployeeDAO> employees;
+        List<Employee> employees;
         employees = parser.parseXML(fileContent); // 스트림을 XMLParser에 전달
         
         

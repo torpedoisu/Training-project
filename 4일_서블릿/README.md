@@ -23,7 +23,7 @@
   
   - XML 파일을 업로드 하는 페이지
 
-- `employeeService.jsp`
+- `employeeTable.jsp`
   
   - axios 사용
   
@@ -65,7 +65,7 @@
   
   - DB 접속, 해제, 롤백 등의 기능
 
-- `EmployeeDB.java`
+- `EmployeeDAO.java`
   
   - Employee 테이블을 조작하는 클래스
   
@@ -74,7 +74,7 @@
 <br>
 
 4. 기타
-- `EmployeeDAO.java` (db 패키지)
+- `Employee.java` (db 패키지)
   
   - 데이터베이스의 Employee 테이블과 일대일 매핑하여 데이터를 읽고 쓸 수 있도록 함
 

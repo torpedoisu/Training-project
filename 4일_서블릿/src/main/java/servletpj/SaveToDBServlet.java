@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.EmployeeService;
+import db.EmployeeDAO;
 import response.ResponseData;
 import response.Status;
 
@@ -37,11 +37,11 @@ public class SaveToDBServlet extends HttpServlet {
             }
             
             XMLParser parser = new XMLParser(); 
-            List<EmployeeDAO> employees = parser.makeEmployee(sb, "axios"); // ÆÄ½Ì
+            List<Employee> employees = parser.makeEmployee(sb, "axios"); // ÆÄ½Ì
             
             response.setContentType("application/json;charset=UTF-8");
             
-            EmployeeService db = new EmployeeService();
+            EmployeeDAO db = new EmployeeDAO();
             responseData = db.syncToEmployeeTable(employees);
             
             

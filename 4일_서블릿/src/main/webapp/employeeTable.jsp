@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="servletpj.EmployeeDAO" %>
+<%@ page import="servletpj.Employee" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -24,8 +24,8 @@
             <th></th>
         </tr>
         <%
-                    List<EmployeeDAO> employees = (ArrayList<EmployeeDAO>) request.getAttribute("employees");
-                    for(EmployeeDAO employee : employees) {
+        List<Employee> employees = (ArrayList<Employee>) request.getAttribute("employees");
+                            for(Employee employee : employees) {
         %>
         <tr>
             <td><%= employee.getDepartment()%></td>

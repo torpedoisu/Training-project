@@ -22,8 +22,8 @@ public class XMLParser {
      * @param inputStream
      * @return 형식이 맞지 않을 시 null 반환, 성공 시 employee 객체 리스트 반환
      */
-    public List<EmployeeDAO> parseXML(InputStream inputStream) {
-        List<EmployeeDAO> employees = new ArrayList<>();
+    public List<Employee> parseXML(InputStream inputStream) {
+        List<Employee> employees = new ArrayList<>();
         
         try {
             System.out.println("Parsing XML...");
@@ -42,7 +42,7 @@ public class XMLParser {
                 Node nNode = nList.item(i);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                    EmployeeDAO employee = new EmployeeDAO();
+                    Employee employee = new Employee();
                     
                     String sDepartment = eElement.getElementsByTagName("department").item(0).getTextContent();
                     String sName = eElement.getElementsByTagName("name").item(0).getTextContent();
@@ -116,10 +116,10 @@ public class XMLParser {
      * @param tool - axios or jquery
      * @return 성공 시 employee 리스트 반환
      */
-    public List<EmployeeDAO> makeEmployee(StringBuilder sb, String tool) {
+    public List<Employee> makeEmployee(StringBuilder sb, String tool) {
         System.out.println("Making data to Employee object...");
 
-        List<EmployeeDAO> employeeList = new ArrayList<EmployeeDAO>();
+        List<Employee> employeeList = new ArrayList<Employee>();
         
         String[] employees;
         String jsonString = sb.toString();
@@ -139,7 +139,7 @@ public class XMLParser {
         
         for (String employee : employees) {
             String[] attributes = employee.replaceAll("[\\[\\]{}\"]", "").split(",");
-            EmployeeDAO em_tmp = new EmployeeDAO();
+            Employee em_tmp = new Employee();
             
             for (String attribute : attributes) {
                 String[] keyValue = attribute.split(":");
