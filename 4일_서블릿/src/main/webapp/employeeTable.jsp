@@ -24,8 +24,8 @@
             <th></th>
         </tr>
         <%
-        List<EmployeEmployeeVOyees = (ArrayList<EmployeEmployeeVOest.getAttribute("employees");
-                               EmployeeVO(Employee employee : employees) {
+        List<EmployeeVO> employees = (ArrayList<EmployeeVO>) request.getAttribute("employees");
+        for(EmployeeVO employee : employees) {
         %>
         <tr>
             <td><%= employee.getDepartment()%></td>
