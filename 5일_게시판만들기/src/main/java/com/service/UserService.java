@@ -3,7 +3,9 @@ package com.service;
 import java.util.HashMap;
 
 import com.dao.UserDAO;
+import com.exception.LoginException;
 import com.global.Status;
+import com.global.TestException;
 import com.vo.UserVO;
 
 public class UserService {
@@ -16,7 +18,8 @@ public class UserService {
         return userService;
     }
     
-    public HashMap<Status, Object> userInsert(UserVO user) {
-        return dao.userInsert(user);
+    public void userInsert(UserVO user){
+        dao.userInsert(user);
     }
+    
 }

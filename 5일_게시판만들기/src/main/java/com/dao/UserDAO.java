@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import com.exception.LoginException;
 import com.global.DBManager;
 import com.global.ResponseData;
 import com.global.Status;
@@ -23,7 +24,7 @@ public class UserDAO {
         return dao;
     }
     
-    public HashMap<Status, Object> userInsert(UserVO user) {
+    public void userInsert(UserVO user){
         dbManager.connect();
         PreparedStatement statement = null;
         System.out.println("Inserting to DB...");
@@ -42,14 +43,13 @@ public class UserDAO {
         } catch (SQLException e) {
             System.out.println("=== [ERROR] while inserting user " + e + " ===");
             dbManager.rollback();
-            returnMap.put(Status.FAIL, (Object) new ResponseData(Status.FAIL, "DB에 insert 도중 에러 (행의 모든 값을 채워주세요)"));
+            throw new LoginException("DB에 insert 도중 에러 (행의 모든 값을 채워주세요)",500, e);
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect(statement);    
             }
         }
         
-            return returnMap;
     }
     
     

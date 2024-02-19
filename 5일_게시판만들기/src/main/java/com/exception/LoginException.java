@@ -9,11 +9,10 @@ public class LoginException extends RuntimeException{
         super(message);
     }
     
-    public LoginException(String message, Integer code, Object type, String uri) {
+    public LoginException(String message, Integer code, Object type) {
         super(message);
         this.code = code;
         this.type = type;
-        this.uri = uri;
     }
 
     public Integer getCode() {

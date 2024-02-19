@@ -27,9 +27,9 @@ public class FrontController extends HttpServlet{
     public void service(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
         req.setCharacterEncoding(charset);
 
-        String url = req.getRequestURI(); // '/5일_게시판만들기/memberInsert.do'
+        String url = req.getRequestURI(); // '/5일_게시판만들기/userInsert.do'
         String contextPath = req.getContextPath(); // '/5일_게시판만들기'
-        String path = url.substring(contextPath.length()); // '/memberInsert.do'
+        String path = url.substring(contextPath.length()); // '/userInsert.do'
         Controller subController = list.get(path);
         
         System.out.println("========== Front Controller path : " + path);

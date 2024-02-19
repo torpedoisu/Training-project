@@ -41,8 +41,6 @@ public class DBManager {
         this.url = properties.getProperty("url");
         this.id = properties.getProperty("id");
         this.pwd = properties.getProperty("pwd");
-        
-        throw new LoginException("이건 예외 테스트 메시지입니다");
     }
     
     // 커밋 옵션 READ COMMITTED로 설정
