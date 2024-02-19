@@ -11,7 +11,7 @@ import org.apache.logging.log4j.core.config.Configurator; // ¿ä³ð Ãß°¡
 
 
 public class HttpUtil {
-    public static Logger logger = LogManager.getLogger("HttpUtil");
+    public static Logger logger = LogManager.getLogger("HttpUtil.class");
     
     public static void forward(HttpServletRequest req, HttpServletResponse res, String path) {
         try {

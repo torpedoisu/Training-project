@@ -4,27 +4,36 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import com.exception.LoginException;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.exception.UserException;
 import com.global.DBManager;
 import com.global.ResponseData;
 import com.global.Status;
 import com.vo.UserVO;
 
 public class UserDAO {
-    private static UserDAO dao = new UserDAO();
-    private DBManager dbManager = new DBManager();
-    private HashMap<Status, Object> returnMap = new HashMap<>();
+    private static UserDAO userDao = null;
+    public static Logger logger = LogManager.getLogger("UserDAO.class");        
     
-    private UserDAO() {
-        returnMap.put(Status.FAIL, null);
-        returnMap.put(Status.DATA, null);
-    }
+    private UserDAO() {}
     
     public static UserDAO getInstance() {
-        return dao;
+        if (userDao == null) {
+            synchronized(UserDAO.class) {
+                userDao = new UserDAO();
+            }
+        }
+        
+        return userDao;
     }
     
     public void userInsert(UserVO user){
+        DBManager dbManager = new DBManager();
+        
         dbManager.connect();
         PreparedStatement statement = null;
         System.out.println("Inserting to DB...");
@@ -39,11 +48,11 @@ public class UserDAO {
             
             dbManager.commit(); 
             
-            System.out.println("=== [SUCCESS] User insert complete ===");
+            logger.info("=== [SUCCESS] User: "+ user.getId() +" insert complete ===");
         } catch (SQLException e) {
-            System.out.println("=== [ERROR] while inserting user " + e + " ===");
             dbManager.rollback();
-            throw new LoginException("DB에 insert 도중 에러 (행의 모든 값을 채워주세요)",500, e);
+            e.printStackTrace();
+            throw new UserException("DB에 insert 도중 에러 (행의 모든 값을 채워주세요)", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e);
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect(statement);    

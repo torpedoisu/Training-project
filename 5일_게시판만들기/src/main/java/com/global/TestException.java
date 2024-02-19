@@ -1,12 +1,12 @@
 package com.global;
 
-import com.exception.LoginException;
+import com.exception.UserException;
 
 public class TestException {
     public void testLogin(){
         //=============
 
-            throw new LoginException("adsfsdf 테스트");
+            throw new UserException("adsfsdf 테스트");
         }
         //============
     }

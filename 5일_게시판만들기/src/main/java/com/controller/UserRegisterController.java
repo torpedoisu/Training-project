@@ -8,15 +8,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.exception.LoginException;
+import com.exception.UserException;
 import com.global.HttpUtil;
 import com.global.ResponseData;
 import com.global.Status;
 import com.service.UserService;
 import com.vo.UserVO;
 
-public class LoginController implements Controller{
-
+public class UserRegisterController implements Controller{
+    
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         String id = req.getParameter("id").trim();

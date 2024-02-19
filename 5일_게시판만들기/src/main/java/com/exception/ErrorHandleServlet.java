@@ -27,7 +27,7 @@ public class ErrorHandleServlet extends HttpServlet{
         Integer code = (Integer) req.getAttribute("javax.servlet.error.status_code");
         String message = (String) req.getAttribute("javax.servlet.error.message");
         Object type = req.getAttribute("javax.servlet.error.exception_type");
-        Exception exception = (Exception) req.getAttribute("javax.servlet.error.exception");
+//        Exception exception = (Exception) req.getAttribute("javax.servlet.error.exception");
 
         // 보낼 헤더 설정
         res.setContentType("applicaion/json;charset=UTF-8");
