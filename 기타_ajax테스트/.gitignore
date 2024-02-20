@@ -5,6 +5,7 @@
 .classpath
 .project
 .settings/
+.tern-project
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,java
