@@ -16,7 +16,7 @@ public class HttpUtil {
             RequestDispatcher dispatcher = req.getRequestDispatcher(path);
             dispatcher.forward(req, res);
         } catch (Exception e) {
-            logger.error("forward ¿À·ù");
+            logger.error("forward ë°œìƒ ì¤‘ ì—ëŸ¬");
         }
     }
 }

@@ -29,7 +29,7 @@ public class UserDAO {
     }
     
     public void userInsert(UserVO user){
-        logger.debug("User: "+ user.getId() +" µî·Ï ½ÃÀÛ");
+        logger.debug("User: "+ user.getId() +" ë“±ë¡ ì‹œì‘");
         DBManager dbManager = new DBManager();
         
         dbManager.connect();
@@ -45,11 +45,11 @@ public class UserDAO {
             
             dbManager.commit(); 
             
-            logger.info("User: "+ user.getId() +" µî·Ï ¿Ï·á");
+            logger.info("User: "+ user.getId() +" ë“±ë¡ ì™„ë£Œ");
         } catch (SQLException e) {
             e.printStackTrace();
             dbManager.rollback();
-            throw new UserException(("DB¿¡ insert µµÁß ¿¡·¯ (ÇàÀÇ ¸ğµç °ªÀ» Ã¤¿öÁÖ¼¼¿ä) - " + e.getMessage()), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException(("DBì— insert ë„ì¤‘ ì—ëŸ¬ (í–‰ì˜ ëª¨ë“  ê°’ì„ ì±„ì›Œì£¼ì„¸ìš”) - " + e.getMessage()), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect(statement);    

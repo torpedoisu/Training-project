@@ -24,7 +24,7 @@ public class SocketServer {
 			serverSocket = new ServerSocket(port);
 			System.out.println("Server started: " + port);
 			
-			// Å¬¶óÀÌ¾ğÆ® ¿¬°á ²÷°Üµµ °è¼Ó ±â´Ù¸®±â
+			// í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ëŠê²¨ë„ ê³„ì† ê¸°ë‹¤ë¦¬ê¸°
 			while (true) {
 				try {
 					clientSocket = serverSocket.accept();

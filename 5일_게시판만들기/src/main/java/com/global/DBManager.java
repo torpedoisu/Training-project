@@ -27,23 +27,23 @@ public class DBManager {
     
 
     
-    // ¸â¹ö º¯¼ö ÃÊ±âÈ­
+    // ë©¤ë²„ ë³€ìˆ˜ ì´ˆê¸°í™”
     public DBManager(){
         Properties properties = new Properties();
         String propertiesName = "/resources/db.properties";
         
         try {
             properties.load(this.getClass().getClassLoader().getResourceAsStream(propertiesName));
-            logger.debug("DB Manager ÃÊ±âÈ­ ¿Ï·á");
+            logger.debug("DBMangaer ì´ˆê¸°í™” ì„±ê³µ");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new UserException("DBMangaer ÃÊ±âÈ­ Áß ¿¹¿Ü ¹ß»ı", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("DBMangaer ì´ˆê¸°í™” ì¤‘ ì˜ˆì™¸ ë°œìƒ", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new UserException("DBMangaer ÃÊ±âÈ­ Áß ¿¹¿Ü ¹ß»ı", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("DBMangaer ì´ˆê¸°í™” ì¤‘ ì˜ˆì™¸ ë°œìƒ", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (NullPointerException e) {
             e.printStackTrace();
-            throw new UserException("DBMangaer ÃÊ±âÈ­ Áß ¿¹¿Ü ¹ß»ı", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("DBMangaer ì´ˆê¸°í™” ì¤‘ ì˜ˆì™¸ ë°œìƒ", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
         this.driver = properties.getProperty("driver");
@@ -52,10 +52,10 @@ public class DBManager {
         this.pwd = properties.getProperty("pwd");
     }
     
-    // Ä¿¹Ô ¿É¼Ç READ COMMITTED·Î ¼³Á¤
+    // ì»¤ë°‹ ì˜µì…˜ READ COMMITTEDë¡œ ì„¤ì •
     public void connect() {
             try {
-                logger.debug("DB ¿¬°á ½ÃÀÛ...");
+                logger.debug("DB ì—°ê²° ì‹œì‘...");
                 
                 if (jdbcConnection == null || jdbcConnection.isClosed()) {
                     Class.forName(driver);
@@ -64,65 +64,65 @@ public class DBManager {
                     jdbcConnection.setAutoCommit(false);
                     jdbcConnection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
                     
-                    logger.debug("DB ¿¬°á ¼º°ø");
+                    logger.debug("DB ì—°ê²° ì„±ê³µ");
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
-                throw new UserException("jdbc µå¶óÀÌ¹ö Á¸ÀçÇÏÁö ¾ÊÀ½" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                throw new UserException("jdbc ë“œë¼ì´ë²„ ì¡´ì¬í•˜ì§€ ì•ŠìŒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } catch (SQLException e) {
                 e.printStackTrace();
-                throw new UserException("db connection Áß ¿¹¿Ü ¹ß»ı" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                throw new UserException("db connection ì¤‘ ì˜ˆì™¸ ë°œìƒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
     }
     
-    // Ä¿¹Ô ½ÇÆĞ½Ã ·Ñ¹é ¼öÇà
+    // ì»¤ë°‹ ì‹¤íŒ¨ì‹œ ë¡¤ë°± ìˆ˜í–‰
     public void commit(){
         try {
-            logger.debug("DB¿¡ Ä¿¹Ô ½ÃÀÛ...");
+            logger.debug("DBì— ì»¤ë°‹ ì‹œì‘...");
             
             if (jdbcConnection != null && !jdbcConnection.isClosed()) {
                 jdbcConnection.commit();
                 
-                logger.debug("db¿¡ Ä¿¹Ô ¿Ï·á");
+                logger.debug("dbì— ì»¤ë°‹ ì™„ë£Œ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new UserException("db¿¡ Ä¿¹Ô Áß ¿¹¿Ü ¹ß»ı" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("dbì— ì»¤ë°‹ ì¤‘ ì˜ˆì™¸ ë°œìƒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } 
     }
     
     public void rollback() {
-     // ·Ñ¹é ½ÃÀÛ 
+     // ï¿½Ñ¹ï¿½ ï¿½ï¿½ï¿½ï¿½ 
         try {
-            logger.debug("Æ®·£Àè¼Ç ·Ñ¹é ½ÃÀÛ...");
+            logger.debug("íŠ¸ëœì­ì…˜ ë¡¤ë°± ì‹œì‘...");
             
             if (jdbcConnection != null && !jdbcConnection.isClosed()) {
                 jdbcConnection.rollback();
                 
-                logger.debug("Æ®·£Àè¼Ç ·Ñ¹é ¿Ï·á");
+                logger.debug("íŠ¸ëœì­ì…˜ ë¡¤ë°± ì™„ë£Œ");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new UserException("db ·Ñ¹é Áß ¿¹¿Ü ¹ß»ı" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("db ë¡¤ë°± ì¤‘ ì˜ˆì™¸ ë°œìƒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } 
     }
 
     public void disconnect(PreparedStatement ps){
         try {
             if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.setAutoCommit(true); // Ä¿¹Ô ¿É¼Ç ´Ù½Ã ¿ø·¡´ë·Î µÇµ¹¸®±â
+                jdbcConnection.setAutoCommit(true); // ì»¤ë°‹ ì˜µì…˜ ë‹¤ì‹œ ì›ë˜ëŒ€ë¡œ ë˜ëŒë¦¬ê¸°
                 jdbcConnection.close();
                 
                 if (ps != null) {
                     ps.close();
                     
-                    logger.debug("db¿ÍÀÇ ¿¬°á ÇØÁ¦ ¿Ï·á");
+                    logger.debug("dbì™€ì˜ ì—°ê²° í•´ì œ ì™„ë£Œ");
                 }
             }   
             
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new UserException("db¿Í ¿¬°á ÇØÁ¦ Áß ¿¹¿Ü ¹ß»ı" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("dbì™€ ì—°ê²° í•´ì œ ì¤‘ ì˜ˆì™¸ ë°œìƒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
     }
@@ -130,7 +130,7 @@ public class DBManager {
     public void disconnect(PreparedStatement ps, ResultSet rs){
         try {
             if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.setAutoCommit(true); // Ä¿¹Ô ¿É¼Ç ´Ù½Ã ¿ø·¡´ë·Î µÇµ¹¸®±â
+                jdbcConnection.setAutoCommit(true); // ì»¤ë°‹ ì˜µì…˜ ë‹¤ì‹œ ì›ë˜ëŒ€ë¡œ ë˜ëŒë¦¬ê¸°
                 jdbcConnection.close();
                 
                 if (ps != null) {
@@ -138,14 +138,14 @@ public class DBManager {
                     
                     if (rs != null) {
                         rs.close();
-                        logger.debug("db¿ÍÀÇ ¿¬°á ÇØÁ¦ ¿Ï·á");
+                        logger.debug("dbì™€ì˜ ì—°ê²° í•´ì œ ì™„ë£Œ");
                     }
                 }
             }   
             
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new UserException("db¿Í ¿¬°á ÇØÁ¦ Áß ¿¹¿Ü ¹ß»ı" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("dbì™€ ì—°ê²° í•´ì œ ì¤‘ ì˜ˆì™¸ ë°œìƒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
     }
@@ -162,7 +162,7 @@ public class DBManager {
             isClosed = this.jdbcConnection.isClosed();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new UserException("db¿ÍÀÇ ¿¬°á È®ÀÎ Áß ¿¹¿Ü ¹ß»ı" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            throw new UserException("dbì™€ì˜ ì—°ê²° í™•ì¸ ì¤‘ ì˜ˆì™¸ ë°œìƒ" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
         return isClosed;

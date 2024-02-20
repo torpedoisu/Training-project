@@ -12,7 +12,6 @@ public class Work {
 	}
 	
 	public void execute() throws InterruptedException {
-		// 1-3초 사이 임의의 시간
 		long sleepTimeMillis = (long) ((Math.random() * 2000) + 1000);
 		System.out.println("Consumer" + Thread.currentThread().getName() + " using Work " + WORK_NUMBER + ", executed sleep time: " + sleepTimeMillis + "ms");
 		

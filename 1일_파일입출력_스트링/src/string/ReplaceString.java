@@ -8,18 +8,18 @@ public class ReplaceString {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("¿øº» text ¹®ÀÚ¿­: ");
+		System.out.print("ì›ë³¸ text ë¬¸ìì—´: ");
 		String originText = sc.nextLine();
 		
-		System.out.print("Ä¡È¯ ´ë»ó ¹®ÀÚ¿­: ");
+		System.out.print("ì¹˜í™˜ ëŒ€ìƒ ë¬¸ìì—´: ");
 		String before = sc.nextLine();
 		
-		System.out.print("Ä¡È¯µÉ ¹®ÀÚ¿­: ");
+		System.out.print("ì¹˜í™˜ë  ë¬¸ìì—´: ");
 		String after = sc.nextLine();
 		
 		String convertedString = originText.replace(before, after);
 		
-		System.out.println("=== °á°ú: " + convertedString + " ===");
+		System.out.println("=== ê²°ê³¼: " + convertedString + " ===");
 	}
 
 }

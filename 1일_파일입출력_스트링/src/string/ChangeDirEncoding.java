@@ -19,10 +19,10 @@ public class ChangeDirEncoding {
 		ChangeDirEncoding changeDirEncoding = new ChangeDirEncoding();
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.print("µğ·¢Åä¸® °æ·Î: ");
+		System.out.print("ë””ë™í† ë¦¬ ê²½ë¡œ: ");
 		String directoryPath = sc.nextLine();
 		
-		System.out.print("º¯È¯ ÀÎÄÚµù Æ÷¸Ë: ");
+		System.out.print("ë³€í™˜ ì¸ì½”ë”© í¬ë§·: ");
 		String targetEncoding = sc.nextLine();
 
         changeDirEncoding.convertEncodingRecursively(new File(directoryPath), targetEncoding);
@@ -31,7 +31,7 @@ public class ChangeDirEncoding {
 	}
 
     private void convertEncodingRecursively(File file, String targetEncoding){
-    	// µğ·ºÅä¸®ÀÌ¸é °è¼Ó ¾Æ·¡·Î µé¾î°¡±â
+    	// ë””ë ‰í† ë¦¬ì´ë©´ ê³„ì† ì•„ë˜ë¡œ ë“¤ì–´ê°€ê¸°
         if (file.isDirectory()) {
         	System.out.println("Reading directory...");
             File[] files = file.listFiles();
@@ -40,7 +40,7 @@ public class ChangeDirEncoding {
                     convertEncodingRecursively(nestedFile, targetEncoding);
                 }
             }
-        // ÆÄÀÏÀÌ¸é ÀÎÄÚµù º¯°æ    
+         // íŒŒì¼ì´ë©´ ì¸ì½”ë”© ë³€ê²½ 
         } else {
         	BufferedReader br = null;
 

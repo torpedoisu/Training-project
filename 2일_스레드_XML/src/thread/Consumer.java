@@ -3,9 +3,9 @@ package thread;
 import java.util.concurrent.BlockingQueue;
 
 public class Consumer implements Runnable{
-	
+
 	private final BlockingQueue<Work> queue;
-	
+
 	public Consumer(BlockingQueue<Work> queue) {
 		this.queue = queue;
 	}

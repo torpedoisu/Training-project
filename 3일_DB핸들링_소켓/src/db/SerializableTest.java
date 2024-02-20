@@ -29,14 +29,14 @@ public class SerializableTest {
 	        	
 	            
 	            
-	            // Ã¹ ¹øÂ° Æ®·£Àè¼Ç - µ¥ÀÌÅÍ Á¶È¸
+	        	// ì²« ë²ˆì§¸ íŠ¸ëœì­ì…˜ - ë°ì´í„° ì¡°íšŒ
 	            statement1 = conn1.createStatement();
 	            resultSet = statement1.executeQuery("SELECT * FROM employees_tb");
 
 	            System.out.println("\n[Serializable Test]");
-	            System.out.println("====== Ã¹¹øÂ° Á¶È¸ Äõ¸® =====");
+	            System.out.println("====== Ã¹ï¿½ï¿½Â° ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½ =====");
 	            
-	            // °á°ú Ãâ·Â
+	            // ê²°ê³¼ ì¶œë ¥
 	            while (resultSet.next()) {
 	                int id = resultSet.getInt("id");
 	                String name = resultSet.getString("name");
@@ -44,18 +44,18 @@ public class SerializableTest {
 	            }
 
 	            System.out.println("========================\n");
-	            // µÎ ¹øÂ° Æ®·£Àè¼Ç - µ¥ÀÌÅÍ ¼öÁ¤
+	            // ë‘ ë²ˆì§¸ íŠ¸ëœì­ì…˜ - ë°ì´í„° ìˆ˜ì •
 	            statement2 = conn2.createStatement();
 	            statement2.executeUpdate("UPDATE employees_tb SET name = 'NEW VALUE' WHERE id = 3");
 
-	            System.out.println("UPDATE Äõ¸® (OLD VALUE -> NEW VALUE) Ä¿¹Ô ¿Ï·á");
+	            System.out.println("UPDATE ï¿½ï¿½ï¿½ï¿½ (OLD VALUE -> NEW VALUE) Ä¿ï¿½ï¿½ ï¿½Ï·ï¿½");
 	            dbManager2.commit();
 
-	            System.out.println("\n====== µÎ¹øÂ° Á¶È¸ Äõ¸® =====");
-	            // Ã¹ ¹øÂ° Æ®·£Àè¼Ç¿¡¼­ ´Ù½Ã µ¥ÀÌÅÍ Á¶È¸
+	            System.out.println("\n====== ï¿½Î¹ï¿½Â° ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½ =====");
+	            // ì²« ë²ˆì§¸ íŠ¸ëœì­ì…˜ì—ì„œ ë‹¤ì‹œ ë°ì´í„° ì¡°íšŒ
 	            resultSet = statement1.executeQuery("SELECT * FROM employees_tb");
 
-	            // °á°ú Ãâ·Â
+	            // ê²°ê³¼ ì¶œë ¥
 	            System.out.println("After update:");
 	            while (resultSet.next()) {
 	                int id = resultSet.getInt("id");

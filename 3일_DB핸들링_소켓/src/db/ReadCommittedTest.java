@@ -29,14 +29,14 @@ public class ReadCommittedTest {
 	        	
 	            
 	            
-	            // Ã¹ ¹øÂ° Æ®·£Àè¼Ç - µ¥ÀÌÅÍ Á¶È¸
+	        	 // ì²« ë²ˆì§¸ íŠ¸ëœì­ì…˜ - ë°ì´í„° ì¡°íšŒ
 	            statement1 = conn1.createStatement();
 	            resultSet = statement1.executeQuery("SELECT * FROM employees_tb");
 
 	            System.out.println("\n[Read Commited Test]");
-	            System.out.println("====== Ã¹¹øÂ° Á¶È¸ Äõ¸® =====");
+	            System.out.println("====== ì²«ë²ˆì§¸ ì¡°íšŒ ì¿¼ë¦¬ =====");
 	            
-	            // °á°ú Ãâ·Â
+	         // ê²°ê³¼ ì¶œë ¥
 	            while (resultSet.next()) {
 	                int id = resultSet.getInt("id");
 	                String name = resultSet.getString("name");
@@ -45,17 +45,17 @@ public class ReadCommittedTest {
 
 	            System.out.println("========================\n");
 	            
-	            System.out.println("UPDATE Äõ¸® (OLD VALUE -> NEW VALUE) (Ä¿¹Ôx)");
+	            System.out.println("UPDATE ì¿¼ë¦¬ (OLD VALUE -> NEW VALUE) (ì»¤ë°‹x)");
 	            
-	            // µÎ ¹øÂ° Æ®·£Àè¼Ç - µ¥ÀÌÅÍ ¼öÁ¤
+	            // ë‘ ë²ˆì§¸ íŠ¸ëœì­ì…˜ - ë°ì´í„° ìˆ˜ì •
 	            statement2 = conn2.createStatement();
 	            statement2.executeUpdate("UPDATE employees_tb SET name = 'NEW VALUE' WHERE id = 3");
 
-	            System.out.println("\n====== µÎ¹øÂ° Á¶È¸ Äõ¸® =====");
-	            // Ã¹ ¹øÂ° Æ®·£Àè¼Ç¿¡¼­ ´Ù½Ã µ¥ÀÌÅÍ Á¶È¸
+	            System.out.println("\n====== ë‘ë²ˆì§¸ ì¡°íšŒ ì¿¼ë¦¬ =====");
+	            // ì²« ë²ˆì§¸ íŠ¸ëœì­ì…˜ì—ì„œ ë‹¤ì‹œ ë°ì´í„° ì¡°íšŒ
 	            resultSet = statement1.executeQuery("SELECT * FROM employees_tb");
 
-	            // °á°ú Ãâ·Â
+	            // ê²°ê³¼ ì¶œë ¥
 	            System.out.println("After update:");
 	            while (resultSet.next()) {
 	                int id = resultSet.getInt("id");
@@ -64,7 +64,7 @@ public class ReadCommittedTest {
 	            }
 	            System.out.println("========================\n");
 	            
-	            System.out.println("UPDATE Äõ¸® Ä¿¹Ô ¿Ï·á\n");
+	            System.out.println("UPDATE ì¿¼ë¦¬ ì»¤ë°‹ ì™„ë£Œ\\n");
 	            dbManager2.commit();
 
 	            

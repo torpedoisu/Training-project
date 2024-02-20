@@ -25,13 +25,13 @@ public class UserRegisterController implements Controller{
     
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-        logger.debug("userRegisterController ÁøÀÔ");
+        logger.debug("userRegisterController ì§„ì…");
         
         String id = req.getParameter("id").trim();
         String pwd = req.getParameter("pwd").trim();
         
         if (id.isEmpty() || pwd.isEmpty()) {
-            req.setAttribute("error", "¸ğµç Ç×¸ñÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä");
+            req.setAttribute("error", "ëª¨ë“  í•­ëª©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”");
             HttpUtil.forward(req, res, "/userInsert.jsp");
         }
         

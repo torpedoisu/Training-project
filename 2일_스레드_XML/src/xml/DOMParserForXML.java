@@ -26,10 +26,10 @@ public class DOMParserForXML {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			// XML ÆÄÀÏ ÆÄ½ÌÇÏ¿© Document °´Ã¼ »ı¼º
+			// XML íŒŒì¼ íŒŒì‹±í•˜ì—¬ Document ê°ì²´ ìƒì„±
 			Document document = builder.parse(new File(filePath));
 			
-			// products ÅÂ±×¿¡ ÇØ´çÇÏ´Â NodeList °¡Á®¿À±â
+			// products íƒœê·¸ì— í•´ë‹¹í•˜ëŠ” NodeList ê°€ì ¸ì˜¤ê¸°
 			NodeList productList = document.getElementsByTagName("product");
 			
 			for (int i = 0; i < productList.getLength(); i++) {
@@ -39,9 +39,9 @@ public class DOMParserForXML {
 				String name = productElement.getElementsByTagName("name").item(0).getTextContent();
 				String price = productElement.getElementsByTagName("price").item(0).getTextContent();
 				
-				System.out.println("¹øÈ£: " + number);
-				System.out.println("ÀÌ¸§: " + name);
-				System.out.println("°¡°İ: " + price);
+				System.out.println("ë²ˆí˜¸: " + number);
+				System.out.println("ì´ë¦„: " + name);
+				System.out.println("ê¸°ê²©: " + price);
 				
 				System.out.println();
 			}

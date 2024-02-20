@@ -25,11 +25,11 @@ public class CopyFile {
 			CopyFile copyFile = new CopyFile();
 			
 			if (file.isFile()) {
-				// ÆÄÀÏÀÌ¶ó¸é ¹Ù·Î º¹»ç
+				// íŒŒì¼ì´ë¼ë©´ ë°”ë¡œ ë³µì‚¬
 				System.out.println("Start copying file: " + file.getName() + " ...");
 				Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);	
 			} else {
-				// µğ·ºÅä¸®¶ó¸é ÁßÃ¸µÇ¾î ÀÖ´Â ÆÄÀÏ°ú µğ·ºÅä¸® °í·ÁÇØ¼­ º¹»ç
+				// ë””ë ‰í† ë¦¬ë¼ë©´ ì¤‘ì²©ë˜ì–´ ìˆëŠ” íŒŒì¼ê³¼ ë””ë ‰í† ë¦¬ ê³ ë ¤í•´ì„œ ë³µì‚¬
 				System.out.println("Start copying folder: " + file.getName() + "/ ...");
 				copyFile.copyDir(file, newFile);
 			}

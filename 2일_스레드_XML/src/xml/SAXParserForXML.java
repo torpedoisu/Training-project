@@ -30,7 +30,7 @@ public class SAXParserForXML {
 				private boolean isName = false;
 				private boolean isPrice = false;
 				
-				// ¿¤¸®¸ÕÆ® ½ÃÀÛ ÅÂ±×¸¦ ¸¸³µÀ» ¶§ È£Ãâ
+				// ì—˜ë¦¬ë¨¼íŠ¸ ì‹œì‘ íƒœê·¸ë¥¼ ë§Œë‚¬ì„ ë•Œ í˜¸ì¶œ
 				@Override
 	            public void startElement(String uri, 
 	            		String localName, String qName, Attributes attributes)
@@ -44,7 +44,7 @@ public class SAXParserForXML {
 	                }
 	            }
 				
-				// ¿¤¸®¸ÕÆ® Á¾·á ÅÂ±×¸¦ ¸¸³µÀ» ¶§ È£Ãâ
+				// ì—˜ë¦¬ë¨¼íŠ¸ ì¢…ë£Œ íƒœê·¸ë¥¼ ë§Œë‚¬ì„ ë•Œ í˜¸ì¶œ
 	            @Override
 	            public void endElement(String uri, String localName, String qName) throws SAXException {
 	            	if (qName.equalsIgnoreCase("number")) {
@@ -56,17 +56,17 @@ public class SAXParserForXML {
 	                }
 	            }
 	
-	            // ÅÂ±× ³»ÀÇ ¹®ÀÚ µ¥ÀÌÅÍ¸¦ ¸¸³µÀ» ¶§ È£Ãâ
+	            // íƒœê·¸ ë‚´ì˜ ë¬¸ì ë°ì´í„°ë¥¼ ë§Œë‚¬ì„ ë•Œ í˜¸ì¶œ
 	            @Override
 	            public void characters(char ch[], int start, int length) throws SAXException {
 	                if (isNumber) {
-	                    System.out.println("¹øÈ£: " + new String(ch, start, length));
+	                    System.out.println("ë²ˆí˜¸: " + new String(ch, start, length));
 	                    isNumber = false;
 	                } else if (isName) {
-	                    System.out.println("ÀÌ¸§: " + new String(ch, start, length));
+	                    System.out.println("ì´ë¦„ " + new String(ch, start, length));
 	                    isName = false;
 	                } else if (isPrice) {
-	                    System.out.println("°¡°İ: " + new String(ch, start, length));
+	                    System.out.println("ê°€ê²©: " + new String(ch, start, length));
 	                    isPrice = false;
 	                }
 	            }

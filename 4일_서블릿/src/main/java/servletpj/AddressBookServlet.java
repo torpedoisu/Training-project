@@ -30,9 +30,9 @@ public class AddressBookServlet extends HttpServlet {
 	    RequestDispatcher dispatcher = null;
 	    
 	    String fileName = filePart.getSubmittedFileName().trim();
-        // ÆÄÀÏÀÌ ¾÷·ÎµåµÇÁö ¾ÊÀº Ã¤·Î Ã¤ÁÙ µÈ °æ¿ì
+	    // íŒŒì¼ì´ ì—…ë¡œë“œë˜ì§€ ì•Šì€ ì±„ë¡œ ì±„ì¤„ ëœ ê²½ìš°
         if (fileName.isEmpty()) {
-            ResponseData responseData = new ResponseData(Status.FAIL, "ÆÄÀÏÀÌ ¾÷·ÎµåµÇÁö ¾Ê¾Ò½À´Ï´Ù. ÆÄÀÏÀ» ¾÷·Îµå ÈÄ Á¦ÃâÇØÁÖ¼¼¿ä.");
+            ResponseData responseData = new ResponseData(Status.FAIL, "íŒŒì¼ì´ ì—…ë¡œë“œë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. íŒŒì¼ì„ ì—…ë¡œë“œ í›„ ì œì¶œí•´ì£¼ì„¸ìš”.");
             request.setAttribute("responseData", responseData);
             dispatcher = getServletContext().getRequestDispatcher("/");
             dispatcher.forward(request, response);
@@ -43,12 +43,12 @@ public class AddressBookServlet extends HttpServlet {
 
         XMLParser parser = new XMLParser();
         List<EmployeeVO> employees;
-        employees = parser.parseXML(fileContent); // ½ºÆ®¸²À» XMLParser¿¡ Àü´Ş
+        employees = parser.parseXML(fileContent); // ìŠ¤íŠ¸ë¦¼ì„ XMLParserì— ì „ë‹¬
         
         
-        // Çü½Ä¿¡ ¸ÂÁö ¾Ê´Â XML ÆÄÀÏÀÎ °æ¿ì
+        // í˜•ì‹ì— ë§ì§€ ì•ŠëŠ” XML íŒŒì¼ì¸ ê²½ìš°
         if (employees == null) { 
-            ResponseData responseData = new ResponseData(Status.FAIL, "Çü½Ä¿¡ ¸ÂÁö ¾Ê´Â XML ÆÄÀÏÀÔ´Ï´Ù. ÆÄÀÏ È®ÀÎ ÈÄ ¾÷·ÎµåÇØÁÖ¼¼¿ä.");
+            ResponseData responseData = new ResponseData(Status.FAIL, "í˜•ì‹ì— ë§ì§€ ì•ŠëŠ” XML íŒŒì¼ì…ë‹ˆë‹¤. íŒŒì¼ í™•ì¸ í›„ ì—…ë¡œë“œí•´ì£¼ì„¸ìš”.");
             request.setAttribute("responseData", responseData);
             dispatcher = getServletContext().getRequestDispatcher("/");
         } else {

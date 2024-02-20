@@ -19,7 +19,7 @@ public class ManageDB {
 	
 	public ManageDB() {}
 	
-	// Å×½ºÆ®¸¦ À§ÇØ »ı¼ºÀÚ·Î connectionMethod ÃÊ±âÈ­ 
+	// í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ ìƒì„±ìë¡œ connectionMethod ì´ˆê¸°í™” 
 	public ManageDB(int connectionMethod) {
 		this.connectionMethod = connectionMethod;
 		
@@ -36,17 +36,17 @@ public class ManageDB {
 	}
 	
 	public void connect() throws SQLException {
-		// Ä¿³Ø¼ÇÀÌ ¾ÈµÇ¾î ÀÖ´Â »óÅÂ¶ó¸é ¿¬°á
+		// ì»¤ë„¥ì…˜ì´ ì•ˆë˜ì–´ ìˆëŠ” ìƒíƒœë¼ë©´ ì—°ê²°
 		System.out.println("Connecting with DB...");
 		
 		if (jdbcConnection == null || jdbcConnection.isClosed()) {
 			try {
 				Class.forName(DRIVER_NAME);
 				jdbcConnection = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
-				jdbcConnection.setAutoCommit(false); // Æ®·£Àè¼Ç Ã³¸®¸¦ À§ÇÑ AutoCommit ÁßÁö
+				jdbcConnection.setAutoCommit(false); // íŠ¸ëœì­ì…˜ ì²˜ë¦¬ë¥¼ ìœ„í•œ AutoCommit ì¤‘ì§€
 				
 				if (connectionMethod != -1) {
-					jdbcConnection.setTransactionIsolation(connectionMethod); // Æ®·£Àè¼Ç °İ¸® ¼öÁØ ¼³Á¤); // Æ®·£Àè¼Ç °İ¸® ¼öÁØ ¼³Á¤
+					jdbcConnection.setTransactionIsolation(connectionMethod); // íŠ¸ëœì­ì…˜ ê²©ë¦¬ ìˆ˜ì¤€ ì„¤ì •); // íŠ¸ëœì­ì…˜ ê²©ë¦¬ ìˆ˜ì¤€ ì„¤ì •
 				}
 	            
 			} catch (ClassNotFoundException e) {
@@ -57,7 +57,7 @@ public class ManageDB {
 	}
 	
 	public void commit() throws SQLException {
-		// Ä¿³Ø¼ÇÀÌ ¾ÈµÇ¾î ÀÖ´Â »óÅÂ¶ó¸é ¿¬°á
+		// ì»¤ë„¥ì…˜ì´ ì•ˆë˜ì–´ ìˆëŠ” ìƒíƒœë¼ë©´ ì—°ê²°
 		System.out.println("Commiting transaction to DB...");
 		
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
@@ -66,11 +66,11 @@ public class ManageDB {
 	}
 	
 	public void disconnect() throws SQLException {
-		// Ä¿³Ø¼ÇÀÌ µÇ¾î ÀÖ´Â »óÅÂ¶ó¸é ¿¬°á ²÷±â
+		// ì»¤ë„¥ì…˜ì´ ë˜ì–´ ìˆëŠ” ìƒíƒœë¼ë©´ ì—°ê²° ëŠê¸°
 		System.out.println("Closing connection with DB...");
 		
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-			jdbcConnection.setAutoCommit(true); // Æ®·£Àè¼Ç Ã³¸®¸¦ ±âº» »óÅÂ·Î µÇµ¹¸²
+			jdbcConnection.setAutoCommit(true); // íŠ¸ëœì­ì…˜ ì²˜ë¦¬ë¥¼ ê¸°ë³¸ ìƒíƒœë¡œ ë˜ëŒë¦¼
 			jdbcConnection.close();
 		}
 	}
@@ -85,7 +85,7 @@ public class ManageDB {
 	    statement.setInt(1, id);
 	    ResultSet resultSet = statement.executeQuery();
 	    if (!resultSet.next()) {
-	        // id°¡ ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é ¿¹¿Ü¸¦ ´øÁü
+	        // idê°€ ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ì˜ˆì™¸ë¥¼ ë˜ì§
 	        throw new SQLException("No employee with the given id exists");
 	    }
 
@@ -240,7 +240,7 @@ public class ManageDB {
 						System.out.print("Enter id to update: ");
 						id = Integer.parseInt(sc.nextLine());
 						
-						db.checkId(id); // Db¿¡ id Á¸ÀçÇÏ´ÂÁö Ã¼Å©
+						db.checkId(id); // Dbï¿½ï¿½ id ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ Ã¼Å©
 						db.commit();
 						db.disconnect();
 						System.out.println("id exist in DB...");
@@ -279,7 +279,7 @@ public class ManageDB {
 						System.out.print("Enter id to delete: ");
 						id = Integer.parseInt(sc.nextLine());
 						
-						db.checkId(id); // Db¿¡ id Á¸ÀçÇÏ´ÂÁö Ã¼Å©
+						db.checkId(id); // Dbì— id ì¡´ì¬í•˜ëŠ”ì§€ ì²´í¬
 						db.commit();
 						db.disconnect();
 						System.out.println("id exist in DB...");
@@ -295,14 +295,14 @@ public class ManageDB {
 						
 				}
 
-		        db.commit(); // ¸ğµç ÀÛ¾÷ÀÌ ¿Ï·áµÈ ÈÄ Ä¿¹Ô
+		        db.commit(); // ëª¨ë“  ì‘ì—…ì´ ì™„ë£Œëœ í›„ ì»¤ë°‹
 		        System.out.println("Commit succeed...");
 			
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("=== [Error] sql error ===");
 				try {
-					db.jdbcConnection.rollback(); // sql ¿¹¿Ü ¹ß»ı½Ã ·Ñ¹é
+					db.jdbcConnection.rollback(); // sql ì˜ˆì™¸ ë°œìƒì‹œ ë¡¤ë°±
 					System.out.println("Rollback succeed...");
 				} catch (SQLException e1) {
 					System.out.println("=== [Error] Error while rollback DB ===");
@@ -313,7 +313,7 @@ public class ManageDB {
 				System.out.println("=== [Error] Error while typing ===");
 			} finally {
 		        try {
-		            db.disconnect(); // µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Á¾·á
+		            db.disconnect(); // ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ì¢…ë£Œ
 		        } catch (SQLException e) {
 		            e.printStackTrace();
 		            System.out.println("=== [Error] Error while closing connection with DB ===");

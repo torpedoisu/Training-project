@@ -18,9 +18,9 @@ import org.w3c.dom.Element;
 public class XMLParser {
     
     /**
-     * employee Çü½ÄÀÇ xml -> employee °´Ã¼ ¸®½ºÆ®·Î º¯È¯ÇÏ´Â ¸Ş¼­µå
+     * employee í˜•ì‹ì˜ xml -> employee ê°ì²´ ë¦¬ìŠ¤íŠ¸ë¡œ ë³€í™˜í•˜ëŠ” ë©”ì„œë“œ
      * @param inputStream
-     * @return Çü½ÄÀÌ ¸ÂÁö ¾ÊÀ» ½Ã null ¹İÈ¯, ¼º°ø ½Ã employee °´Ã¼ ¸®½ºÆ® ¹İÈ¯
+     * @return í˜•ì‹ì´ ë§ì§€ ì•Šì„ ì‹œ null ë°˜í™˜, ì„±ê³µ ì‹œ employee ê°ì²´ ë¦¬ìŠ¤íŠ¸ ë°˜í™˜
      */
     public List<EmployeeVO> parseXML(InputStream inputStream) {
         List<EmployeeVO> employees = new ArrayList<>();
@@ -30,7 +30,7 @@ public class XMLParser {
             
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputStream); // InputStream¿¡¼­ XML ÀĞ±â
+            Document doc = dBuilder.parse(inputStream); // InputStreamì—ì„œ XML ì½ê¸°
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("employee");
@@ -75,12 +75,12 @@ public class XMLParser {
     }
     
     /**
-     * JSON µ¥ÀÌÅÍ -> xml Çü½ÄÀ¸·Î ¹®¼­¸¦ ¸¸µå´Â ¸Ş¼­µå
+     * JSON ë°ì´í„° -> xml í˜•ì‹ìœ¼ë¡œ ë¬¸ì„œë¥¼ ë§Œë“œëŠ” ë©”ì„œë“œ
      * @param sb
-     * @return xml Çü½ÄÀÇ stringbuilder ¹İÈ¯
+     * @return xml í˜•ì‹ì˜ stringbuilder ë°˜í™˜
      */
     public String makeXML(StringBuilder sb) {
-        // XML ÇüÅÂ Àâ±â
+        // XML í˜•íƒœ ì¡ê¸°
         System.out.println("Making XML...");
            
         String[] employees = sb.toString().split("},");
@@ -95,7 +95,8 @@ public class XMLParser {
             for (String attribute : attributes) {
                 String[] keyValue = attribute.split(":");
                 String key = keyValue[0].trim();
-                String value = keyValue.length > 1 ? keyValue[1].trim() : ""; // °ªÀÌ ¾ø´Â °æ¿ì Ã³¸®
+                String value = keyValue.length > 1 ? keyValue[1].trim() : ""; // ê°’ì´ ì—†ëŠ” ê²½ìš° ì²˜ë¦¬
+
                 xml.append("    <" + key + ">" + value + "</" + key + ">\n");
             }
             xml.append("  </employee>\n");
@@ -111,10 +112,10 @@ public class XMLParser {
     
     
     /**
-     * JSON µ¥ÀÌÅÍ -> Employee °´Ã¼·Î º¯È¯ÇØÁÖ´Â ¸Ş¼­µå
+     * JSON ë°ì´í„° -> Employee ê°ì²´ë¡œ ë³€í™˜í•´ì£¼ëŠ” ë©”ì„œë“œ
      * @param sb
      * @param tool - axios or jquery
-     * @return ¼º°ø ½Ã employee ¸®½ºÆ® ¹İÈ¯
+     * @return ì„±ê³µ ì‹œ employee ë¦¬ìŠ¤íŠ¸ ë°˜í™˜
      */
     public List<EmployeeVO> makeEmployee(StringBuilder sb, String tool) {
         System.out.println("Making data to Employee object...");
@@ -123,16 +124,16 @@ public class XMLParser {
         
         String[] employees;
         String jsonString = sb.toString();
-        if(tool.equals("axios")) {// axios »ç¿ë ½Ã
+        if(tool.equals("axios")) {// axios ï¿½ï¿½ï¿½ ï¿½ï¿½
             
             int startIndex = jsonString.indexOf("[");
             int endIndex = jsonString.lastIndexOf("]");
 
             String employeesString = jsonString.substring(startIndex + 1, endIndex);
     
-            // ½°Ç¥¸¦ ±âÁØÀ¸·Î ¹®ÀÚ¿­À» ºĞ¸®ÇÏ¿© ¹è¿­·Î ¸¸µê
+            // ì‰¼í‘œë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë¬¸ìì—´ì„ ë¶„ë¦¬í•˜ì—¬ ë°°ì—´ë¡œ ë§Œë“¦
             employees = employeesString.split("\\},\\{");
-        } else { //jquery »ç¿ë ½Ã 
+        } else { //jquery ì‚¬ìš© ì‹œ 
             employees = jsonString.split("},");
         }
 
@@ -144,7 +145,7 @@ public class XMLParser {
             for (String attribute : attributes) {
                 String[] keyValue = attribute.split(":");
                 String key = keyValue[0].trim();
-                String value = keyValue.length > 1 ? keyValue[1].trim() : ""; // °ªÀÌ ¾ø´Â °æ¿ì Ã³¸®
+                String value = keyValue.length > 1 ? keyValue[1].trim() : ""; // ê°’ì´ ì—†ëŠ” ê²½ìš° ì²˜ë¦¬
                 
                 switch(key) {
                 

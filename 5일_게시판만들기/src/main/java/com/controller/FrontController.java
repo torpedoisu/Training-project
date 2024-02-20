@@ -35,12 +35,12 @@ public class FrontController extends HttpServlet{
     public void service(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
         req.setCharacterEncoding(charset);
 
-        String url = req.getRequestURI(); // '/5ÀÏ_°Ô½ÃÆÇ¸¸µé±â/userInsert.do'
-        String contextPath = req.getContextPath(); // '/5ÀÏ_°Ô½ÃÆÇ¸¸µé±â'
+        String url = req.getRequestURI(); // '/5ì¼_ê²Œì‹œíŒë§Œë“¤ê¸°/userInsert.do'
+        String contextPath = req.getContextPath(); // '/5ì¼_ê²Œì‹œíŒë§Œë“¤ê¸°'
         String path = url.substring(contextPath.length()); // '/userInsert.do'
         Controller subController = list.get(path);
         
-        logger.debug("FrontController¿¡¼­ " + path + "·Î ¶ó¿ìÆÃ ½ÃÀÛ");
+        logger.debug("FrontControllerï¿½ï¿½ï¿½ï¿½ " + path + "ë¡œ ë¼ìš°íŒ… ì‹œì‘");
         
         subController.execute(req, res);
     }

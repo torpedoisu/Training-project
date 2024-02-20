@@ -28,11 +28,11 @@ public class ErrorHandleServlet extends HttpServlet{
         Object type = req.getAttribute("javax.servlet.error.exception_type");
 //        Exception exception = (Exception) req.getAttribute("javax.servlet.error.exception");
 
-        // ∫∏≥æ «Ï¥ı º≥¡§
+        // Î≥¥ÎÇº Ìó§Îçî ÏÑ§Ï†ï
         res.setContentType("applicaion/json;charset=UTF-8");
         res.setStatus(code);
         
-        // ∫∏≥æ πŸµ º≥¡§
+        // Î≥¥ÎÇº Î∞îÎîî ÏÑ§Ï†ï
         ResponseData responseData = new ResponseData(Status.FAIL, message, type);
         out.print(responseData.getJsonResponseData());
         out.flush();

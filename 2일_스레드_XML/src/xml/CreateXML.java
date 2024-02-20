@@ -28,18 +28,18 @@ public class CreateXML {
 		
 		try {
 			
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); // »õ·Î¿î DOM Æ®¸® »ı¼º
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); // ìƒˆë¡œìš´ DOM íŠ¸ë¦¬ ìƒì„±
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document document = builder.newDocument();
 			document.setXmlStandalone(true);
 			
-			//Document¿¡ product ÅÂ±× Ãß°¡
+			//Documentì— product íƒœê·¸ ì¶”ê°€
 			Element products = document.createElement("products");
 			document.appendChild(products);
 			
-			List<String> product1 = Arrays.asList("100", "»õ¿ì±ø", "1500");
-			List<String> product2 = Arrays.asList("101", "¾çÆÄ¸µ", "2000");
-			List<String> product3 = Arrays.asList("102", "È¨·±º¼", "3000");
+			List<String> product1 = Arrays.asList("100", "ï¿½ï¿½ï¿½ï¿½ï¿½", "1500");
+			List<String> product2 = Arrays.asList("101", "ï¿½ï¿½ï¿½Ä¸ï¿½", "2000");
+			List<String> product3 = Arrays.asList("102", "È¨ï¿½ï¿½ï¿½ï¿½", "3000");
 			
 			List<List<String>> productList = Arrays.asList(product1, product2, product3);
 			
@@ -47,24 +47,24 @@ public class CreateXML {
 				Element product = document.createElement("product");
 				
 				Element number = document.createElement("number");
-				number.setTextContent(line.get(0)); //lineÀÇ 1¹øÂ°¸¦ number ÅÂ±× ¾È¿¡ ¼³¸í
+				number.setTextContent(line.get(0));  //lineì˜ 1ë²ˆì§¸ë¥¼ number íƒœê·¸ ì•ˆì— ì„¤ëª…
 				
 				Element name = document.createElement("name");
-				name.setTextContent(line.get(1)); // lineÀÇ 2¹øÂ°¸¦ name ÅÂ±× ¾È¿¡ ¼³Á¤
+				name.setTextContent(line.get(1)); // lineì˜ 2ë²ˆì§¸ë¥¼ name íƒœê·¸ ì•ˆì— ì„¤ì •
 				
 				Element price = document.createElement("price");
-				price.setTextContent(line.get(2)); // lineÀÇ 3¹øÂ°¸¦ price ÅÂ±× ¾È¿¡ ¼³Á¤
+				price.setTextContent(line.get(2)); // lineì˜ 3ë²ˆì§¸ë¥¼ price íƒœê·¸ ì•ˆì— ì„¤ì •
 				
 				product.appendChild(number);
 				product.appendChild(name);
 				product.appendChild(price);
 				
-				products.appendChild(product); // product ÅÂ±× ¾È¿¡ ¸¸µç number name price ÅÂ±× ³Ö¾îÁÖ±â
+				products.appendChild(product); // product íƒœê·¸ ì•ˆì— ë§Œë“  number name price íƒœê·¸ ë„£ì–´ì£¼ê¸°
 				
 			}
 			
-			// ´Ù¸¥ DOM Æ®¸®¸¦ ´Ù¸¥ Çü½ÄÀ¸·Î º¯È¯ÇÒ ¶§ »ç¿ë
-			// DOM Æ®¸®¸¦ ¹®ÀÚ¿­·Î º¯È¯ÇØ ÆÄÀÏ·Î ÀúÀåÇÏ°Å³ª, ³×Æ®¿öÅ©¸¦ ÅëÇØ Àü¼Û
+			// ë‹¤ë¥¸ DOM íŠ¸ë¦¬ë¥¼ ë‹¤ë¥¸ í˜•ì‹ìœ¼ë¡œ ë³€í™˜í•  ë•Œ ì‚¬ìš©
+			// DOM íŠ¸ë¦¬ë¥¼ ë¬¸ìì—´ë¡œ ë³€í™˜í•´ íŒŒì¼ë¡œ ì €ì¥í•˜ê±°ë‚˜, ë„¤íŠ¸ì›Œí¬ë¥¼ í†µí•´ ì „ì†¡
 			TransformerFactory transformerFactory = TransformerFactory.newInstance(); 
 			Transformer transformer = transformerFactory.newTransformer();
 			transformer.setOutputProperty("encoding", "UTF-8");
@@ -80,11 +80,11 @@ public class CreateXML {
 			System.out.println("=== [Success] Create Document ===");
 			
 		} catch (ParserConfigurationException e) {
-			// DocumentBuilder »ı¼ºÇÒ ¶§ ¹®Á¦ ¹ß»ı
+			// DocumentBuilder ìƒì„±í•  ë•Œ ë¬¸ì œ ë°œìƒ
 			System.out.println("=== [Error] Error while making DOM ===");
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// XML¹®¼­¸¦ ´Ù¸¥ ÇüÅÂ·Î º¯È¯ÇÏ´Â °úÁ¤¿¡¼­ ¹®Á¦ ¹ß»ı
+			// XMLë¬¸ì„œë¥¼ ë‹¤ë¥¸ í˜•íƒœë¡œ ë³€í™˜í•˜ëŠ” ê³¼ì •ì—ì„œ ë¬¸ì œ ë°œìƒ
 			System.out.println("=== [Error] Error while transforming XML ===");
 			e.printStackTrace();
 		}

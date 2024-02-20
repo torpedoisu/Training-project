@@ -26,11 +26,11 @@ public class MoveFile {
 			MoveFile moveFile = new MoveFile();
 			
 			if (src.isFile()) {
-				// ÆÄÀÏÀÌ¶ó¸é ¹Ù·Î ÀÌµ¿
+				// íŒŒì¼ì´ë¼ë©´ ë°”ë¡œ ì´ë™
 				System.out.println("Start moving file: " + src.getName() + " ...");
 				Files.move(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);	
 			} else {
-				// µğ·ºÅä¸®¶ó¸é ÁßÃ¸µÇ¾î ÀÖ´Â ÆÄÀÏ°ú µğ·ºÅä¸® °í·ÁÇØ¼­ ÀÌµ¿ ÈÄ ¿øº» »èÁ¦
+				// ë””ë ‰í† ë¦¬ë¼ë©´ ì¤‘ì²©ë˜ì–´ ìˆëŠ” íŒŒì¼ê³¼ ë””ë ‰í† ë¦¬ ê³ ë ¤í•´ì„œ ì´ë™
 				System.out.println("Start moving folder: " + src.getName() + "/ ...");
 				moveFile.moveDir(src, dst);
 			}
@@ -67,7 +67,7 @@ public class MoveFile {
 			}
 		}
 		
-		// ÆÄÀÏ ´Ù ¿Å±â¸é »óÀ§ ¿øº» µğ·ºÅä¸® »èÁ¦
+		// íŒŒì¼ ë‹¤ ì˜®ê¸°ë©´ ìƒìœ„ ì›ë³¸ ë””ë ‰í† ë¦¬ ì‚­ì œ
 		srcFile.delete();
 		
 	}

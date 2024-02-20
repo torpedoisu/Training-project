@@ -29,16 +29,16 @@ public class ReplaceStringAndStore {
 		
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("¿øº» text ÆÄÀÏ¸í: ");
+        System.out.print("ì›ë³¸ text íŒŒì¼ëª…: ");
         String sourceFilePath = sc.nextLine();
 
-        System.out.print("Ä¡È¯µÉ text ÆÄÀÏ¸í: ");
+        System.out.print("ì¹˜í™˜ë  text íŒŒì¼ëª…: ");
         String targetFilePath = sc.nextLine();
 
-        System.out.print("Ä¡È¯´ë»ó ¹®ÀÚ¿­: ");
+        System.out.print("ì¹˜í™˜ëŒ€ìƒ ë¬¸ìì—´: ");
         String targetString = sc.nextLine();
 
-        System.out.print("Ä¡È¯ÇÒ ¹®ÀÚ¿­: ");
+        System.out.print("ì¹˜í™˜í•  ë¬¸ìì—´: ");
         String replacementString = sc.nextLine();
 
         try {
@@ -66,7 +66,7 @@ public class ReplaceStringAndStore {
 			try {
 				System.out.println("Closing stream...");
 				
-				// Inputstream °ü·Ã - BufferedReader¸¦ ¸¶Áö¸·À¸·Î °¨½ÎÁá±â¿¡ br¸¸ close
+				// Inputstream ê´€ë ¨ - BufferedReaderë¥¼ ë§ˆì§€ë§‰ìœ¼ë¡œ ê°ì‹¸ì¤¬ê¸°ì— brë§Œ close
 				if (br != null) br.close();
 				if (osw != null) osw.close();
 			} catch (IOException e) {

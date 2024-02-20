@@ -19,11 +19,11 @@ public class LinkedListPollTest {
 
         Queue<Work> queue = new LinkedList<Work>();
 
-        // Producer ½º·¹µå
+     // Producer ìŠ¤ë ˆë“œ
         Thread producerThread = new Thread(() -> {
             for (int i = 0; i < numberOfWork; i++) {
                 Work work = new Work();
-                queue.add(work); // ÀÛ¾÷À» Å¥¿¡ Ãß°¡
+                queue.add(work); // ì‘ì—…ì„ íì— ì¶”ê°€
 				System.out.println("Work" + work.getWorkNumber() + " enqueued");
             }
         });
@@ -34,7 +34,7 @@ public class LinkedListPollTest {
             Thread consumerThread = new Thread(() -> {
                 while (true) {
                     try {
-                        Work work = queue.poll(); // Å¥¿¡¼­ ÀÛ¾÷À» °¡Á®¿È
+                        Work work = queue.poll(); // íì—ì„œ ì‘ì—…ì„ ê°€ì ¸ì˜´
                         work.execute();
                     } catch (InterruptedException e) {
                         e.printStackTrace();

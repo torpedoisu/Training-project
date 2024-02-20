@@ -30,7 +30,7 @@ public class SaveToXMLServlet extends HttpServlet {
             
             System.out.println("Reading JSON...");
             
-            // JSON ÀĞ¾î¿À±â
+            // JSON ì½ì–´ì˜¤ê¸°
             StringBuilder sb = new StringBuilder();
             String line = null;
             BufferedReader reader = request.getReader();
@@ -47,7 +47,7 @@ public class SaveToXMLServlet extends HttpServlet {
             out.print(xml);
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            responseData = new ResponseData(Status.FAIL, "¼­ºí¸´ Ã³¸® µµÁß ¿¹¿Ü ¹ß»ı");
+            responseData = new ResponseData(Status.FAIL, "ì„œë¸”ë¦¿ ì²˜ë¦¬ ë„ì¤‘ ì˜ˆì™¸ ë°œìƒ");
         
             try {
                 out = response.getWriter();

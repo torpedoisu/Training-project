@@ -23,7 +23,6 @@ public class ChangeEncoding {
 		
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.print("파일 경로 입력: ");
 		String sourceFilePath = sc.nextLine();
 		try {
 			

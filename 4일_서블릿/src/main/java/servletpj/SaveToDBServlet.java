@@ -37,7 +37,7 @@ public class SaveToDBServlet extends HttpServlet {
             }
             
             XMLParser parser = new XMLParser(); 
-            List<EmployeeVO> employees = parser.makeEmployee(sb, "axios"); // ÆÄ½Ì
+            List<EmployeeVO> employees = parser.makeEmployee(sb, "axios"); 
             
             response.setContentType("application/json;charset=UTF-8");
             
@@ -57,7 +57,7 @@ public class SaveToDBServlet extends HttpServlet {
             
         } catch (Exception e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            responseData = new ResponseData(Status.FAIL, "¼­ºí¸´ Ã³¸® µµÁß ¿¹¿Ü ¹ß»ı");
+            responseData = new ResponseData(Status.FAIL, "ì„œë¸”ë¦¿ ì²˜ë¦¬ ë„ì¤‘ ì˜ˆì™¸ ë°œìƒ");
         
             try {
                 out = response.getWriter();
