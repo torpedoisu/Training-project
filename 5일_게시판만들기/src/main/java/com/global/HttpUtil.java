@@ -4,21 +4,19 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.Level; // 요놈 추가
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.config.Configurator; // 요놈 추가
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 
 public class HttpUtil {
-    public static Logger logger = LogManager.getLogger("HttpUtil.class");
+    public static Logger logger = LogManager.getLogger(HttpUtil.class);
     
     public static void forward(HttpServletRequest req, HttpServletResponse res, String path) {
         try {
             RequestDispatcher dispatcher = req.getRequestDispatcher(path);
             dispatcher.forward(req, res);
         } catch (Exception e) {
-            logger.debug("[Error] forward 오류");
+            logger.error("forward 오류");
         }
     }
 }

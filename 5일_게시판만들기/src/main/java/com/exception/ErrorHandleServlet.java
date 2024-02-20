@@ -22,8 +22,7 @@ public class ErrorHandleServlet extends HttpServlet{
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         
         PrintWriter out = res.getWriter();
-        System.out.println("==========에러 핸들러 들어옴");
-
+        
         Integer code = (Integer) req.getAttribute("javax.servlet.error.status_code");
         String message = (String) req.getAttribute("javax.servlet.error.message");
         Object type = req.getAttribute("javax.servlet.error.exception_type");

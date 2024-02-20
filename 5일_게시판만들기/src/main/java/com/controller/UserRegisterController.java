@@ -8,7 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.exception.UserException;
+import com.global.DBManager;
 import com.global.HttpUtil;
 import com.global.ResponseData;
 import com.global.Status;
@@ -17,8 +21,12 @@ import com.vo.UserVO;
 
 public class UserRegisterController implements Controller{
     
+    public static Logger logger = LogManager.getLogger(UserRegisterController.class);
+    
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+        logger.debug("userRegisterController ¡¯¿‘");
+        
         String id = req.getParameter("id").trim();
         String pwd = req.getParameter("pwd").trim();
         

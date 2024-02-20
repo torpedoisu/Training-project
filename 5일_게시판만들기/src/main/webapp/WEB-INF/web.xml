@@ -3,6 +3,7 @@
   <display-name>5일_게시판만들기</display-name>
   
   <!-- =========== servlet 설정 =========== -->
+  
   <servlet>
     <servlet-name>front</servlet-name>
     <servlet-class>com.controller.FrontController</servlet-class>

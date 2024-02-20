@@ -1,5 +1,5 @@
 package com.global;
 
 public enum Status {
-    SUCCESS, FAIL, DATA;
+    SUCCESS, FAIL
 }
