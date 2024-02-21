@@ -3,7 +3,7 @@ package com.service;
 import java.util.HashMap;
 
 import com.dao.UserDAO;
-import com.exception.UserException;
+import com.exception.CustomException;
 import com.global.Status;
 import com.vo.UserVO;
 

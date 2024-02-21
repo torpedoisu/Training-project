@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.exception.UserException;
+import com.exception.CustomException;
 import com.global.DBManager;
 import com.global.HttpUtil;
 import com.global.ResponseData;
@@ -45,7 +45,7 @@ public class UserRegisterController implements Controller{
 
         PrintWriter out = res.getWriter();
         req.setAttribute("id", id);
-        HttpUtil.forward(req, res, "/result/memberInsertOutput.jsp");
+        HttpUtil.forward(req, res, "index.jsp");
     }
 
 }

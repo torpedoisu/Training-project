@@ -40,7 +40,7 @@ public class FrontController extends HttpServlet{
         String path = url.substring(contextPath.length()); // '/userInsert.do'
         Controller subController = list.get(path);
         
-        logger.debug("FrontController���� " + path + "로 라우팅 시작");
+        logger.debug("FrontController - " + path + "로 라우팅 시작");
         
         subController.execute(req, res);
     }

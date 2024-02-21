@@ -7,24 +7,23 @@ public class UserVO {
     private String id;
     private String pwd;
     
-    public BigInteger getPk() {
-        return pk;
+    public String getPk() {
+        return String.valueOf(pk);
+    }
+    public void setPk(String val) {
+        this.pk = new BigInteger(val);
     }
     
     public String getId() {
         return id;
     }
     
-    public String getPwd() {
-        return pwd;
-    }
-    
-    public void setPk(String val) {
-        this.pk = new BigInteger(val);
-    }
-    
     public void setId(String val) {
         this.id = val;
+    }
+    
+    public String getPwd() {
+        return pwd;
     }
     
     public void setPwd(String val) {

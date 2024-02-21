@@ -3,18 +3,18 @@ package com.exception;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class UserException extends RuntimeException{
+public class CustomException extends RuntimeException{
     
-    public static Logger logger = LogManager.getLogger(UserException.class);
+    public static Logger logger = LogManager.getLogger(CustomException.class);
     
     private Integer code;
     
-    public UserException(String message) {
+    public CustomException(String message) {
         super(message);
         logger.debug(message);
     }
     
-    public UserException(String message, Integer code) {
+    public CustomException(String message, Integer code) {
         super(message);
         this.code = code;
         logger.error(message);
