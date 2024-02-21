@@ -10,7 +10,7 @@ import com.vo.UserVO;
 public class UserService {
     
     private static UserService userService = null;
-    private UserDAO dao = UserDAO.getInstance();
+    private UserDAO userDao = UserDAO.getInstance();
     
     private UserService() {}
     
@@ -23,8 +23,8 @@ public class UserService {
         return userService;
     }
     
-    public void userInsert(UserVO user){
-        dao.userInsert(user);
+    public UserVO userInsert(UserVO user){
+        return userDao.insert(user);
     }
     
 }

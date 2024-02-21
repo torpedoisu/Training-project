@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.global.DBManager;
-
 public class FrontController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     String charset = null;
@@ -28,7 +26,7 @@ public class FrontController extends HttpServlet{
         list = new HashMap<String, Controller>();
         
         list.put("/userInsert.do", new UserRegisterController());
-//TODO:        list.put("/userSearchController", new UserSearchController());
+        list.put("/userLogout.do", new LogoutController());
     }
 
     @Override 
