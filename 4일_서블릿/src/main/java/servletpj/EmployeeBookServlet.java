@@ -25,12 +25,11 @@ public class EmployeeBookServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    Part filePart = request.getPart("file");
-	    
-	    RequestDispatcher dispatcher = null;
-	    
-	    String fileName = filePart.getSubmittedFileName().trim();
-	    // 파일이 업로드되지 않은 채로 채줄 된 경우
+        Part filePart = request.getPart("file");
+        RequestDispatcher dispatcher = null;
+        
+        String fileName = filePart.getSubmittedFileName().trim();
+        // 파일이 업로드되지 않은 채로 채줄 된 경우
         if (fileName.isEmpty()) {
             ResponseData responseData = new ResponseData(Status.FAIL, "파일이 업로드되지 않았습니다. 파일을 업로드 후 제출해주세요.");
             request.setAttribute("responseData", responseData);
@@ -39,8 +38,8 @@ public class EmployeeBookServlet extends HttpServlet {
             return;
         }
         
-	    InputStream fileContent = filePart.getInputStream();
-
+        InputStream fileContent = filePart.getInputStream();
+        
         XMLParser parser = new XMLParser();
         List<EmployeeVO> employees;
         employees = parser.parseXML(fileContent); // 스트림을 XMLParser에 전달

@@ -5,43 +5,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
     <title>File Upload</title>
+    <script src="javascript/uploadFile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<meta charset="UTF-8">
 </head>
 <body>
 
-    <form id="uploadForm" action="employeebook" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="fileUploader" />
-        <button id="sumbitFile">파일 제출</button>
-    </form>
 
-<!-- 
-    <script language="JavaScript">
-        var fileUploaded = false;
+  <form id="uploadForm" action="employeebook" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="fileUploader" />
+    <button type="submit" onclick="submitFile(this)">파일 제출</button>
+  </form>
 
-        document.getElementById('fileUploader').addEventListener('change', function(e){
-
-            console.log("파일 업로드 확인 - " + e);
-
-            var file = e.target.files[0];
-            if(file.type !== "text/xml"){
-                alert("XML 파일을 업로드해주세요.");
-                document.getElementById('fileUploader').value = '';
-            } else {
-                fileUploaded = true;
-            }
-        });
-        
-        document.getElementById('submitFile').addEventListener('click', function(e){
-            if(!fileUploaded){
-                e.preventDefault();
-                alert("XML 파일을 업로드해주세요.");
-            } else {
-                document.getElementById('uploadForm').submit();
-            }
-        });    
-        
+<%
+    // 서블릿에서 반환하는 값이 없다면 에러
+    ResponseData responseData = (ResponseData) request.getAttribute("responseData");
+    if (responseData != null && !responseData.isSuccess()) {
+%>
+ <script language="JavaScript">
+        var errorData = <%= responseData.getResponseData() %>;
+        alert(errorData.statusDescription);
     </script>
-     -->
+<%
+    }
+%>
+
 </body>
 </html>
