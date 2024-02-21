@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="response.ResponseData" %>    
-<%
-    ResponseData responseData = (ResponseData) request.getAttribute("responseData");
-    if (responseData != null && !responseData.isSuccess()) {
-%>
-    <script language="JavaScript">
-	    var errorData = <%= responseData.getResponseData() %>;
-	    alert(errorData.statusDescription);
-    </script>
-<%
-    }
-%>
 
 <!DOCTYPE html>
 <html>
@@ -21,12 +10,12 @@
 </head>
 <body>
 
-    <form id="uploadForm" action="addressbook" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="employeebook" method="post" enctype="multipart/form-data">
         <input type="file" name="file" id="fileUploader" />
         <button id="sumbitFile">파일 제출</button>
     </form>
 
-
+<!-- 
     <script language="JavaScript">
         var fileUploaded = false;
 
@@ -53,5 +42,6 @@
         });    
         
     </script>
+     -->
 </body>
 </html>
