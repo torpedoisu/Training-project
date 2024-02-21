@@ -5,7 +5,7 @@
 <head>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="ajaxTest.js"></script>
+<script src="javascript/ajaxTest.js"></script>
 <meta charset="UTF-8">
 <title>ajax 라이브러리 테스트</title>
 </head>
