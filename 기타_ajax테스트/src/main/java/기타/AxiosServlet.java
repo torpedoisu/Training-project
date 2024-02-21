@@ -33,13 +33,15 @@ public class AxiosServlet extends HttpServlet {
 
         // JSON 파싱
         String jsonString = sb.toString();
-        JSONObject jsonObject = new JSONObject(jsonString);
-        
+   
         PrintWriter out = response.getWriter();
         
 // ========================= 테스트 시작===============================
         
         
+//      [JSONObject 라이브러리 사용]
+        JSONObject jsonObject = new JSONObject(jsonString);
+
 //         [객체만을 반환] 테스트를 위한 객체 생성
         User user = new User(jsonObject.getString("name"), jsonObject.getInt("age"));
         
@@ -47,22 +49,26 @@ public class AxiosServlet extends HttpServlet {
         Map<String, Object> userMap = new HashMap<String, Object>();
         userMap.put("userMap", user);
         
-//      [Map을 사용하여 멤버변수만을 반환]
+//        [Map을 사용하여 멤버변수만을 반환]
         Map<String, String> userValMap = new HashMap<String, String>();
         userValMap.put(user.getName(), String.valueOf(user.getAge()));
-        
+
 
         
 //        [객체만을 반환] - 실패
-        out.print(user);
+//        out.print(user);
         
 //        [객체를 Map에 넣어준 이후 반환] - 실패
-        out.print(userMap);
+//        out.print(userMap);
         
 //        [Map을 사용하여 멤버변수만을 반환] - 실패
-        out.print(userValMap);
+//        out.print(userValMap);
         
-        // 응답 헤더 설정
+//        [JSONObject 라이브러리 사용] - 성공
+        out.print(jsonObject.toString());
+
+        
+//        응답 헤더 설정
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
@@ -71,29 +77,29 @@ public class AxiosServlet extends HttpServlet {
     }
 
 
-	private class User {
-		public String name;
-		public int age;
-		
-		public User(String name, int age) {
-			this.name = name;
-			this.age = age;
-		}
-		
-		public String getName() {
-			return this.name;
-		}
-		
-		public int getAge() {
-			return this.age;
-		}
-		
-		public void setName(String val) {
-			this.name = val;
-		}
-		
-		public void setAge(int val) {
-			this.age = val;
-		}
-	}
+    private class User {
+        public String name;
+        public int age;
+        
+        public User(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        public int getAge() {
+            return this.age;
+        }
+        
+        public void setName(String val) {
+            this.name = val;
+        }
+        
+        public void setAge(int val) {
+            this.age = val;
+        }
+    }
 }

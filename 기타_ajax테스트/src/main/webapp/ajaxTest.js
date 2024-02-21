@@ -27,9 +27,11 @@ function jQueryAjax() {
         contentType: "application/json;charset=utf-8",
         success: (data) => {
             console.log('data', data);
+            alert('data - ' + data.name + ' ' + data.age);
         },
         error: (jqXHR, textStatus, errorThrown) => {
             console.error(textStatus, errorThrown);
+            alert(textStatus+ ' ' + errorThrown);
         }
     });
 }
@@ -52,8 +54,10 @@ function vanillaAjax() {
     xhr.onload = function() {
         if (xhr.status === 200) {
             console.log(JSON.parse(xhr.responseText));
+            alert(xhr.responseText);
         } else {
-            console.error('Error:', xhr.status, xhr.statusText);
+            console.error('Error:' + xhr.status + xhr.statusText);
+            alert('Error:' + xhr.status + xhr.statusText)
         }
     };
     xhr.onerror = function() {
@@ -76,9 +80,11 @@ function axiosJson() {
 	})
     .then((response) => {
         console.log('response data', response.data);
+        alert('response data - ' + response.data.name + ' ' + response.data.age);
     })
     .catch((error) => {
         console.error('error', error);
+        alert('error - ' + error);
     });
     
 }
