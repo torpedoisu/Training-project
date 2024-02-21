@@ -44,11 +44,11 @@
     </tbody>
   </table>
   
-  <button onclick="addRow()">행 추가</button>
-  <button onclick="saveRow()">행 저장</button>
+  <button type = "submit" onclick="addRow()">행 추가</button>
+  <button type = "submit" onclick="saveRow()">행 저장</button>
   <br/>
-  <button onclick="saveToXML()">XML로 저장</button>
-  <button onclick="saveToDB()">DB에 저장 (브라우저 -> DB)</button>
+  <button type = "submit" onclick="saveToXML()">XML로 저장</button>
+  <button type = "sumbit" onclick="saveToDB()">DB에 저장 (브라우저 -> DB)</button>
 
 </body>
 </html>

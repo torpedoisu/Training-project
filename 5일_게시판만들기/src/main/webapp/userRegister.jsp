@@ -14,7 +14,7 @@ ${error}
 <form action="userInsert.do" method="post">
     ID: <input type="text" name="id"> <br>
     Password: <input type="text" name="pwd"><br>
-    <input type="submit" value="가입">
+    <button type="submit" value="가입">
 </form>
 </body>
 </html>

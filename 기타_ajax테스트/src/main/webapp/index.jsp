@@ -11,9 +11,9 @@
 </head>
 <body>
 
-<button onclick="jQueryAjax()">jQuery의 ajax</button>
-<button onclick="axiosJson()">axios의 json 자동 변환</button>
-<button onclick="vanillaAjax()">바닐라 js로 ajax 구현</button>
+<button type ="submit" onclick="jQueryAjax()">jQuery의 ajax</button>
+<button type = "submit" onclick="axiosJson()">axios의 json 자동 변환</button>
+<button type = "submit" onclick="vanillaAjax()">바닐라 js로 ajax 구현</button>
 
 </body>
 </html>
