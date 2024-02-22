@@ -2,6 +2,8 @@ package com.service;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.dao.UserDAO;
 import com.exception.CustomException;
 import com.global.Status;
@@ -30,17 +32,22 @@ public class UserService {
         UserDAO userDao = new UserDAO();
 
         // user의 pk 설정
-        user = userDao.insert(user);
+        UserVO insertedUser = userDao.insert(user);
+        
+        if (insertedUser == null) {
+            throw new CustomException("Service - 회원 가입 중 오류", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "/userRegister.jsp");
+        }
         UserVO userInfoInDB = userDao.getUserWithIdPwd(id, pwd);
         user.setPk(userInfoInDB.getPk());
         
         return user;
     }
 
+    
     public boolean checkUserIsValid(String userPk, String userId, String userPwd) {
         UserDAO userDao = new UserDAO();
 
-        UserVO userInDB = userDao.getUser(userPk);
+        UserVO userInDB = userDao.getUserWithIdPwd(userId, userPwd);
         
         if (userInDB.getId().equals(userId) && userInDB.getPwd().equals(userPwd)) {
             return true;
