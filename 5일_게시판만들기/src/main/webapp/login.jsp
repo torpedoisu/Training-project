@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <script src="javascript/login.js" ></script>
+  <script src="javascript/user.js" ></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <title>login</title>
 </head>

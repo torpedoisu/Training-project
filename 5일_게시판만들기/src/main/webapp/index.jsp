@@ -8,6 +8,7 @@
   <title>게시판</title>
   
   <script src="javascript/article.js"></script>
+  <script src="javascript/user.js" ></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
       getPostList();
@@ -17,6 +18,7 @@
 <body>
     <h1>게시판</h1>
     <table id="articleTable">
+    <button type="button" id="logout">로그아웃</button>
         <thead>
             <tr>
                 <th>글 번호</th>
@@ -40,7 +42,10 @@
                     }
                 }
             %>
-        </tbody>
+        </tbody> 
+        <br>
+        <button type="button" id="registerArticle">게시글 작성</button>
+        
 
 </body>
 </html>
