@@ -11,14 +11,19 @@
   <script src="javascript/user.js" ></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-      getPostList();
+    window.onload = function() {
+          loadIndexButtons();
+      };
   </script>
   
 </head>
 <body>
     <h1>게시판</h1>
     <table id="articleTable">
-    <button type="button" id="logout">로그아웃</button>
+
+    <button type="button" onclick="logout()" id="logoutButton" style="display: none">로그아웃</button>
+    <button type="button" onclick="redirectToLogin()" id="loginButton" style="display: none">로그인</button>
+    
         <thead>
             <tr>
                 <th>글 번호</th>
@@ -43,8 +48,7 @@
                 }
             %>
         </tbody> 
-        <br>
-        <button type="button" id="registerArticle">게시글 작성</button>
+        <button type="button" onclick="redirectToPost()" id="postButton" style="display: none">게시글 작성</button>
         
 
 </body>

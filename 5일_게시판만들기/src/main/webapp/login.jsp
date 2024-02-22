@@ -11,7 +11,7 @@
     <form method="post">
       ID: <input type="text" id="id" value="id" required> <br>
       Password: <input type="password" id="pwd" value="pwd" required><br>
-      <button type="button" onclick="login(this)">로그인</button>
+      <button type="button" onclick="login()">로그인</button>
     </form>
 </body>
 </html>
