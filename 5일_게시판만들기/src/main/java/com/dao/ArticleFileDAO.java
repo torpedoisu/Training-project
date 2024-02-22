@@ -47,9 +47,9 @@ public class ArticleFileDAO {
             
             logger.debug("file: " + " 등록 완료");
         } catch (SQLException e) {
+            logger.error("파일을 DB에 insert 도중 에러");
             e.printStackTrace();
             dbManager.rollback();
-            throw new CustomException(("파일을 DB에 insert 도중 에러 - " + e.getMessage()), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect(statement);    

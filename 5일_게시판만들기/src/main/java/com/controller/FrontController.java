@@ -28,7 +28,7 @@ public class FrontController extends HttpServlet{
         // 회원 정보 관리 컨트롤러 
         list.put("/userInsert.do", new UserRegisterController());
         list.put("/userLogout.do", new LogoutController());
-        list.put("/userLogin.do", new LoginController());
+        list.put("/userAuth.do", new UserAuthController());
     }
 
     @Override 

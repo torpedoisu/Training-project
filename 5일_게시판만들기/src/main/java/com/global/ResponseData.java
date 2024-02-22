@@ -5,6 +5,10 @@ public class ResponseData {
     private String statusDescription;
     private Object exceptionType;
     
+    public ResponseData(Status status) {
+        this.status = status;
+    }
+    
     public ResponseData(Status status, String statusDescription) {
         this.status = status;
         this.statusDescription = statusDescription;

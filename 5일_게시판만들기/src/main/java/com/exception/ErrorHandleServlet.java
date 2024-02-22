@@ -23,14 +23,14 @@ public class ErrorHandleServlet extends HttpServlet{
         
         PrintWriter out = res.getWriter();
         
-        Integer code = (Integer) req.getAttribute("javax.servlet.error.status_code");
+        Integer httpStatusCode = (Integer) req.getAttribute("javax.servlet.error.status_code");
         String message = (String) req.getAttribute("javax.servlet.error.message");
         Object type = req.getAttribute("javax.servlet.error.exception_type");
-//        Exception exception = (Exception) req.getAttribute("javax.servlet.error.exception");
+        CustomException exception = (CustomException) req.getAttribute("javax.servlet.error.exception");
 
         // 보낼 헤더 설정
         res.setContentType("applicaion/json;charset=UTF-8");
-        res.setStatus(code);
+        res.setStatus(httpStatusCode);
         
         // 보낼 바디 설정
         ResponseData responseData = new ResponseData(Status.FAIL, message, type);
@@ -38,8 +38,7 @@ public class ErrorHandleServlet extends HttpServlet{
         out.flush();
         out.close();
         
-        System.out.println(responseData.getJsonResponseData());
-        HttpUtil.forward(req, res, "/result/memberInsertOutput.jsp");
+        HttpUtil.forward(req, res, exception.getNextPath());
 
     }
 }

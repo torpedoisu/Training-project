@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.exception.CustomException;
 import com.global.HttpUtil;
 import com.service.UserService;
 import com.vo.UserVO;
@@ -27,8 +27,7 @@ public class UserRegisterController implements Controller{
         String pwd = req.getParameter("pwd").trim();
         
         if (id.isEmpty() || pwd.isEmpty()) {
-            req.setAttribute("error", "모든 항목을 입력해주세요");
-            HttpUtil.forward(req, res, "/userInsert.jsp");
+            throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "/userInsert.jsp");
         }
         
         UserVO user = new UserVO();
@@ -42,9 +41,9 @@ public class UserRegisterController implements Controller{
         // 유저 정보 세션으로 전송
         HttpSession session = req.getSession();
         session.setAttribute("user", userWithPk);
-
-        PrintWriter out = res.getWriter();
-        req.setAttribute("id", id);
+        
+        res.setStatus(HttpServletResponse.SC_OK);
+        
         HttpUtil.forward(req, res, "index.jsp");
     }
 

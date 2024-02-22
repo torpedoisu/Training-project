@@ -34,16 +34,17 @@ public class DBManager {
         
         try {
             properties.load(this.getClass().getClassLoader().getResourceAsStream(propertiesName));
-            logger.debug("DBMangaer 초기화 성공");
+            logger.error("DBMangaer 초기화 성공");
         } catch (FileNotFoundException e) {
+            logger.error("DBMangaer 초기화 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("DBMangaer 초기화 중 예외 발생", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (IOException e) {
+            logger.error("DBMangaer 초기화 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("DBMangaer 초기화 중 예외 발생", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } catch (NullPointerException e) {
+            logger.error("DBMangaer 초기화 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("DBMangaer 초기화 중 예외 발생", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            
         }
         
         this.driver = properties.getProperty("driver");
@@ -67,11 +68,11 @@ public class DBManager {
                     logger.debug("DB 연결 성공");
                 }
             } catch (ClassNotFoundException e) {
+                logger.error("jdbc 드라이버 존재하지 않음");
                 e.printStackTrace();
-                throw new CustomException("jdbc 드라이버 존재하지 않음" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             } catch (SQLException e) {
+                logger.error("db connection 중 예외 발생");
                 e.printStackTrace();
-                throw new CustomException("db connection 중 예외 발생" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
     }
     
@@ -86,8 +87,8 @@ public class DBManager {
                 logger.debug("db에 커밋 완료");
             }
         } catch (SQLException e) {
+            logger.error("db에 커밋 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("db에 커밋 중 예외 발생" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } 
     }
     
@@ -102,8 +103,8 @@ public class DBManager {
                 logger.debug("트랜잭션 롤백 완료");
             }
         } catch (SQLException e) {
+            logger.error("db 롤백 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("db 롤백 중 예외 발생" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } 
     }
 
@@ -121,8 +122,8 @@ public class DBManager {
             }   
             
         } catch (SQLException e) {
+            logger.error("db와 연결 해제 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("db와 연결 해제 중 예외 발생" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
     }
@@ -144,8 +145,8 @@ public class DBManager {
             }   
             
         } catch (SQLException e) {
+            logger.error("db와 연결 해제 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("db와 연결 해제 중 예외 발생" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
     }
@@ -161,8 +162,8 @@ public class DBManager {
         try {
             isClosed = this.jdbcConnection.isClosed();
         } catch (SQLException e) {
+            logger.error("db와의 연결 확인 중 예외 발생");
             e.printStackTrace();
-            throw new CustomException("db와의 연결 확인 중 예외 발생" , HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         
         return isClosed;

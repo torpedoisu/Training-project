@@ -44,7 +44,7 @@ public class ArticleVO {
         this.externalFiles = files;
     }
     
-    public UserVO getexternalUser() {
+    public UserVO getExternalUser() {
         return externalUser;
     }
     

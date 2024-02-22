@@ -55,9 +55,9 @@ public class UserDAO {
             
             
         } catch (SQLException e) {
+            logger.error("DB에 insert 도중 에러");
             e.printStackTrace();
             dbManager.rollback();
-            throw new CustomException(("DB에 insert 도중 에러 (행의 모든 값을 채워주세요) - " + e.getMessage()), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect(statement, generatedKeys);    
@@ -65,6 +65,37 @@ public class UserDAO {
         }
         
         return user;
+    }
+
+    public UserVO getUser(String userPk) {
+        logger.debug("UserPk: "+ userPk +" 조회 시작");
+        
+        dbManager.connect();
+        
+        PreparedStatement statement = null;
+        ResultSet generatedKeys = null;
+
+        String sql = "SELECT * FROM USER_TB WHERE PK = ?;";
+        
+        try {
+            statement = dbManager.getJdbcConnection().prepareStatement(sql);
+            statement.setString(1, userPk);
+            statement.executeUpdate();
+            
+            dbManager.commit(); 
+            
+            logger.debug("UserPk: "+ userPk +" 조회 완료");
+            
+        } catch (SQLException e) {
+            logger.error("DB에서 select 도중 에러");
+            e.printStackTrace();
+            dbManager.rollback();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect(statement, generatedKeys);    
+            }
+        }
+        
     }
     
     

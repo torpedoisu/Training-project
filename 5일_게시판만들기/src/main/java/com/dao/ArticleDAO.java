@@ -51,10 +51,10 @@ public class ArticleDAO {
             logger.debug("ArticlePk: "+ article.getPk() +" 등록 완료");
             
         } catch (SQLException e) {
+            logger.error("게시글을 DB에 insert 도중 에러");
             e.printStackTrace();
             dbManager.rollback();
-            throw new CustomException(("게시글을 DB에 insert 도중 에러 - " + e.getMessage()), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        } finally {
+            } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
                 dbManager.disconnect(statement);    
             }
