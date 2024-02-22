@@ -22,10 +22,19 @@ public class UserService {
         return userService;
     }
     
-    public UserVO userInsert(UserVO user){
+    public UserVO userInsert(String id, String pwd){
+        UserVO user = new UserVO();
+        user.setId(id);
+        user.setPwd(pwd);
+        
         UserDAO userDao = new UserDAO();
 
-        return userDao.insert(user);
+        // user의 pk 설정
+        user = userDao.insert(user);
+        UserVO userInfoInDB = userDao.getUserWithIdPwd(id, pwd);
+        user.setPk(userInfoInDB.getPk());
+        
+        return user;
     }
 
     public boolean checkUserIsValid(String userPk, String userId, String userPwd) {

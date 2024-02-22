@@ -34,7 +34,6 @@ public class UserDAO {
         dbManager.connect();
         
         PreparedStatement statement = null;
-        ResultSet generatedKeys = null;
 
         String sql = "INSERT INTO user_tb (id, pwd) VALUES (?, ?)";
         
@@ -48,11 +47,6 @@ public class UserDAO {
             
             logger.debug("User: "+ user.getId() +" 등록 완료");
             
-            if (generatedKeys.next()) {
-                String userPk = generatedKeys.getString(1);// 새로 생성된 게시글의 PK
-                user.setPk(userPk); // ArticleVO에 설정
-            }
-            
             
         } catch (SQLException e) {
             logger.error("DB에 insert 도중 에러");
@@ -60,14 +54,14 @@ public class UserDAO {
             dbManager.rollback();
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, generatedKeys);    
+                dbManager.disconnect(statement);    
             }
         }
         
         return user;
     }
 
-    public UserVO getUser(String userPk) {
+    public UserVO getUserWithIdPwd(String id, String pwd) {
         logger.debug("UserPk: "+ userPk +" 조회 시작");
         
         dbManager.connect();

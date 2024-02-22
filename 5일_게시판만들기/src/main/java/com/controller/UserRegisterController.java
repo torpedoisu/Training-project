@@ -30,13 +30,9 @@ public class UserRegisterController implements Controller{
             throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "/userInsert.jsp");
         }
         
-        UserVO user = new UserVO();
-        user.setId(id);
-        user.setPwd(pwd);
-        
         // 유저 db에 등록
         UserService service = UserService.getInstance();
-        UserVO userWithPk = service.userInsert(user);
+        UserVO userWithPk = service.userInsert(id, pwd);
         
         // 유저 정보 세션으로 전송
         HttpSession session = req.getSession();
