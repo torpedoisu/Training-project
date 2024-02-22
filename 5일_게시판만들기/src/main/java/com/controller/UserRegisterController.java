@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 
 import com.exception.CustomException;
 import com.global.HttpUtil;
@@ -24,20 +26,30 @@ public class UserRegisterController implements Controller{
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         logger.debug("userRegisterController 진입");
         
-        String id = req.getParameter("id").trim();
-        String pwd = req.getParameter("pwd").trim();
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = req.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        reader.close();
         
-        if (id.isEmpty() || pwd.isEmpty()) {
+        // JSON 데이터를 JSONObject로 파싱
+        JSONObject jsonRequest = new JSONObject(sb.toString());
+        String userId = jsonRequest.getString("id");
+        String userPwd = jsonRequest.getString("pwd");
+        
+        if (userId.trim().isEmpty() || userId.trim().isEmpty()) {
             throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "/userRegister.jsp");
         }
         
         // 유저 db에 등록
         UserService service = UserService.getInstance();
-        UserVO userWithPk = service.userInsert(id, pwd);
+        UserVO userInDB = service.userInsert(userId, userPwd);
         
         // 유저 정보 세션으로 전송
         HttpSession session = req.getSession();
-        session.setAttribute("user", userWithPk);
+        session.setAttribute("user", userInDB);
         
         res.setStatus(HttpServletResponse.SC_OK);
         

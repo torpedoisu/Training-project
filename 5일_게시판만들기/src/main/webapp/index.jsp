@@ -4,15 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>게시판</title>
-    
-    <script src="javascript/board.js"></script>
-    <!-- JavaScript로 서버에서 게시글 목록을 비동기적으로 가져오는 함수 호출 -->
-    <script>
-        getPostList();
-    </script>
-    
+  <meta charset="UTF-8">
+  <title>게시판</title>
+  
+  <script src="javascript/article.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+      getPostList();
+  </script>
+  
 </head>
 <body>
     <h1>게시판</h1>

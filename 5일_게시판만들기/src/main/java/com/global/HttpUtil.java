@@ -25,4 +25,18 @@ public class HttpUtil {
             
         }
     }
+    
+    public static void forward(HttpServletRequest req, HttpServletResponse res, PrintWriter out, String path) {
+        res.setContentType("applicaion/json;charset=UTF-8");
+        
+        try {
+            RequestDispatcher dispatcher = req.getRequestDispatcher(path);
+            out.flush();
+            dispatcher.forward(req, res);
+        } catch (Exception e) {
+            logger.error("forward 발생 중 에러");
+            e.printStackTrace();
+            
+        }
+    }
 }

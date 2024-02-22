@@ -4,6 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <title>회원 가입</title>
+  <script src="/javascript/userRegister.js" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <h3>회원 가입</h3>
