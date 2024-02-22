@@ -25,8 +25,10 @@ public class FrontController extends HttpServlet{
         charset = sc.getInitParameter("charset");
         list = new HashMap<String, Controller>();
         
+        // 회원 정보 관리 컨트롤러 
         list.put("/userInsert.do", new UserRegisterController());
         list.put("/userLogout.do", new LogoutController());
+        list.put("/userLogin.do", new LoginController());
     }
 
     @Override 

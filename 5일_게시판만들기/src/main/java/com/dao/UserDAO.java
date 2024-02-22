@@ -14,21 +14,14 @@ import com.global.DBManager;
 import com.vo.UserVO;
 
 public class UserDAO {
-    private static UserDAO userDao = null;
+    private DBManager dbManager = null;
+
     public static Logger logger = LogManager.getLogger(UserDAO.class);        
-    
-    private UserDAO() {}
-    
-    public static UserDAO getInstance() {
-        if (userDao == null) {
-            synchronized(UserDAO.class) {
-                userDao = new UserDAO();
-            }
-        }
-        
-        return userDao;
+
+    public UserDAO() {
+        dbManager = new DBManager();
     }
-   
+    
     /**
      * USER_TB 테이블에 유저를 등록하는 메서드
      * 
@@ -37,9 +30,9 @@ public class UserDAO {
      */
     public UserVO insert(UserVO user){
         logger.debug("User: "+ user.getId() +" 등록 시작");
-        DBManager dbManager = new DBManager();
         
         dbManager.connect();
+        
         PreparedStatement statement = null;
         ResultSet generatedKeys = null;
 

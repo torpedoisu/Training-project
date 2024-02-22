@@ -15,21 +15,13 @@ import com.vo.ArticleVO;
 import com.vo.UserVO;
 
 public class ArticleDAO {
-    private static ArticleDAO articleDao = null;
+    private DBManager dbManager = null;
+
     public static Logger logger = LogManager.getLogger(UserDAO.class);        
-    
-    private ArticleDAO() {}
-    
-    public static ArticleDAO getInstance() {
-        if (articleDao == null) {
-            synchronized(UserDAO.class) {
-                articleDao = new ArticleDAO();
-            }
-        }
-        
-        return articleDao;
+
+    public ArticleDAO() {
+        dbManager = new DBManager();
     }
-    
 
     /**
      * ARTICLE_TB 테이블에 게시글을 등록하는 메서드
@@ -39,9 +31,9 @@ public class ArticleDAO {
      */
     public ArticleVO insert(ArticleVO article){
         logger.debug("ArticlePk: "+ article.getPk() +" 등록 시작");
-        DBManager dbManager = new DBManager();
         
         dbManager.connect();
+        
         PreparedStatement statement = null;
         
         String sql = "INSERT INTO article_tb (pk, title, content) VALUES (?, ?, ?)";

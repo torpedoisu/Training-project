@@ -1,11 +1,13 @@
 package com.vo;
 
 import java.math.BigInteger;
+import java.util.List;
 
 public class UserVO {
     private BigInteger pk;
     private String id;
     private String pwd;
+    private List<ArticleVO> externalArticles;
     
     public String getPk() {
         return String.valueOf(pk);
@@ -29,4 +31,13 @@ public class UserVO {
     public void setPwd(String val) {
         this.pwd = val;
     }
+    
+    public List<ArticleVO> getExternalArticles() {
+        return externalArticles;
+    }
+    
+    public void setExternalArticles(List<ArticleVO> articles) {
+        this.externalArticles = articles;
+    }
+    
 }

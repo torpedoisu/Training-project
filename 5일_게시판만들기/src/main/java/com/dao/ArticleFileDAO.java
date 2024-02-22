@@ -14,31 +14,25 @@ import com.global.DBManager;
 import com.vo.ArticleFileVO;
 
 public class ArticleFileDAO {
-    private static ArticleFileDAO articleFileDao = null;
+    private DBManager dbManager = null;
+
     public static Logger logger = LogManager.getLogger(UserDAO.class);        
-    
-    private ArticleFileDAO () {}
-    
-    public static ArticleFileDAO getInstance() {
-        if (articleFileDao == null) {
-            synchronized(UserDAO.class) {
-                articleFileDao = new ArticleFileDAO();
-            }
-        }
-        
-        return articleFileDao;
+
+    public ArticleFileDAO() {
+        dbManager = new DBManager();
     }
-    
+
     /**
-     * FILE_TB 테이블에 file 등록하는 메서드 
+     * FILE_TB 테이블에 file 등록하는 메서드
      * 
      * @param file - db에 등록할 파일, FileVO의 pk는 ARTICLE_TB의 외래키
      * @return ArticleFileVO
      */
     public ArticleFileVO insert(ArticleFileVO file){
-        DBManager dbManager = new DBManager();
+        logger.debug("FilePk: "+ file.getPk() +" 등록 시작");
         
         dbManager.connect();
+        
         PreparedStatement statement = null;
 
         String fileSql = "INSERT INTO file_tb (article_pk, file) VALUES (?, ?)";
