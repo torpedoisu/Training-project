@@ -21,7 +21,7 @@
   <!-- =========== 예외 설정 =========== -->
 
   <error-page>
-    <exception-type>java.lang.Exception</exception-type>
+    <exception-type>com.exception.CustomException</exception-type>
     <location>/errorHandle</location>
   </error-page>
    

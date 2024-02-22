@@ -27,14 +27,16 @@ public class FrontController extends HttpServlet{
         
         // 회원 정보 관리 컨트롤러 
         list.put("/userInsert.do", new UserRegisterController());
-        list.put("/userLogout.do", new LogoutController());
+        list.put("/userLogin.do", new UserLoginController());
+        list.put("/userLogout.do", new UserLogoutController());
         list.put("/userAuth.do", new UserAuthController());
     }
 
     @Override 
     public void service(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
         req.setCharacterEncoding(charset);
-
+        res.setCharacterEncoding(charset);
+        
         String url = req.getRequestURI(); // '/5일_게시판만들기/userInsert.do'
         String contextPath = req.getContextPath(); // '/5일_게시판만들기'
         String path = url.substring(contextPath.length()); // '/userInsert.do'
@@ -43,6 +45,7 @@ public class FrontController extends HttpServlet{
         logger.debug("FrontController - " + path + "로 라우팅 시작");
         
         subController.execute(req, res);
+        return;
     }
 
 }

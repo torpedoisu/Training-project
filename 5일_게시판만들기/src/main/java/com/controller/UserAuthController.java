@@ -20,7 +20,7 @@ import com.vo.UserVO;
 
 public class UserAuthController implements Controller{
 
-    public static Logger logger = LogManager.getLogger(LogoutController.class);
+    public static Logger logger = LogManager.getLogger(UserLogoutController.class);
     
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -48,7 +48,7 @@ public class UserAuthController implements Controller{
                 String userId = user.getId();
                 String userPwd = user.getPwd();
                 
-                boolean isValid = userService.checkUserIsValid(userPk, userId, userPwd);
+                boolean isValid = userService.checkUserIsValidInSession(userPk, userId, userPwd);
                 
                 // 유저 정보가 db와 일치하는 경우
                 if (isValid) {
@@ -57,20 +57,20 @@ public class UserAuthController implements Controller{
                 
                 // 유저 정보가 db와 일치하지 않는 경우
                 } else {
-                    //TODO:
+                    //TODO:어디로 갈지?
                     throw new CustomException("잘못된 아이디이거나 잘못된 비밀번호 입니다", HttpServletResponse.SC_BAD_REQUEST, "/index.jsp");
                 }
                 
             // 유저 객체가 제대로 불러와지지 않는 경우
             } else {
+                // TODO: 어디로 갈지?
                 throw new CustomException("유저 정보가 손상되었습니다", HttpServletResponse.SC_BAD_REQUEST, "/index.jsp");
             }    
         }
-        
-        
-        
+
         out.flush();
         out.close();
+        return;
     }
 
 }

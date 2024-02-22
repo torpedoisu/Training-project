@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class UserRegisterController implements Controller{
         String pwd = req.getParameter("pwd").trim();
         
         if (id.isEmpty() || pwd.isEmpty()) {
-            throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "/userInsert.jsp");
+            throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "/userRegister.jsp");
         }
         
         // 유저 db에 등록
@@ -40,7 +41,7 @@ public class UserRegisterController implements Controller{
         
         res.setStatus(HttpServletResponse.SC_OK);
         
-        HttpUtil.forward(req, res, "index.jsp");
+        HttpUtil.forward(req, res, "/index.jsp");
     }
 
 }

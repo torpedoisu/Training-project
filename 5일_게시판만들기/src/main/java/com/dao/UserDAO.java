@@ -61,35 +61,49 @@ public class UserDAO {
         return user;
     }
 
-    public UserVO getUserWithIdPwd(String id, String pwd) {
-        logger.debug("UserPk: "+ userPk +" 조회 시작");
+    /**
+     * USER_TB 테이블에서 아이디와 비밀번호로 일치되는 유저를 반환하는 메서드
+     * 
+     * @param userId
+     * @param userPwd - sha256으로 인코딩된 비밀번호
+     * @return UserVO
+     */
+    public UserVO getUserWithIdEncPwd(String userId, String userEncPwd) {
+        logger.debug("User: "+ userId +" 조회 시작");
         
         dbManager.connect();
         
         PreparedStatement statement = null;
-        ResultSet generatedKeys = null;
-
-        String sql = "SELECT * FROM USER_TB WHERE PK = ?;";
+        ResultSet rs = null;
+        UserVO user = new UserVO();
+        
+        String sql = "SELECT * FROM USER_TB WHERE ID = ? AND PWD = ?";
         
         try {
             statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, userPk);
-            statement.executeUpdate();
+            statement.setString(1, userId);
+            statement.setString(2, userEncPwd);
+            rs = statement.executeQuery();
             
-            dbManager.commit(); 
+            if (rs.next()) {
+                user.setPk(rs.getString("PK"));
+                user.setId(rs.getString("ID"));
+                user.setPwd(rs.getString("PWD"));
+            }
             
-            logger.debug("UserPk: "+ userPk +" 조회 완료");
+            
+            logger.debug("UserPk: "+ userId +" 조회 완료");
             
         } catch (SQLException e) {
             logger.error("DB에서 select 도중 에러");
             e.printStackTrace();
-            dbManager.rollback();
         } finally {
             if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, generatedKeys);    
+                dbManager.disconnect(statement, rs);    
             }
         }
-        
+        return user;
+
     }
     
     

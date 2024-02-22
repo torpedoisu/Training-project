@@ -16,15 +16,13 @@ import com.global.HttpUtil;
 import com.global.ResponseData;
 import com.global.Status;
 
-public class LogoutController implements Controller{
+public class UserLogoutController implements Controller{
 
-    public static Logger logger = LogManager.getLogger(LogoutController.class);
+    public static Logger logger = LogManager.getLogger(UserLogoutController.class);
     
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         logger.debug("LogOutController 진입");
-        
-        PrintWriter out = res.getWriter();
         
         // 유저 정보 받아오기
         HttpSession session = req.getSession();
@@ -33,7 +31,6 @@ public class LogoutController implements Controller{
         if (session != null && session.getAttribute("user") != null) {
             session.invalidate();
             res.setStatus(HttpServletResponse.SC_OK);
-            out.print(new ResponseData(Status.SUCCESS));
             
         // 유저가 로그인 되어 있지 않은 경우
         } else if (session != null){
@@ -44,8 +41,6 @@ public class LogoutController implements Controller{
             throw new CustomException("유저 정보에 문제가 있습니다", HttpServletResponse.SC_BAD_REQUEST, "/index.jsp");
         }
         
-        out.flush();
-        out.close();
         
         HttpUtil.forward(req, res, "index.jsp");
     }

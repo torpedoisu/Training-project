@@ -3,17 +3,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>회원 가입</title>
+  <script src="/javascript/login.js" ></script>
+<title>login</title>
 </head>
 <body>
-<h3>회원 가입</h3>
-
-${error}
-
-<form action="userInsert.do" method="post">
+    <form action="userLogin.do" method="post">
     ID: <input type="text" name="id" required> <br>
     Password: <input type="password" name="pwd" required><br>
-    <button type="submit">가입</button>
+    <button type="submit">로그인</button>
 </form>
 </body>
 </html>

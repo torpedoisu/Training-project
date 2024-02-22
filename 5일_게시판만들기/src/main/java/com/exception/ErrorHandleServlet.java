@@ -29,16 +29,13 @@ public class ErrorHandleServlet extends HttpServlet{
         CustomException exception = (CustomException) req.getAttribute("javax.servlet.error.exception");
 
         // 보낼 헤더 설정
-        res.setContentType("applicaion/json;charset=UTF-8");
         res.setStatus(httpStatusCode);
         
         // 보낼 바디 설정
         ResponseData responseData = new ResponseData(Status.FAIL, message, type);
         out.print(responseData.getJsonResponseData());
-        out.flush();
-        out.close();
-        
-        HttpUtil.forward(req, res, exception.getNextPath());
 
+        System.out.println(exception.getNextPath());
+        HttpUtil.forward(req, res, exception.getNextPath());
     }
 }

@@ -4,10 +4,10 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class UserVO {
-    private BigInteger pk;
-    private String id;
-    private String pwd;
-    private List<ArticleVO> externalArticles;
+    private BigInteger pk = null;
+    private String id = null;
+    private String pwd = null;
+    private List<ArticleVO> externalArticles = null;
     
     public String getPk() {
         return String.valueOf(pk);
@@ -40,4 +40,10 @@ public class UserVO {
         this.externalArticles = articles;
     }
     
+    public boolean isExist() {
+        if (id == null && pwd == null) {
+            return false;
+        }
+        return true;
+    }
 }
