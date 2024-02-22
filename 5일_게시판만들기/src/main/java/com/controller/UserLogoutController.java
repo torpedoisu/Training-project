@@ -34,11 +34,11 @@ public class UserLogoutController implements Controller{
             
         // 유저가 로그인 되어 있지 않은 경우
         } else if (session != null){
-            throw new CustomException("현재 로그인 상태가 아닙니다", HttpServletResponse.SC_BAD_REQUEST, "/index.jsp");
+            throw new CustomException("현재 로그인 상태가 아닙니다", HttpServletResponse.SC_BAD_REQUEST, "index.jsp");
             
         // 유저의 세션 정보가 손상된 경우
         } else if (session.getAttribute("user") != null) {
-            throw new CustomException("유저 정보에 문제가 있습니다", HttpServletResponse.SC_BAD_REQUEST, "/index.jsp");
+            throw new CustomException("유저 정보에 문제가 있습니다", HttpServletResponse.SC_BAD_REQUEST, "index.jsp");
         }
         
         

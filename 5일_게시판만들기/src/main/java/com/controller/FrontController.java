@@ -26,7 +26,7 @@ public class FrontController extends HttpServlet{
         list = new HashMap<String, Controller>();
         
         // 회원 정보 관리 컨트롤러 
-        list.put("/userInsert.do", new UserRegisterController());
+        list.put("/userRegister.do", new UserRegisterController());
         list.put("/userLogin.do", new UserLoginController());
         list.put("/userLogout.do", new UserLogoutController());
         list.put("/userAuth.do", new UserAuthController());

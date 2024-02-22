@@ -40,7 +40,7 @@ public class UserRegisterController implements Controller{
         String userPwd = jsonRequest.getString("pwd");
         
         if (userId.trim().isEmpty() || userId.trim().isEmpty()) {
-            throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "/userRegister.jsp");
+            throw new CustomException("비밀번호 혹은 아이디 채워지지 않음", HttpServletResponse.SC_BAD_REQUEST, "userRegister.jsp");
         }
         
         // 유저 db에 등록
@@ -52,8 +52,8 @@ public class UserRegisterController implements Controller{
         session.setAttribute("user", userInDB);
         
         res.setStatus(HttpServletResponse.SC_OK);
-        
-        HttpUtil.forward(req, res, "/index.jsp");
+        logger.debug("회원 가입 완료");
+        HttpUtil.forward(req, res, "index.jsp");
     }
 
 }

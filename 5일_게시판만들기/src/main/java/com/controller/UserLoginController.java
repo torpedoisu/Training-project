@@ -40,7 +40,7 @@ public class UserLoginController implements Controller {
         
         // ID 또는 비밀번호가 입력되지 않은 경우
         if (userId == null || userPwd == null || userId.trim().isEmpty() || userPwd.trim().isEmpty()) {
-            throw new CustomException("ID 또는 비밀번호를 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "/login.jsp");
+            throw new CustomException("ID 또는 비밀번호를 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
         }
 
         // UserService를 사용하여 사용자 정보 가져오기
@@ -48,7 +48,7 @@ public class UserLoginController implements Controller {
         UserVO user = userService.getUserInDB(userId, userPwd);
 
         if (!user.isExist()) {
-            throw new CustomException("잘못된 사용자입니다", HttpServletResponse.SC_BAD_REQUEST, "/login.jsp");
+            throw new CustomException("잘못된 사용자입니다", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
         }
         // 세션에 사용자 정보 저장
         HttpSession session = req.getSession();
@@ -57,6 +57,7 @@ public class UserLoginController implements Controller {
         // 로그인 성공 메시지 출력
         res.setStatus(HttpServletResponse.SC_OK);
         
-        HttpUtil.forward(req, res, "/index.jsp");
+        logger.debug("로그인 완료");
+        HttpUtil.forward(req, res, "index.jsp");
     }
 }
