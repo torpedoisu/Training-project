@@ -49,6 +49,7 @@ public class UserRegisterController implements Controller{
         
         // 유저 정보 세션으로 전송
         HttpSession session = req.getSession();
+        session.setMaxInactiveInterval(60 * 60 * 10); 
         session.setAttribute("user", userInDB);
         
         res.setStatus(HttpServletResponse.SC_OK);

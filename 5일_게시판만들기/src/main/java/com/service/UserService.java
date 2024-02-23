@@ -57,19 +57,6 @@ public class UserService {
         return user;
     }
 
-    
-    public boolean checkUserIsValidInSession(String userPk, String userId, String userEncPwd) {
-        UserDAO userDao = new UserDAO();
-        
-        UserVO userInDB = userDao.getUserWithIdEncPwd(userId, userEncPwd);
-        
-        if (userInDB.getId().equals(userId) && userInDB.getPwd().equals(userEncPwd)) {
-            return true;
-        }
-        
-        return false;
-    }
-
     public UserVO getUserInDB(String userId, String userPwd) {
         UserDAO userDao = new UserDAO();
         

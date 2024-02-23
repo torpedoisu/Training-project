@@ -35,12 +35,6 @@ public class ArticleService {
     public void registerArticle(UserVO user, String title, String content, List<byte[]> files) {
         
         logger.debug("Service - 게시글 등록 시작");
-        
-        boolean userIsValid = UserService.getInstance().checkUserIsValidInSession(user.getPk(), user.getId(), user.getPwd());
-        
-        if (!userIsValid) {
-            throw new CustomException("세션이 잘못되었습니다 다시 로그인해주세요.", HttpServletResponse.SC_FORBIDDEN, "login.jsp");
-        }
 
         content = (content == null) ? "" : content;
         title = (title == null) ? "" : content;

@@ -52,6 +52,7 @@ public class UserLoginController implements Controller {
         }
         // 세션에 사용자 정보 저장
         HttpSession session = req.getSession();
+        session.setMaxInactiveInterval(60 * 60 * 10); // 10시간
         session.setAttribute("user", user);
 
         // 로그인 성공 메시지 출력
