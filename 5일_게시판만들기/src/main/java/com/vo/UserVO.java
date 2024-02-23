@@ -41,7 +41,7 @@ public class UserVO {
     }
     
     public boolean isExist() {
-        if (id == null && pwd == null) {
+        if (id == null || pwd == null) {
             return false;
         }
         return true;

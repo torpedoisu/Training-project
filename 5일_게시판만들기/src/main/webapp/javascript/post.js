@@ -2,7 +2,7 @@
 function registerPost() {
     console.log('게시글 작성');
     let title = document.getElementById('title').value;
-    let content = document.getElementById('content').innerHTML;
+    let content = document.getElementById('content').value;
     let fileList = document.getElementById('file').files;
     
     const formData = new FormData();
@@ -11,7 +11,8 @@ function registerPost() {
     formData.append('content', content);
     
     for (let i = 0; i < fileList.length; i++) {
-        formData.append('file' + i, fileList[i]);
+        const blob = convertFileToBlob(fileList[i]);
+        formData.append('file' + i, blob, fileList[i].name);
     }
     
     // formData에 잘 추가되었는지 확인
@@ -35,6 +36,16 @@ function registerPost() {
         });
 }
 
+function convertFileToBlob(file) {
+    return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const blob = new Blob([reader.result], { type: file.type });
+            resolve(blob);
+        };
+        reader.readAsArrayBuffer(file);
+    });
+}
 
 function updateFileList(files) {
     let fileList = document.getElementById('fileList');

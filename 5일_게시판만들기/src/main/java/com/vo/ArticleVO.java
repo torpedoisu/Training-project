@@ -8,7 +8,7 @@ public class ArticleVO {
     
     private BigInteger pk;
     private String title;
-    private Blob content;
+    private String content;
     private List<ArticleFileVO> externalFiles;
     private UserVO externalUser;
     
@@ -28,11 +28,11 @@ public class ArticleVO {
         this.title = title;
     }
 
-    public Blob getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Blob content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

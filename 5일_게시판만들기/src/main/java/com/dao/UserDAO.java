@@ -89,10 +89,11 @@ public class UserDAO {
                 user.setPk(rs.getString("PK"));
                 user.setId(rs.getString("ID"));
                 user.setPwd(rs.getString("PWD"));
+            } else {
+                throw new CustomException("해당 user를 조회할 수 없습니다", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
             }
             
-            
-            logger.debug("UserPk: "+ userId +" 조회 완료");
+            logger.debug("User: "+ userId +" 조회 완료");
             
         } catch (SQLException e) {
             logger.error("DB에서 select 도중 에러");
@@ -104,6 +105,42 @@ public class UserDAO {
         }
         return user;
 
+    }
+
+    public UserVO getUserWithId(String userId) {
+logger.debug("User: "+ userId +" 조회 시작");
+        
+        dbManager.connect();
+        
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        UserVO user = new UserVO();
+        
+        String sql = "SELECT * FROM USER_TB WHERE ID = ?";
+        
+        try {
+            statement = dbManager.getJdbcConnection().prepareStatement(sql);
+            statement.setString(1, userId);
+            rs = statement.executeQuery();
+            
+            if (rs.next()) {
+                user.setPk(rs.getString("PK"));
+                user.setId(rs.getString("ID"));
+                user.setPwd(rs.getString("PWD"));
+            }
+            logger.debug(user.getPwd());
+            
+            logger.debug("User: "+ user.getId() +" 조회 완료");
+            
+        } catch (SQLException e) {
+            logger.error("DB에서 select 도중 에러");
+            e.printStackTrace();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect(statement, rs);    
+            }
+        }
+        return user;
     }
     
     

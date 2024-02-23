@@ -11,8 +11,8 @@
 <h3>회원 가입</h3>
 
     <form method="post">
-      ID: <input type="text" id="id" value="id" required> <br>
-      Password: <input type="password" id="pwd" value="pwd" required><br>
+      ID: <input type="text" id="id" required> <br>
+      Password: <input type="password" id="pwd" required><br>
       <button type="button" onclick="register()">가입</button>
     </form>
     

@@ -23,6 +23,7 @@
 
     <button type="button" onclick="logout()" id="logoutButton" style="display: none">로그아웃</button>
     <button type="button" onclick="redirectToLogin()" id="loginButton" style="display: none">로그인</button>
+    <button type="button" onclick="redirectToRegister()" id="registerButton" style="display: none">회원가입</button>
     
         <thead>
             <tr>

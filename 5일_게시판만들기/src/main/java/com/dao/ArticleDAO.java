@@ -30,25 +30,25 @@ public class ArticleDAO {
      * @return ArticleVO
      */
     public ArticleVO insert(ArticleVO article){
-        logger.debug("ArticlePk: "+ article.getPk() +" 등록 시작");
+        logger.debug("ArticlePk: "+ article.getTitle() +" 등록 시작");
         
         dbManager.connect();
         
         PreparedStatement statement = null;
         
-        String sql = "INSERT INTO article_tb (pk, title, content) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO article_tb (user_pk, title, content) VALUES (?, ?, ?)";
         
         try {
             statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, article.getPk());
+            statement.setString(1, article.getExternalUser().getPk());
             statement.setString(2, article.getTitle());
-            statement.setBlob(3, article.getContent());
+            statement.setString(3, article.getContent());
             statement.executeUpdate();
             
             
             dbManager.commit(); 
             
-            logger.debug("ArticlePk: "+ article.getPk() +" 등록 완료");
+            logger.debug("ArticlePk: "+ article.getTitle() +" 등록 완료");
             
         } catch (SQLException e) {
             logger.error("게시글을 DB에 insert 도중 에러");
@@ -62,6 +62,11 @@ public class ArticleDAO {
             return article;
         }
         
+    }
+
+    public String select(ArticleVO articleVo) {
+        
+        return null;
     }
     
 }

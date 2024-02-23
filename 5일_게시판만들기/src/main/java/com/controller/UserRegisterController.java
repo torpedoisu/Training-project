@@ -44,8 +44,8 @@ public class UserRegisterController implements Controller{
         }
         
         // 유저 db에 등록
-        UserService service = UserService.getInstance();
-        UserVO userInDB = service.userInsert(userId, userPwd);
+        UserService userService = UserService.getInstance();
+        UserVO userInDB = userService.register(userId, userPwd);
         
         // 유저 정보 세션으로 전송
         HttpSession session = req.getSession();

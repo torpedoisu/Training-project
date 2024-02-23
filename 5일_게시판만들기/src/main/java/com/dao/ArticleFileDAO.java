@@ -29,23 +29,23 @@ public class ArticleFileDAO {
      * @return ArticleFileVO
      */
     public ArticleFileVO insert(ArticleFileVO file){
-        logger.debug("FilePk: "+ file.getPk() +" 등록 시작");
+        logger.debug("File 등록 시작");
         
         dbManager.connect();
         
         PreparedStatement statement = null;
 
-        String fileSql = "INSERT INTO file_tb (article_pk, file) VALUES (?, ?)";
+        String fileSql = "INSERT INTO file_tb (article_pk, content) VALUES (?, ?)";
         
         try {
             statement = dbManager.getJdbcConnection().prepareStatement(fileSql);
-            statement.setString(1, file.getPk()); // 게시글의 PK를 외래 키로 설정
+            statement.setString(1, file.getExternalArticle().getPk()); // 게시글의 PK를 외래 키로 설정
             statement.setBlob(2, file.getFile());
             statement.executeUpdate();
             
             dbManager.commit(); 
             
-            logger.debug("file: " + " 등록 완료");
+            logger.debug("file 등록 완료");
         } catch (SQLException e) {
             logger.error("파일을 DB에 insert 도중 에러");
             e.printStackTrace();

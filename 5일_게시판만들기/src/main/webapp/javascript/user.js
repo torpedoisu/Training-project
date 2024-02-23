@@ -24,6 +24,11 @@ function redirectToLogin() {
     window.location.href = "login.jsp";
 }
 
+function redirectToRegister() {
+    console.log("회원가입 페이지로 redirect");
+    window.location.href = "userRegister.jsp";
+}
+
 function register() {
     console.log("register 시작");
     
@@ -50,10 +55,12 @@ function loadIndexButtons() {
     if (user) {
         document.getElementById('logoutButton').style.display = 'block';
         document.getElementById('loginButton').style.display = 'none';
+        document.getElementById('registerButton').style.display = 'none'
         document.getElementById('postButton').style.display = 'block';
     } else {
         document.getElementById('logoutButton').style.display = 'none';
         document.getElementById('loginButton').style.display = 'block'
+        document.getElementById('registerButton').style.display = 'block'
         document.getElementById('postButton').style.display = 'none';
     }
 }
