@@ -17,7 +17,7 @@ import com.vo.UserVO;
 public class ArticleDAO {
     private DBManager dbManager = null;
 
-    public static Logger logger = LogManager.getLogger(UserDAO.class);        
+    public static Logger logger = LogManager.getLogger(ArticleDAO.class);        
 
     public ArticleDAO() {
         dbManager = new DBManager();

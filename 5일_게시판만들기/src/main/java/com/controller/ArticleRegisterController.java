@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,38 +13,36 @@ import javax.servlet.http.Part;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 public class ArticleRegisterController implements Controller {
     
-    public static Logger logger = LogManager.getLogger(UserLogoutController.class);
+    public static Logger logger = LogManager.getLogger(ArticleRegisterController.class);
     
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        String form = req.getParameter("formData");
-        logger.debug("form - " + form);
         
-        Part formPart = req.getPart("formData");
-        logger.debug("formPart" + formPart);
+
+            String contentType = req.getContentType();
+            if (contentType != null && contentType.toLowerCase().startsWith("multipart/")) {
+                Collection<Part> parts = req.getParts();
+                
+                for (Part part : parts) {
+                   if (part.getHeader("Content-Disposition").contains("filename=")) {
+                       Part file = req.getPart(part.getName());
+                       String fileInString = extractFormData(file);
+                       logger.debug(part.getName() + " " + fileInString);
+
+                    } else {
+                      String formValue = req.getParameter(part.getName());  
+                      logger.debug(part.getName() + " " + formValue);
+
+                    }
+                   
+                }
+            }
         
-        String title = req.getParameter("title");
-        logger.debug("title - " + title);
         
-//        Part titlePart = req.getPart("title");
-//        String title = extractFormData(titlePart);
-//        
-        Part contentPart = req.getPart("content");
-        logger.debug("content - " + contentPart);  
-//      
-//        String content = extractFormData(contentPart);
-//        List<Part> fileParts = new ArrayList<>();
-//        Collection<Part> parts = req.getParts();
-//        for (Part part: parts) {
-//            if (part.getName().equals("file")) {
-//                fileParts.add(part);
-//            }
-//        }
-//        
-//        
     }
     
     private String extractFormData(Part part) throws IOException {
