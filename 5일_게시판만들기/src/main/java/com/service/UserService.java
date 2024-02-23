@@ -61,7 +61,28 @@ public class UserService {
         
         return user;
     }
-
+    
+    /**
+     * 클라이언트가 입력한 정보가 db에 있는 user와 일치하는지 검증
+     * 
+     * @param userId - 클라이언트가 입력한 id
+     * @param userPwd - 클라이언트가 입력한 password
+     * @return UserVO
+     */
+    public UserVO login(String userId, String userPwd) {
+        String userEncPwd = Encrypt.encode(userPwd);
+        
+        UserDAO userDao = new UserDAO();
+        UserVO userInDB = userDao.getUserWithIdEncPwd(userId, userEncPwd);
+        
+        // 유저 정보로 조회한 객체가 비어있다면 db에 존재하지 않는 것
+        if(!userInDB.isExist()) {
+            throw new CustomException("틀린 아이디이거나 비밀번호입니다", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
+        }
+        
+        return userInDB;
+    }
+    
     /**
      * 유저의 아이디와 비밀번호로 User객체를 받아오는 메서드
      * 
@@ -69,7 +90,7 @@ public class UserService {
      * @param userPwd- 유저가 입력한 비밀번호 (인코딩 전)
      * @return UserVO
      */
-    public UserVO getUserInDB(String userId, String userPwd) {
+    private UserVO getUserInDB(String userId, String userPwd) {
         UserDAO userDao = new UserDAO();
         
         String userEncPwd = Encrypt.encode(userPwd);
@@ -95,6 +116,5 @@ public class UserService {
         }
         return false;
     }
-    
     
 }

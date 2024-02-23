@@ -20,6 +20,11 @@ public class FrontController extends HttpServlet{
     public static Logger logger = LogManager.getLogger(FrontController.class);
     
 
+    /*
+     * - servlet에 설정해둔 인코딩 타입을 로딩
+     * - 만들어놓은 컨트롤러 매핑하는 기능
+     * - Map 사용을 위해 Controller 인터페이스 생성
+     */
     @Override
     public void init(ServletConfig sc) throws ServletException {
         charset = sc.getInitParameter("charset");
@@ -35,6 +40,10 @@ public class FrontController extends HttpServlet{
         
     }
 
+    /**
+     * - 설정해둔 인코딩 타입을 서브 컨트롤러에 진입하기 전에 설정
+     * - 클라이언트에게서 path를 받아 등록해둔 Map을 사용해 해당 컨트롤러로 보내는 기능
+     */
     @Override 
     public void service(HttpServletRequest req, HttpServletResponse res)throws ServletException, IOException {
         req.setCharacterEncoding(charset);

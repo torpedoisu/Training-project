@@ -22,6 +22,12 @@ public class UserRegisterController implements Controller{
     
     public static Logger logger = LogManager.getLogger(UserRegisterController.class);
     
+    /**
+     * 회원가입 이후 세션으로 user 객체를 등록하는 컨트롤러
+     * 
+     * 예외 처리
+     * - 아이디와 비밀번호가 입력되었는지 검증
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
         logger.debug("userRegisterController 진입");

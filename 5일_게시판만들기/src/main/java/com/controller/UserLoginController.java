@@ -21,6 +21,12 @@ public class UserLoginController implements Controller {
 
     public static Logger logger = LogManager.getLogger(UserLoginController.class);
 
+    /*
+     * user 객체를 세션에 등록해줌으로써 로그인을 구현한 로그인 컨트롤러
+     * 
+     * 예외 처리
+     * - id와 password가 존재하는지 검증 (없다면 다시 입력하도록 라우팅)
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         logger.debug("LoginController 진입");
@@ -43,13 +49,10 @@ public class UserLoginController implements Controller {
             throw new CustomException("ID 또는 비밀번호를 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
         }
 
-        // UserService를 사용하여 사용자 정보 가져오기
+        // UserService를 사용하여 사용자 정보 가져오기 (service에서 검증)
         UserService userService = UserService.getInstance();
-        UserVO user = userService.getUserInDB(userId, userPwd);
-
-        if (!user.isExist()) {
-            throw new CustomException("잘못된 사용자입니다", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
-        }
+        UserVO user = userService.login(userId, userPwd); 
+        
         // 세션에 사용자 정보 저장
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(60 * 60 * 10); // 10시간
