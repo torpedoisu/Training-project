@@ -1,6 +1,5 @@
 package com.service;
 
-import java.sql.Blob;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import com.dao.ArticleDAO;
 import com.dao.ArticleFileDAO;
+import com.dao.UserDAO;
 import com.exception.CustomException;
 import com.vo.ArticleFileVO;
 import com.vo.ArticleVO;
@@ -85,5 +85,42 @@ public class ArticleService {
         
         
         logger.debug("Service - 게시글 등록 완료");
+    }
+
+    /** 
+     * 모든 게시글을 조회하는 메서드
+     * 
+     * 예외 처리
+     * - 게시글들을 db에서 받아오지 못하는 경우 체크
+     * - 게시글의 작성자 정보를 받아오지 못하는 경우 체크
+     * @return List<ArticleVO>
+     */
+    public List<ArticleVO> getArticles() {
+        logger.debug("Service - 전체 게시글 조회 시작");
+        ArticleDAO articleDao = new ArticleDAO();
+        
+        // 게시글 조회 완료
+        List<ArticleVO> articles = articleDao.selectAll();
+        if (articles.isEmpty()) {
+            throw new CustomException("게시글 정보들을 찾을 수 없습니다", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "login.jsp");
+        }
+        
+        // 게시글의 작성자 조회
+        UserDAO userDao = new UserDAO();
+        for (ArticleVO article : articles) {
+            String userPk = article.getExternalUser().getPk();
+            
+            if (userPk == null) {
+                throw new CustomException("ARTICLE_TB에서 user fk를 조회할 수 없습니다");
+            }
+            
+            UserVO user = userDao.selectUserWithPk(userPk);
+            article.setExternalUser(user);
+        }
+        
+        logger.debug("Service - 전체 게시글 조회 완료");
+        
+        return articles;
+        
     }
 }

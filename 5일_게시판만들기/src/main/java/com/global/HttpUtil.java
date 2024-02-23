@@ -25,7 +25,7 @@ public class HttpUtil {
         }
     }
     
-    public static void exceptionForward(HttpServletRequest req, HttpServletResponse res, PrintWriter out, String path) {
+    public static void forward(HttpServletRequest req, HttpServletResponse res, PrintWriter out, String path) {
         res.setContentType("applicaion/json;charset=UTF-8");
         
         try {

@@ -132,9 +132,48 @@ public class UserDAO {
                 user.setId(rs.getString("ID"));
                 user.setPwd(rs.getString("PWD"));
             }
-            logger.debug(user.getPwd());
             
-            logger.debug("User: "+ user.getId() +" 조회 완료");
+            logger.debug("[getUserWithId] User: "+ user.getId() +" 조회 완료");
+            
+        } catch (SQLException e) {
+            logger.error("DB에서 select 도중 에러");
+            e.printStackTrace();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect(statement, rs);    
+            }
+        }
+        return user;
+    }
+
+    /**
+     * USER_TB 테이블에서 pk로 유저를 조회하는 메서드
+     * @param userPk
+     * @return UserVO
+     */
+    public UserVO selectUserWithPk(String userPk) {
+        logger.debug("[selectUserWithPk] UserPk: "+ userPk +" 조회 시작");
+        
+        dbManager.connect();
+        
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        UserVO user = new UserVO();
+        
+        String sql = "SELECT * FROM USER_TB WHERE PK = ?";
+        
+        try {
+            statement = dbManager.getJdbcConnection().prepareStatement(sql);
+            statement.setString(1, userPk);
+            rs = statement.executeQuery();
+            
+            if (rs.next()) {
+                user.setPk(rs.getString("PK"));
+                user.setId(rs.getString("ID"));
+                user.setPwd(rs.getString("PWD"));
+            }
+            
+            logger.debug("[selectUserWithPk] UserPk: "+ user.getPk() +" 조회 완료");
             
         } catch (SQLException e) {
             logger.error("DB에서 select 도중 에러");

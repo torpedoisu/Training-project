@@ -3,13 +3,12 @@ package com.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.exception.CustomException;
 import com.global.DBManager;
 import com.vo.ArticleVO;
 import com.vo.UserVO;
@@ -150,6 +149,49 @@ public class ArticleDAO {
         }
         
         return newArticle;
+    }
+
+    public List<ArticleVO> selectAll() {
+        logger.debug("[selectAll] 전체 게시글 조회 시작");
+        
+        dbManager.connect();
+
+        List<ArticleVO> articles = new ArrayList<ArticleVO>();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        
+        String sql = "SELECT * FROM ARTICLE_TB";
+        
+        try {
+            statement = dbManager.getJdbcConnection().prepareStatement(sql);
+            rs = statement.executeQuery();
+            
+            while (rs.next()) {
+                ArticleVO article = new ArticleVO();
+                
+                article.setPk(rs.getString("PK"));
+                article.setTitle(rs.getString("TITLE"));
+                article.setContent(rs.getString("CONTENT"));
+                
+                UserVO user = new UserVO();
+                user.setPk(rs.getString("USER_PK"));
+                article.setExternalUser(user);
+                
+                articles.add(article);
+            }
+
+            logger.debug("[selectAll] 전체 게시글 조회 완료");
+            
+        } catch (SQLException e) {
+            logger.error("게시글을 DB에 select 도중 에러");
+            e.printStackTrace();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect(statement, rs);    
+            }
+        }
+        
+        return articles;
     }
     
 }

@@ -13,6 +13,7 @@
   <script>
     window.onload = function() {
           loadIndexButtons();
+          loadArticles();
       };
   </script>
   

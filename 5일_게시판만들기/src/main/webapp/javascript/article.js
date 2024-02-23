@@ -3,8 +3,6 @@ function redirectToPost() {
     window.location.href = "post.jsp";
 }
 
-
-
 function checkUserInSession() {
     console.log("유저 로그인 상태인지 확인");
     const user = sessionStorage.getItem('user');
@@ -13,5 +11,19 @@ function checkUserInSession() {
     }
 }
 
+function loadArticles(){
+    console.log("게시글 로딩");
+    
+    axios.get('articleLoad.do')
+        .then(response => {
+            console.log(response);
+            window.location.href = response.headers.path;
+        })
+        .catch(error => {
+            console.log(error);
+            alert(error.response.data.statusDescription);
+            window.location.href = error.response.headers.path;
+        });
+}
 
 
