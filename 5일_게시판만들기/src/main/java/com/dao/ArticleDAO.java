@@ -26,7 +26,7 @@ public class ArticleDAO {
     /**
      * ARTICLE_TB 테이블에 게시글을 등록하는 메서드
      * 
-     * @param article - db에 등록할 게시글 정보, pk는 USER_TB의 외래키
+     * @param article - db에 등록할 게시글 정보
      * @return ArticleVO
      */
     public ArticleVO insert(ArticleVO article){
@@ -63,6 +63,13 @@ public class ArticleDAO {
         
     }
 
+    /**
+     * ARTICLE_TB 테이블에서 제목으로 게시글을 조회하는 메셔드
+     * 
+     * @param user - UserVO 객체
+     * @param title - 조회에 사용될 제목
+     * @return ArticleVO
+     */
     public ArticleVO selectWithTitle(UserVO user, String title) {
         logger.debug("[selectWithTitle] user: "+ user.getId() + "의 게시글제목: " + title +" 조회 시작");
         
@@ -101,6 +108,12 @@ public class ArticleDAO {
         return article;
     }
 
+    /**
+     * ARTICLE_TB 테이블에서 유저의 정보, 제목, 본문으로 게시글을 조회하는 메서드
+     * 
+     * @param article
+     * @return ArticleVO
+     */
     public ArticleVO select(ArticleVO article) {
         logger.debug("[select] user: "+ article.getExternalUser().getId() + "의 게시글제목: " + article.getTitle() +" 조회 시작");
         

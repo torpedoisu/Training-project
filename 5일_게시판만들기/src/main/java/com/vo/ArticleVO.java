@@ -52,6 +52,10 @@ public class ArticleVO {
         this.externalUser = user;
     }
     
+    /**
+     * 게시글의 제목과 본문이 존재하면 Article이 존재하는 것으로 간주
+     * @return boolean
+     */
     public boolean isExist() {
         if (this.title == null || this.content == null) {
             return false;

@@ -31,10 +31,22 @@ public class ArticleRegisterController implements Controller {
         logger.debug("게시글 등록 시작");
         
         HttpSession session = req.getSession();
-        UserVO user = (UserVO) session.getAttribute("user");
+        UserVO user = null;
+        
         // 세션이 존재하지 않는 경우 리다이렉트
-        if (user == null) {
+        if (session == null) {
             throw new CustomException("다시 로그인 해주세요" , HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
+        } else {
+            Object obj = session.getAttribute("user");
+            
+            // 잘못된 객체 들어와서 예외 발생할 수 있음으로 처리 
+            if (obj instanceof UserVO) {
+                user = (UserVO) obj;
+                
+            // 유저 객체가 제대로 불러와지지 않는 경우
+            } else {
+                throw new CustomException("유저 정보가 손상되었습니다. 다시 로그인해주세요", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
+            }    
         }
         
         logger.debug("user " + user.getId() + " 세션 받아오기 완료");
