@@ -9,8 +9,8 @@
 </head>
 <body>
     <form method="post">
-      ID: <input type="text" id="id" value="id" required> <br>
-      Password: <input type="password" id="pwd" value="pwd" required><br>
+      ID: <input type="text" id="id" required> <br>
+      Password: <input type="password" id="pwd" required><br>
       <button type="button" onclick="login()">로그인</button>
     </form>
 </body>

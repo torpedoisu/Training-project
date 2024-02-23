@@ -27,9 +27,9 @@
   <h1>게시글 작성</h1>
   <form id="articleForm">
     <label for="title">제목:</label><br>
-    <input type="text" id="title" name="title" ><br><br>
+    <input type="text" id="title" name="title" required><br><br>
     
-    <input type="textarea" id="content" name="content"  class="editor" ></input>
+    <input type="textarea" id="content" name="content"  class="editor" required></input>
 
     <label for="file">파일 선택:</label>
     <input type="file" id="file" name="file" multiple onchange="updateFileList(this.files)"><br>
