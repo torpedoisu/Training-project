@@ -40,6 +40,11 @@ public class UserVO {
         this.externalArticles = articles;
     }
     
+    /**
+     * 유저의 아이디와 비밀번호가 null이 아니면 유저가 존재하는 것으로 간주
+     
+     * @return  boolean
+     */
     public boolean isExist() {
         if (id == null || pwd == null) {
             return false;

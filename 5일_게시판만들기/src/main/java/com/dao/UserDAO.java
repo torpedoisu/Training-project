@@ -105,6 +105,12 @@ public class UserDAO {
 
     }
 
+    /**
+     * USER_TB 테이블에서 아이디로 유저를 조회하는 메서드
+     * 
+     * @param userId
+     * @return UserVO
+     */
     public UserVO getUserWithId(String userId) {
         logger.debug("[getUserWithId] User: "+ userId +" 조회 시작");
         
