@@ -58,11 +58,9 @@ public class UserService {
     }
 
     
-    public boolean checkUserIsValidInSession(String userPk, String userId, String userPwd) {
+    public boolean checkUserIsValidInSession(String userPk, String userId, String userEncPwd) {
         UserDAO userDao = new UserDAO();
         
-        String userEncPwd = Encrypt.encode(userPwd);
-
         UserVO userInDB = userDao.getUserWithIdEncPwd(userId, userEncPwd);
         
         if (userInDB.getId().equals(userId) && userInDB.getPwd().equals(userEncPwd)) {

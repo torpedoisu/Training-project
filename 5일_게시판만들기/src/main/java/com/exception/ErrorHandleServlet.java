@@ -35,7 +35,6 @@ public class ErrorHandleServlet extends HttpServlet{
         ResponseData responseData = new ResponseData(Status.FAIL, message, type);
         out.print(responseData.getJsonResponseData());
 
-        System.out.println(exception.getNextPath());
         HttpUtil.exceptionForward(req, res, out, exception.getNextPath());
     }
 }

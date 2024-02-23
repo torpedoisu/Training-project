@@ -29,13 +29,13 @@ public class UserDAO {
      * @return userVO - pk가 등록된 UserVO 
      */
     public UserVO insert(UserVO user){
-        logger.debug("User: "+ user.getId() +" 등록 시작");
+        logger.debug("[insert] User: "+ user.getId() +" 등록 시작");
         
         dbManager.connect();
         
         PreparedStatement statement = null;
 
-        String sql = "INSERT INTO user_tb (id, pwd) VALUES (?, ?)";
+        String sql = "INSERT INTO USER_TB (ID, PWD) VALUES (?, ?)";
         
         try {
             statement = dbManager.getJdbcConnection().prepareStatement(sql);
@@ -69,7 +69,7 @@ public class UserDAO {
      * @return UserVO
      */
     public UserVO getUserWithIdEncPwd(String userId, String userEncPwd) {
-        logger.debug("User: "+ userId +" 조회 시작");
+        logger.debug("[getUserWithIdEncPwd] User: "+ userId +" 조회 시작");
         
         dbManager.connect();
         
@@ -89,8 +89,6 @@ public class UserDAO {
                 user.setPk(rs.getString("PK"));
                 user.setId(rs.getString("ID"));
                 user.setPwd(rs.getString("PWD"));
-            } else {
-                throw new CustomException("해당 user를 조회할 수 없습니다", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
             }
             
             logger.debug("User: "+ userId +" 조회 완료");
@@ -108,7 +106,7 @@ public class UserDAO {
     }
 
     public UserVO getUserWithId(String userId) {
-logger.debug("User: "+ userId +" 조회 시작");
+        logger.debug("[getUserWithId] User: "+ userId +" 조회 시작");
         
         dbManager.connect();
         

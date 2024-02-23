@@ -1,15 +1,14 @@
 package com.dao;
 
-import java.math.BigInteger;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.exception.CustomException;
 import com.global.DBManager;
 import com.vo.ArticleFileVO;
 
@@ -29,23 +28,25 @@ public class ArticleFileDAO {
      * @return ArticleFileVO
      */
     public ArticleFileVO insert(ArticleFileVO file){
-        logger.debug("File 등록 시작");
+        logger.debug("[insert] File 등록 시작");
         
         dbManager.connect();
         
         PreparedStatement statement = null;
-
-        String fileSql = "INSERT INTO file_tb (article_pk, content) VALUES (?, ?)";
+        
+        String fileSql = "INSERT INTO FILE_TB (ARTICLE_PK, CONTENT) VALUES (?, ?)";
         
         try {
             statement = dbManager.getJdbcConnection().prepareStatement(fileSql);
             statement.setString(1, file.getExternalArticle().getPk()); // 게시글의 PK를 외래 키로 설정
-            statement.setBlob(2, file.getFile());
+            //BLOB 등록
+            InputStream inputStream = new ByteArrayInputStream(file.getFile());
+            statement.setBinaryStream(2, inputStream, file.getFile().length);
             statement.executeUpdate();
             
             dbManager.commit(); 
             
-            logger.debug("file 등록 완료");
+            logger.debug("[insert] File 등록 완료");
         } catch (SQLException e) {
             logger.error("파일을 DB에 insert 도중 에러");
             e.printStackTrace();

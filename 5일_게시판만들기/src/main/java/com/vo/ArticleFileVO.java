@@ -5,7 +5,7 @@ import java.sql.Blob;
 
 public class ArticleFileVO {
     private BigInteger pk;
-    private Blob file;
+    private byte[] file;
     private ArticleVO externalArticle;
     
     public String getPk() {
@@ -16,11 +16,11 @@ public class ArticleFileVO {
         this.pk = new BigInteger(pk);
     }
     
-    public Blob getFile() {
+    public byte[] getFile() {
         return file;
     }
     
-    public void setFile(Blob file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
     

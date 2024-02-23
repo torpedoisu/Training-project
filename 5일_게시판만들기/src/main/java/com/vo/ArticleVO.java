@@ -51,4 +51,12 @@ public class ArticleVO {
     public void setExternalUser(UserVO user) {
         this.externalUser = user;
     }
+    
+    public boolean isExist() {
+        if (this.title == null || this.content == null) {
+            return false;
+        }
+        
+        return true;
+    }
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.controller.ArticleRegisterController;
 import com.dao.ArticleDAO;
 import com.dao.ArticleFileDAO;
 import com.exception.CustomException;
@@ -33,9 +32,9 @@ public class ArticleService {
         return articleService;
     }
     
-    public void registerArticle(UserVO user, String title, String content, List<Blob> files) {
+    public void registerArticle(UserVO user, String title, String content, List<byte[]> files) {
         
-        logger.debug("게시글 등록 Service 시작");
+        logger.debug("Service - 게시글 등록 시작");
         
         boolean userIsValid = UserService.getInstance().checkUserIsValidInSession(user.getPk(), user.getId(), user.getPwd());
         
@@ -46,29 +45,42 @@ public class ArticleService {
         content = (content == null) ? "" : content;
         title = (title == null) ? "" : content;
         
-        ArticleVO articleVo = new ArticleVO();
-        articleVo.setExternalUser(user);
-        articleVo.setTitle(title);
-        articleVo.setContent(content);
+        ArticleVO article = new ArticleVO();
+        article.setExternalUser(user);
+        article.setTitle(title);
+        article.setContent(content);
 
+//      유저는 같은 제목을 등록할 수 없음
         ArticleDAO articleDao = new ArticleDAO();
-        ArticleVO  insertedArticle = articleDao.insert(articleVo);
+        ArticleVO articleInDB = articleDao.selectWithTitle(user, title);
         
-//        
-//        String articlePk = articleDao.select(articleVo); //TODO
-//        articleVo.setPk(articlePk);
+        if (articleInDB.isExist()) {
+            throw new CustomException("이미 등록한 제목입니다. 다른 제목을 사용해주세요", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
+        }
+        
+//      게시글 등록
+        ArticleVO  insertedArticle = articleDao.insert(article);
+        
+//      게시글의 pk 설정
+        ArticleVO articleInDBWithPK = articleDao.select(article);
+        if (!articleInDBWithPK.isExist()) {
+            throw new CustomException("Service - db에 게시글 등록 후 pk 가져오던 중 오류", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
+        }
+        article.setPk(articleInDBWithPK.getPk());
+        
+
 //
 //        
-//        // 파일 등록
-//        ArticleFileVO articleFileVo = new ArticleFileVO();
-//        ArticleFileDAO articleFileDao = new ArticleFileDAO();
-//        for (Blob file: files) {
-//            articleFileVo.setExternalArticle(articleVo);
-//            articleFileVo.setFile(file);
-//            articleFileDao.insert(articleFileVo);
-//        }
-//        
+        // 파일 등록
+        ArticleFileVO articleFileVo = new ArticleFileVO();
+        ArticleFileDAO articleFileDao = new ArticleFileDAO();
+        for (byte[] file: files) {
+            articleFileVo.setExternalArticle(article);
+            articleFileVo.setFile(file);
+            articleFileDao.insert(articleFileVo);
+        }
         
         
+        logger.debug("Service - 게시글 등록 완료");
     }
 }

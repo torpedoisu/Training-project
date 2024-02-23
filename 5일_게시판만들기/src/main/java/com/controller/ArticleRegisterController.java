@@ -3,7 +3,6 @@ package com.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.exception.CustomException;
+import com.global.HttpUtil;
 import com.service.ArticleService;
 import com.vo.UserVO;
 
@@ -42,10 +41,9 @@ public class ArticleRegisterController implements Controller {
         
         String title = null;
         String content = null;
-        List<Blob> files = new ArrayList<Blob>();
+        List<byte[]> files = new ArrayList<byte[]>();
         
         byte[] fileBytes = null;
-        Blob blob = null;
         
         // multipart 헤더 맞는지 확인
         String contentType = req.getContentType();
@@ -57,14 +55,7 @@ public class ArticleRegisterController implements Controller {
                 if (part.getHeader("Content-Disposition").contains("filename=")) {
                    Part file = req.getPart(part.getName());
                    fileBytes = readPart(file);
-                   
-                try {
-                    blob = new SerialBlob(fileBytes);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                   
-                   files.add(blob);
+                   files.add(fileBytes);
                    
                 // 파일이 아닌 경우
                 } else {
@@ -81,7 +72,6 @@ public class ArticleRegisterController implements Controller {
                       default:
                           throw new CustomException("잘못된 요청입니다", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
                   }
-                  logger.debug(part.getName() + " " + formValue);
                 }
                
             }
@@ -91,7 +81,7 @@ public class ArticleRegisterController implements Controller {
         ArticleService articleService = ArticleService.getInstance();
         articleService.registerArticle(user, title, content, files);
     
-        
+        HttpUtil.forward(req, res, "index.jsp");
     }
     
     private byte[] readPart(Part part) throws IOException {

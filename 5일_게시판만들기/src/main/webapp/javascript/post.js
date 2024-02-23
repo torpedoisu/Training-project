@@ -10,9 +10,9 @@ function registerPost() {
     formData.append('title', title);
     formData.append('content', content);
     
+    
     for (let i = 0; i < fileList.length; i++) {
-        const blob = convertFileToBlob(fileList[i]);
-        formData.append('file' + i, blob, fileList[i].name);
+        formData.append('file' + i, fileList[i], fileList[i].name);
     }
     
     // formData에 잘 추가되었는지 확인
