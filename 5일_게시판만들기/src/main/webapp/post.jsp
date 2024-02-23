@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>게시글 작성</title>
+    <script src="javascript/post.js"></script>
   <script src="javascript/article.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
@@ -26,15 +27,15 @@
   <h1>게시글 작성</h1>
   <form id="articleForm">
     <label for="title">제목:</label><br>
-    <input type="text" id="title" name="title"><br><br>
+    <input type="text" id="title" name="title" value="title"><br><br>
     
-    <div id="content" name="content" class="editor" contenteditable="true"></div>
+    <div id="content" name="content" value="content" class="editor" contenteditable="true"></div>
 
     <label for="file">파일 선택:</label>
-    <input type="file" id="file" name="file" multiple onchange="updateFileList(this.files)"><br>
+    <input type="file" id="file" name="file" value="file" multiple onchange="updateFileList(this.files)"><br>
     <ul id="fileList"></ul>
-
-    <button type="button" onclick="registerArticle()">작성 완료</button>
+    
+    <button type="button" onclick="registerPost()">작성 완료</button>
   </form>
 </body>
 </html>
