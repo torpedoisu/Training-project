@@ -13,6 +13,12 @@ import com.vo.UserVO;
 
 public class UserAuthController implements Controller{
 
+    /**
+     * 유저의 세션이 존재하는지 확인하는 메서드
+     * 
+     * 예외 처리
+     * - 유저 세션이 존재하는지 확인
+     */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession session = req.getSession();

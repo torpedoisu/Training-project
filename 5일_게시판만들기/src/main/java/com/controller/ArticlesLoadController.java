@@ -18,9 +18,9 @@ import com.global.HttpUtil;
 import com.service.ArticleService;
 import com.vo.ArticleVO;
 
-public class ArticleLoadController implements Controller{
+public class ArticlesLoadController implements Controller{
 
-    public static Logger logger = LogManager.getLogger(ArticleLoadController.class);
+    public static Logger logger = LogManager.getLogger(ArticlesLoadController.class);
     
     /**
      * 작성자, 제목, 본문 정보를 담은 article 객체 반환하는 메서드

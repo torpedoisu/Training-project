@@ -23,7 +23,7 @@ function checkUserInSession() {
 function loadArticles(){
     console.log("게시글 로딩");
     
-    axios.get('articleLoad.do')
+    axios.get('articlesLoad.do')
         .then(response => {
             console.log(response.data.articles);
             displayArticles(response.data.articles);
