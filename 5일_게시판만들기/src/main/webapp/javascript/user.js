@@ -78,6 +78,5 @@ function logout() {
         });
     sessionStorage.removeItem('user');
     checkLoginStatus();
-    
 
 }

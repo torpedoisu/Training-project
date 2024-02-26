@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>게시글 작성</title>
   <script src="javascript/post.js"></script>
-  <script src="javascript/article.js"></script>
+  <script src="javascript/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     window.onload = function() {

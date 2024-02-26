@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <title>게시판</title>
   
-  <script src="javascript/article.js"></script>
+  <script src="javascript/index.js"></script>
   <script src="javascript/user.js" ></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/index.css">
@@ -15,6 +15,7 @@
     window.onload = function() {
           loadIndexButtons();
           loadArticles();
+          checkUserInSession();
       };
   </script>
   
@@ -32,6 +33,7 @@
                 <th>작성자</th>
                 <th>제목</th>
                 <th>본문</th>
+                <th>바로가기</th>
             </tr>
         </thead>
         <tbody id="articleTableBody"></tbody>
