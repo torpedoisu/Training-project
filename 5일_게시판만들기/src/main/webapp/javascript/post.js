@@ -1,4 +1,18 @@
 
+function checkUserInPost() {
+    console.log("유저 로그인 상태인지 확인");
+    
+    axios.get('userAuth.do')
+        .then(response => {
+            console.log('유저 로그인 상태');
+        })
+        .catch(error => {
+            console.log('유저 로그인 상태 아님');
+            alert(error.response.data.statusDescription);
+            window.location.href = error.response.headers.path;
+        });
+}
+
 function registerPost() {
     console.log('게시글 작성');
     let title = document.getElementById('title').value;

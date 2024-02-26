@@ -70,7 +70,6 @@ function vanillaAjax() {
 function axiosJson() {
 	alert("axiosJson 시작");
     
-    
 	let axiosUser = new User("axios", 20);
 	
 	axios.post(AXIOS_SERVLET_URL, axiosUser, {

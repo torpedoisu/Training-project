@@ -67,7 +67,7 @@ public class ArticleFileDAO {
         while (rs.next()) {
             ArticleFileVO file = new ArticleFileVO();
             file.setPk(rs.getString("PK"));
-            file.setFile(rs.getBytes("file"));
+            file.setFile(rs.getBytes("CONTENT"));
             
             files.add(file);
         }

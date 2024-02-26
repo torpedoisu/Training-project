@@ -39,13 +39,12 @@ public class ArticleRegisterController implements Controller {
         logger.debug("게시글 등록 시작");
         
         HttpSession session = req.getSession();
-        UserVO user = null;
+ 
+        UserVO user = (UserVO) session.getAttribute("user");
         
         // 세션이 존재하지 않는 경우 리다이렉트
-        if (session == null) {
+        if (session == null || user == null) {
             throw new CustomException("다시 로그인 해주세요" , HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
-        } else {
-            UserVO obj = (UserVO) session.getAttribute("user");
         }
         
         logger.debug("user " + user.getId() + " 세션 받아오기 완료");

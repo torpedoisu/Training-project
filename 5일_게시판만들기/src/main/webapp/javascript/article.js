@@ -1,3 +1,27 @@
+function checkUserInArticle(article) {
+    console.log("글을 작성한 유저가 맞는지 확인");
+    
+    axios.get('')
+        .then(response => {
+            createDeleteBtn(article);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+// 게시물 삭제 버튼 추가
+function createDeleteBtn(article) {
+        // 게시물 삭제 버튼 추가
+    const deleteButtonElement = document.getElementById('delete');
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = '게시물 삭제';
+    deleteButton.addEventListener('click', function() {
+        deleteArticle(article.pk);
+    });
+    deleteButtonElement.appendChild(deleteButton);
+}
+
 function getArticleDetails(articlePk) {
     
     //TODO:
@@ -7,7 +31,7 @@ function getArticleDetails(articlePk) {
             displayArticleDetails(article);
         })
         .catch(error => {
-            
+            console.log(error);
             alert(error.response.data.statusDescription);
             window.location.href = error.response.headers.path;
         });
@@ -18,34 +42,35 @@ function displayArticleDetails(article) {
     const articleTitleElement = document.getElementById('articleTitle');
     const articleUserElement = document.getElementById('articleUser');
     const articleContentElement = document.getElementById('articleContent');
-    const articleFileLinkElement = document.getElementById('articleFileLink');
 
     articleTitleElement.innerHTML = article.title;
     articleUserElement.innerHTML= '작성자: ' + article.user;
     articleContentElement.innerHTML= article.content;
 
-    // 파일(blob) 처리
-
-    if (article.file) {
-        // 파일이 있는 경우 파일 다운로드 링크 생성
-        const fileURL = URL.createObjectURL(article.file); // Blob URL 생성
-        const fileName = 'downloaded_file'; // 파일 이름 (임시로 설정)
-        const fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        fileLink.download = fileName;
-        fileLink.textContent = '파일 다운로드';
-        articleFileLinkElement.appendChild(fileLink);
-    }
-
-    // 게시물 삭제 버튼 추가
-    const deleteButtonElement = document.getElementById('delete');
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = '게시물 삭제';
-    deleteButton.addEventListener('click', function() {
-        deleteArticle(article.id);
-    });
-    deleteButtonElement.appendChild(deleteButton);
+    checkUserInArticle(article);
+    
+    makeFile(article.file);
 }
+
+
+
+function makeFileURL(file){
+    const articleFileLinkElement = document.getElementById('articleFileLink');
+        
+    let decodedFile= atob(file);
+    let blob = new Blob([decodedFile], { type: 'application/octet-stream' }); // Blob 객체 생성
+    let fileURL = URL.createObjectURL(blob); // Blob URL 생성
+    const fileName = '파일'; // 파일 이름 설정
+    let fileLink = document.createElement('a');
+    
+    fileLink.href = fileURL;
+    fileLink.download = fileName;
+    fileLink.textContent = `파일 다운로드 (${file.name})`; // 다운로드 링크에 파일 이름 표시
+    articleFileLinkElement.appendChild(fileLink);
+    articleFileLinkElement.appendChild(document.createElement('br')); // 각 파일마다 줄 바꿈 추가
+}
+
+
 
 function deleteArticle(articleId) {
     

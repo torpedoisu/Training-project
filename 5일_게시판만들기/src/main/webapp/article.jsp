@@ -22,6 +22,7 @@
         <p id="articleUser"></p>
         <p id="articleContent"></p>
     </div>
-    <div id="delete"></div>
+    <div id="delete>"></div>
+    <div id="articleFileLink"></div>
 </body>
 </html>

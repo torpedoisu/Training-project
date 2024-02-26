@@ -31,6 +31,7 @@ public class CommonServlet extends HttpServlet {
 
         // JSON 파싱
         String jsonString = sb.toString();
+        System.out.println("jsonString - " + jsonString);
         JSONObject jsonObject = new JSONObject(jsonString);
 
         // 응답 헤더 설정

@@ -50,6 +50,15 @@ public class ArticleDetailController implements Controller{
             int index = 0;
             for (ArticleFileVO articleFile : articleFiles) {
                 String base64EncodedFile = this.convertBlobToBase64(articleFile.getFile());
+                
+                
+                
+                System.out.println("디코딩 전 base64 - " + base64EncodedFile);
+                String s = new String(Base64.getDecoder().decode(base64EncodedFile));
+                System.out.println("디코딩 후 base64 - " + s);
+                
+                
+                
                 fileObject.put("file" + index++, base64EncodedFile);
             }
         }    
