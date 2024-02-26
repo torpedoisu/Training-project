@@ -1,28 +1,44 @@
-function getArticleDetails(articleId) {
+function getArticleDetails(articlePk) {
     
     //TODO:
-    axios.get(`articleDetail.do?id=${articleId}`)
+    axios.get(`articleDetail.do?pk=${articlePk}`)
         .then(response => {
-            const article = response.data.article;
+            const article = response.data;
             displayArticleDetails(article);
         })
         .catch(error => {
-            console.log(error);
+            
             alert(error.response.data.statusDescription);
             window.location.href = error.response.headers.path;
         });
 }
 
 function displayArticleDetails(article) {
+    console.log(article);
     const articleTitleElement = document.getElementById('articleTitle');
     const articleUserElement = document.getElementById('articleUser');
     const articleContentElement = document.getElementById('articleContent');
+    const articleFileLinkElement = document.getElementById('articleFileLink');
 
-    articleTitleElement.textContent = article.title;
-    articleUserElement.textContent = '작성자: ' + article.user;
-    articleContentElement.textContent = article.content;
-    
+    articleTitleElement.innerHTML = article.title;
+    articleUserElement.innerHTML= '작성자: ' + article.user;
+    articleContentElement.innerHTML= article.content;
+
+    // 파일(blob) 처리
+
+    if (article.file) {
+        // 파일이 있는 경우 파일 다운로드 링크 생성
+        const fileURL = URL.createObjectURL(article.file); // Blob URL 생성
+        const fileName = 'downloaded_file'; // 파일 이름 (임시로 설정)
+        const fileLink = document.createElement('a');
+        fileLink.href = fileURL;
+        fileLink.download = fileName;
+        fileLink.textContent = '파일 다운로드';
+        articleFileLinkElement.appendChild(fileLink);
+    }
+
     // 게시물 삭제 버튼 추가
+    const deleteButtonElement = document.getElementById('delete');
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '게시물 삭제';
     deleteButton.addEventListener('click', function() {

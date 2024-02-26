@@ -4,13 +4,18 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.global.DBManager;
 import com.vo.ArticleFileVO;
+import com.vo.ArticleVO;
+import com.vo.UserVO;
 
 public class ArticleFileDAO {
 
@@ -44,5 +49,34 @@ public class ArticleFileDAO {
         statement.close();
         
         return file;
+    }
+
+    public List<ArticleFileVO> selectFilesByArticlePk(DBManager dbManager, String articlePk) throws SQLException{
+        logger.debug("[selectFilesByArticlePk] 상세 게시글pk: " + articlePk + "에 대한 파일 조회 시작");
+
+        List<ArticleFileVO> files = new ArrayList<ArticleFileVO>();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        
+        String sql = "SELECT * FROM FILE_TB WHERE ARTICLE_PK = ?";
+        
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, articlePk);
+        rs = statement.executeQuery();
+        
+        while (rs.next()) {
+            ArticleFileVO file = new ArticleFileVO();
+            file.setPk(rs.getString("PK"));
+            file.setFile(rs.getBytes("file"));
+            
+            files.add(file);
+        }
+
+        rs.close();
+        statement.close();
+        
+        logger.debug("[selectFilesByArticlePk] 상세 게시글pk: " + articlePk + "에 대한 파일 조회 완료");
+        
+        return files;
     }
 }

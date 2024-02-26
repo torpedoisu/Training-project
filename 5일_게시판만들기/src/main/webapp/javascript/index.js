@@ -5,7 +5,7 @@ function redirectToPost() {
 
 function redirectToArticle(articlePk) {
     console.log("게시글 상세 페이지로 redirect");
-    window.location.href = `articleDetail.jsp?id=${articleId}`;
+    window.location.href = `article.jsp?pk=${articlePk}`;
 }
 
 function checkUserInSession() {
@@ -13,10 +13,19 @@ function checkUserInSession() {
     
     axios.get('userAuth.do')
         .then(response => {
-            console.log(response);
+            console.log('유저 로그인 상태');
+            document.getElementById('logoutButton').style.display = 'block';
+            document.getElementById('loginButton').style.display = 'none';
+            document.getElementById('registerButton').style.display = 'none';
+            document.getElementById('postButton').style.display = 'block';
+
         })
         .catch(error => {
-            console.log(error);
+            console.log('유저 로그인 상태 아님');
+            document.getElementById('logoutButton').style.display = 'none';
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('registerButton').style.display = 'block';
+            document.getElementById('postButton').style.display = 'none';
         });
 }
 
@@ -30,8 +39,8 @@ function loadArticles(){
         })
         .catch(error => {
             console.log(error);
-            //alert(error.response.data);
-            //window.location.href = error.response.headers.path;
+            alert(error.response.data);
+            window.location.href = error.response.headers.path;
         });
 }
 
@@ -54,7 +63,6 @@ function displayArticles(articles) {
         userCell.innerHTML = article.user;
         titleCell.innerHTML = article.title;
         contentCell.innerHTML = article.content;
-
         actionCell.innerHTML = `<button onclick="redirectToArticle(${article.pk})">상세보기</button>`; // 버튼 추가
     });
 }

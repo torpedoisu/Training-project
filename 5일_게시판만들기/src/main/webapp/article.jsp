@@ -6,12 +6,12 @@
   <meta charset="UTF-8">
   <title>게시물 상세 페이지</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="javascript/articleDetail.js"></script>
+  <script src="javascript/article.js"></script>
   <script>
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const articlePk = urlParams.get('pk');
-            getArticleDetails(articleId);
+            getArticleDetails(articlePk);
         };
     </script>
 </head>
@@ -22,5 +22,6 @@
         <p id="articleUser"></p>
         <p id="articleContent"></p>
     </div>
+    <div id="delete"></div>
 </body>
 </html>

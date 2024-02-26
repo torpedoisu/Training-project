@@ -161,4 +161,57 @@ public class ArticleService {
         return articles;
         
     }
+
+    public ArticleVO getArticle(String articlePk) {
+        logger.debug("Service - 게시물 상세 조회 트랜잭션 시작");
+        DBManager dbManager = new DBManager();
+        
+        dbManager.connect();
+        
+        ArticleVO article = null;
+        try {
+            ArticleDAO articleDao = new ArticleDAO();
+            article = articleDao.selectByPk(dbManager, articlePk);
+            
+            if (article == null) {
+                throw new CustomException("게시글 조회가 실패했습니다", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "index.jsp");
+            }
+            
+            // 게시글의 작성자 조회
+            UserDAO userDao = new UserDAO();
+            String userPk = article.getExternalUser().getPk();
+                
+            UserVO user = userDao.selectUserWithPk(dbManager, userPk);
+            article.setExternalUser(user);
+            
+            // 파일 불러오기
+            ArticleFileDAO articleFileDao = new ArticleFileDAO();
+
+            List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article.getPk());
+            if (articleFilesVo.size() != 0 && articleFilesVo != null) {
+                article.setExternalFiles(articleFilesVo);
+                // 파일에도 게시글 넣어주기 (양방향
+                for (ArticleFileVO articleFile : articleFilesVo) {
+                    articleFile.setExternalArticle(article);
+                }
+            }
+            
+            dbManager.commit();
+            
+        } catch (SQLException e) {
+            logger.error("게시물 상세 조회 중 예외 발생");
+            e.printStackTrace();
+            dbManager.rollback();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect();    
+            }
+        }
+        
+        logger.debug("Service - 게시글 상세 조회 트랜잭션 완료");
+        
+        return article;
+        
+    }
+    
 }

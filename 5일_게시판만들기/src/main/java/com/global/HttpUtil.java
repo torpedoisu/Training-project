@@ -31,6 +31,7 @@ public class HttpUtil {
         try {
             res.setHeader("path", path);
             out.flush();
+            out.close();
         } catch (Exception e) {
             logger.error("forward 발생 중 에러");
             e.printStackTrace();

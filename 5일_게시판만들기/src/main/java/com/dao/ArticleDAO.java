@@ -10,6 +10,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.global.DBManager;
+import com.vo.ArticleFileVO;
 import com.vo.ArticleVO;
 import com.vo.UserVO;
 
@@ -118,7 +119,6 @@ public class ArticleDAO {
 
     public List<ArticleVO> selectAll(DBManager dbManager) throws SQLException {
         logger.debug("[selectAll] 전체 게시글 조회 시작");
-    
 
         List<ArticleVO> articles = new ArrayList<ArticleVO>();
         PreparedStatement statement = null;
@@ -149,6 +149,35 @@ public class ArticleDAO {
         logger.debug("[selectAll] 전체 게시글 조회 완료");
 
         return articles;
+    }
+
+    public ArticleVO selectByPk(DBManager dbManager, String articlePk) throws SQLException{
+        logger.debug("[selectByPk] 상세 게시글pk - " + articlePk + "조회 시작");
+        
+        ArticleVO article = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        
+        
+        String sql = "SELECT PK, TITLE, USER_PK, CONTENT FROM ARTICLE_TB WHERE PK = ?";
+        pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
+        pstmt.setString(1, articlePk);
+        rs = pstmt.executeQuery();
+        
+        if (rs.next()) {
+            article = new ArticleVO();
+            article.setPk(rs.getString("PK"));
+            article.setTitle(rs.getString("TITLE"));
+            article.setContent(rs.getString("CONTENT"));
+            
+            // 유저 정보 세팅
+            UserVO userVo = new UserVO();
+            userVo.setPk(rs.getString("USER_PK"));
+            article.setExternalUser(userVo);
+        }
+        
+        logger.debug("[selectByPk] 상세 게시글pk - " + articlePk + "조회 완료");
+        return article;
     }
     
 }
