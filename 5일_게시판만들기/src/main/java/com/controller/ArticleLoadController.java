@@ -31,7 +31,6 @@ public class ArticleLoadController implements Controller{
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         logger.debug("전체 게시글 조회 시작");
-        
         PrintWriter out = res.getWriter();
         
         ArticleService articleService = ArticleService.getInstance();

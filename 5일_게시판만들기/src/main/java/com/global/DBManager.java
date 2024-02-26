@@ -58,12 +58,12 @@ public class DBManager {
             try {
                 logger.debug("DB 연결 시작...");
                 
-                if (jdbcConnection == null || jdbcConnection.isClosed()) {
+                if (this.jdbcConnection == null || this.jdbcConnection.isClosed()) {
                     Class.forName(driver);
                     
-                    jdbcConnection = DriverManager.getConnection(url, id, pwd);
-                    jdbcConnection.setAutoCommit(false);
-                    jdbcConnection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+                    this.jdbcConnection = DriverManager.getConnection(url, id, pwd);
+                    this.jdbcConnection.setAutoCommit(false);
+                    this.jdbcConnection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
                     
                     logger.debug("DB 연결 성공");
                 }
@@ -81,8 +81,8 @@ public class DBManager {
         try {
             logger.debug("DB에 커밋 시작...");
             
-            if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.commit();
+            if (this.jdbcConnection != null && !this.jdbcConnection.isClosed()) {
+                this.jdbcConnection.commit();
                 
                 logger.debug("db에 커밋 완료");
             }
@@ -97,8 +97,8 @@ public class DBManager {
         try {
             logger.debug("트랜잭션 롤백 시작...");
             
-            if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.rollback();
+            if (this.jdbcConnection != null && !this.jdbcConnection.isClosed()) {
+                this.jdbcConnection.rollback();
                 
                 logger.debug("트랜잭션 롤백 완료");
             }
@@ -108,11 +108,26 @@ public class DBManager {
         } 
     }
 
+    public void disconnect(){
+        try {
+            if (this.jdbcConnection != null && !this.jdbcConnection.isClosed()) {
+                this.jdbcConnection.setAutoCommit(true); // 커밋 옵션 다시 원래대로 되돌리기
+                this.jdbcConnection.close();
+                
+            }   
+            
+        } catch (SQLException e) {
+            logger.error("db와 연결 해제 중 예외 발생");
+            e.printStackTrace();
+        }
+        
+    }
+    
     public void disconnect(PreparedStatement ps){
         try {
-            if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.setAutoCommit(true); // 커밋 옵션 다시 원래대로 되돌리기
-                jdbcConnection.close();
+            if (this.jdbcConnection != null && !this.jdbcConnection.isClosed()) {
+                this.jdbcConnection.setAutoCommit(true); // 커밋 옵션 다시 원래대로 되돌리기
+                this.jdbcConnection.close();
                 
                 if (ps != null) {
                     ps.close();
@@ -130,9 +145,9 @@ public class DBManager {
     
     public void disconnect(PreparedStatement ps, ResultSet rs){
         try {
-            if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-                jdbcConnection.setAutoCommit(true); // 커밋 옵션 다시 원래대로 되돌리기
-                jdbcConnection.close();
+            if (this.jdbcConnection != null && !this.jdbcConnection.isClosed()) {
+                this.jdbcConnection.setAutoCommit(true); // 커밋 옵션 다시 원래대로 되돌리기
+                this.jdbcConnection.close();
                 
                 if (ps != null) {
                     ps.close();

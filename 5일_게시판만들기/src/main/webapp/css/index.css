@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+#articleTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#articleTable th, #articleTable td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#articleTable th {
+    background-color: #f2f2f2;
+}

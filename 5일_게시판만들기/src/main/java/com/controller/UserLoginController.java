@@ -61,7 +61,6 @@ public class UserLoginController implements Controller {
         // 로그인 성공 메시지 출력
         res.setStatus(HttpServletResponse.SC_OK);
         
-        logger.debug("로그인 완료");
         HttpUtil.forward(req, res, "index.jsp");
     }
 }

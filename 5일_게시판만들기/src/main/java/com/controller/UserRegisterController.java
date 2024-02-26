@@ -59,7 +59,6 @@ public class UserRegisterController implements Controller{
         session.setAttribute("user", userInDB);
         
         res.setStatus(HttpServletResponse.SC_OK);
-        logger.debug("회원 가입 완료");
         HttpUtil.forward(req, res, "index.jsp");
     }
 

@@ -36,7 +36,6 @@ public class UserLogoutController implements Controller{
             res.setStatus(HttpServletResponse.SC_OK);
         } 
         
-        
         HttpUtil.forward(req, res, "index.jsp");
     }
 

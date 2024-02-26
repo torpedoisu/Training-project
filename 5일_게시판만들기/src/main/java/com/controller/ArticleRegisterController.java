@@ -45,16 +45,7 @@ public class ArticleRegisterController implements Controller {
         if (session == null) {
             throw new CustomException("다시 로그인 해주세요" , HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
         } else {
-            Object obj = session.getAttribute("user");
-            
-            // 잘못된 객체 들어와서 예외 발생할 수 있음으로 처리 
-            if (obj instanceof UserVO) {
-                user = (UserVO) obj;
-                
-            // 유저 객체가 제대로 불러와지지 않는 경우
-            } else {
-                throw new CustomException("유저 정보가 손상되었습니다. 다시 로그인해주세요", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
-            }    
+            UserVO obj = (UserVO) session.getAttribute("user");
         }
         
         logger.debug("user " + user.getId() + " 세션 받아오기 완료");

@@ -10,6 +10,7 @@
   <script src="javascript/article.js"></script>
   <script src="javascript/user.js" ></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
   <script>
     window.onload = function() {
           loadIndexButtons();
@@ -28,28 +29,12 @@
     
         <thead>
             <tr>
-                <th>글 번호</th>
-                <th>제목</th>
                 <th>작성자</th>
+                <th>제목</th>
+                <th>본문</th>
             </tr>
         </thead>
-        <tbody>
-            <%
-                List<ArticleVO> articles = (List<ArticleVO>) request.getAttribute("articles");
-                if (articles != null) {
-                    for (ArticleVO article : articles) {
-            %>
-            <tr>
-                <td><%= article.getExternalUser().getId() %></td>
-                <td><%= article.getTitle() %></td>
-                <td><%= article.getContent() %></td>
-            </tr>
-            <%-- 게시글을 테이블에 출력하는 부분 끝 --%>
-            <% 
-                    }
-                }
-            %>
-        </tbody> 
+        <tbody id="articleTableBody"></tbody>
         <button type="button" onclick="redirectToPost()" id="postButton" style="display: none">게시글 작성</button>
         
 

@@ -4,59 +4,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.exception.CustomException;
 import com.global.DBManager;
 import com.vo.UserVO;
 
 public class UserDAO {
-    private DBManager dbManager = null;
 
     public static Logger logger = LogManager.getLogger(UserDAO.class);        
 
-    public UserDAO() {
-        dbManager = new DBManager();
-    }
-    
     /**
      * USER_TB 테이블에 유저를 등록하는 메서드
      * 
      * @param user - db에 등록할 유저 정보, pk는 db에서 auto increment
      * @return userVO - pk가 등록된 UserVO 
+     * @throws SQLException 
      */
-    public UserVO insert(UserVO user){
+    public UserVO insert(DBManager dbManager, UserVO user) throws SQLException{
         logger.debug("[insert] User: "+ user.getId() +" 등록 시작");
-        
-        dbManager.connect();
         
         PreparedStatement statement = null;
 
         String sql = "INSERT INTO USER_TB (ID, PWD) VALUES (?, ?)";
+
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, user.getId());
+        statement.setString(2, user.getPwd());
+        statement.executeUpdate();
+        statement.close();
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, user.getId());
-            statement.setString(2, user.getPwd());
-            statement.executeUpdate();
-            
-            dbManager.commit(); 
-            
-            logger.debug("User: "+ user.getId() +" 등록 완료");
-            
-            
-        } catch (SQLException e) {
-            logger.error("DB에 insert 도중 에러");
-            e.printStackTrace();
-            dbManager.rollback();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement);    
-            }
-        }
+        logger.debug("[insert] User: "+ user.getId() +" 등록 완료");
         
         return user;
     }
@@ -67,11 +45,10 @@ public class UserDAO {
      * @param userId
      * @param userPwd - sha256으로 인코딩된 비밀번호
      * @return UserVO
+     * @throws SQLException 
      */
-    public UserVO getUserWithIdEncPwd(String userId, String userEncPwd) {
+    public UserVO getUserWithIdEncPwd(DBManager dbManager, String userId, String userEncPwd) throws SQLException {
         logger.debug("[getUserWithIdEncPwd] User: "+ userId +" 조회 시작");
-        
-        dbManager.connect();
         
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -79,28 +56,22 @@ public class UserDAO {
         
         String sql = "SELECT * FROM USER_TB WHERE ID = ? AND PWD = ?";
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, userId);
-            statement.setString(2, userEncPwd);
-            rs = statement.executeQuery();
-            
-            if (rs.next()) {
-                user.setPk(rs.getString("PK"));
-                user.setId(rs.getString("ID"));
-                user.setPwd(rs.getString("PWD"));
-            }
-            
-            logger.debug("User: "+ userId +" 조회 완료");
-            
-        } catch (SQLException e) {
-            logger.error("DB에서 select 도중 에러");
-            e.printStackTrace();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, rs);    
-            }
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, userId);
+        statement.setString(2, userEncPwd);
+        rs = statement.executeQuery();
+        
+        if (rs.next()) {
+            user.setPk(rs.getString("PK"));
+            user.setId(rs.getString("ID"));
+            user.setPwd(rs.getString("PWD"));
         }
+        
+        rs.close();
+        statement.close();
+            
+        logger.debug("[getUserWithIdEncPwd] User: "+ userId +" 조회 완료");
+        
         return user;
 
     }
@@ -110,11 +81,10 @@ public class UserDAO {
      * 
      * @param userId
      * @return UserVO
+     * @throws SQLException 
      */
-    public UserVO getUserWithId(String userId) {
+    public UserVO getUserWithId(DBManager dbManager, String userId) throws SQLException {
         logger.debug("[getUserWithId] User: "+ userId +" 조회 시작");
-        
-        dbManager.connect();
         
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -122,27 +92,21 @@ public class UserDAO {
         
         String sql = "SELECT * FROM USER_TB WHERE ID = ?";
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, userId);
-            rs = statement.executeQuery();
-            
-            if (rs.next()) {
-                user.setPk(rs.getString("PK"));
-                user.setId(rs.getString("ID"));
-                user.setPwd(rs.getString("PWD"));
-            }
-            
-            logger.debug("[getUserWithId] User: "+ user.getId() +" 조회 완료");
-            
-        } catch (SQLException e) {
-            logger.error("DB에서 select 도중 에러");
-            e.printStackTrace();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, rs);    
-            }
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, userId);
+        rs = statement.executeQuery();
+        
+        if (rs.next()) {
+            user.setPk(rs.getString("PK"));
+            user.setId(rs.getString("ID"));
+            user.setPwd(rs.getString("PWD"));
         }
+        
+        rs.close();
+        statement.close();
+        
+        logger.debug("[getUserWithId] User: "+ userId +" 조회 완료");
+        
         return user;
     }
 
@@ -150,11 +114,10 @@ public class UserDAO {
      * USER_TB 테이블에서 pk로 유저를 조회하는 메서드
      * @param userPk
      * @return UserVO
+     * @throws SQLException 
      */
-    public UserVO selectUserWithPk(String userPk) {
+    public UserVO selectUserWithPk(DBManager dbManager, String userPk) throws SQLException {
         logger.debug("[selectUserWithPk] UserPk: "+ userPk +" 조회 시작");
-        
-        dbManager.connect();
         
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -162,27 +125,21 @@ public class UserDAO {
         
         String sql = "SELECT * FROM USER_TB WHERE PK = ?";
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, userPk);
-            rs = statement.executeQuery();
-            
-            if (rs.next()) {
-                user.setPk(rs.getString("PK"));
-                user.setId(rs.getString("ID"));
-                user.setPwd(rs.getString("PWD"));
-            }
-            
-            logger.debug("[selectUserWithPk] UserPk: "+ user.getPk() +" 조회 완료");
-            
-        } catch (SQLException e) {
-            logger.error("DB에서 select 도중 에러");
-            e.printStackTrace();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, rs);    
-            }
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, userPk);
+        rs = statement.executeQuery();
+        
+        if (rs.next()) {
+            user.setPk(rs.getString("PK"));
+            user.setId(rs.getString("ID"));
+            user.setPwd(rs.getString("PWD"));
         }
+        
+        rs.close();
+        statement.close();
+        
+        logger.debug("[selectUserWithPk] UserPk: "+ userPk +" 조회 완료");
+        
         return user;
     }
     

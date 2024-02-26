@@ -14,52 +14,34 @@ import com.vo.ArticleVO;
 import com.vo.UserVO;
 
 public class ArticleDAO {
-    private DBManager dbManager = null;
 
     public static Logger logger = LogManager.getLogger(ArticleDAO.class);        
-
-    public ArticleDAO() {
-        dbManager = new DBManager();
-    }
 
     /**
      * ARTICLE_TB 테이블에 게시글을 등록하는 메서드
      * 
      * @param article - db에 등록할 게시글 정보
      * @return ArticleVO
+     * @throws SQLException 
      */
-    public ArticleVO insert(ArticleVO article){
+    public ArticleVO insert(DBManager dbManager, ArticleVO article) throws SQLException{
         logger.debug("[insert] ArticlePk: "+ article.getTitle() +" 등록 시작");
-        
-        dbManager.connect();
         
         PreparedStatement statement = null;
         
         String sql = "INSERT INTO ARTICLE_TB (USER_PK, TITLE, CONTENT) VALUES (?, ?, ?)";
+
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, article.getExternalUser().getPk());
+        statement.setString(2, article.getTitle());
+        statement.setString(3, article.getContent());
+        statement.executeUpdate();
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, article.getExternalUser().getPk());
-            statement.setString(2, article.getTitle());
-            statement.setString(3, article.getContent());
-            statement.executeUpdate();
-            
-            dbManager.commit(); 
-            
-            logger.debug("[insert] ArticlePk: "+ article.getTitle() +" 등록 완료");
-            
-        } catch (SQLException e) {
-            logger.error("게시글을 DB에 insert 도중 에러");
-            e.printStackTrace();
-            dbManager.rollback();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement);    
-            }
-        }
+        statement.close();
+        
+        logger.debug("[insert] ArticlePk: "+ article.getTitle() +" 등록 완료");
         
         return article;
-        
     }
 
     /**
@@ -68,41 +50,32 @@ public class ArticleDAO {
      * @param user - UserVO 객체
      * @param title - 조회에 사용될 제목
      * @return ArticleVO
+     * @throws SQLException 
      */
-    public ArticleVO selectWithTitle(UserVO user, String title) {
+    public ArticleVO selectWithTitle(DBManager dbManager, UserVO user, String title) throws SQLException {
         logger.debug("[selectWithTitle] user: "+ user.getId() + "의 게시글제목: " + title +" 조회 시작");
-        
-        dbManager.connect();
-        
+
         ArticleVO article = new ArticleVO();
         PreparedStatement statement = null;
         ResultSet rs = null;
         
         String sql = "SELECT * FROM ARTICLE_TB WHERE USER_PK = ? AND TITLE = ?";
+
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, user.getPk());
+        statement.setString(2, title);
+        rs = statement.executeQuery();
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, user.getPk());
-            statement.setString(2, title);
-            rs = statement.executeQuery();
-            
-            if (rs.next()) {
-                article.setPk(rs.getString("PK"));
-                article.setTitle(rs.getString("TITLE"));
-                article.setContent(rs.getString("CONTENT"));
-            }
-            
-            
-            logger.debug("[selectWithTitle] user: "+ user.getId() + "의 게시글제목: " + article.getTitle() +" 조회 완료");
-            
-        } catch (SQLException e) {
-            logger.error("게시글을 DB에 select 도중 에러");
-            e.printStackTrace();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, rs);    
-            }
+        if (rs.next()) {
+            article.setPk(rs.getString("PK"));
+            article.setTitle(rs.getString("TITLE"));
+            article.setContent(rs.getString("CONTENT"));
         }
+        
+        rs.close();
+        statement.close();
+            
+        logger.debug("[selectWithTitle] user: "+ user.getId() + "의 게시글제목: " + article.getTitle() +" 조회 완료");
         
         return article;
     }
@@ -112,49 +85,40 @@ public class ArticleDAO {
      * 
      * @param article
      * @return ArticleVO
+     * @throws SQLException 
      */
-    public ArticleVO select(ArticleVO article) {
+    public ArticleVO select(DBManager dbManager, ArticleVO article) throws SQLException {
         logger.debug("[select] user: "+ article.getExternalUser().getId() + "의 게시글제목: " + article.getTitle() +" 조회 시작");
-        
-        dbManager.connect();
         
         ArticleVO newArticle = new ArticleVO();
         PreparedStatement statement = null;
         ResultSet rs = null;
         
         String sql = "SELECT * FROM ARTICLE_TB WHERE USER_PK = ? AND TITLE = ? AND CONTENT = ?";
-        
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            statement.setString(1, article.getExternalUser().getPk());
-            statement.setString(2, article.getTitle());
-            statement.setString(3, article.getContent());
-            rs = statement.executeQuery();
-            
-            if (rs.next()) {
-                newArticle.setPk(rs.getString("PK"));
-                newArticle.setTitle(rs.getString("TITLE"));
-                newArticle.setContent(rs.getString("CONTENT"));
-            }
 
-            logger.debug("[select] user: "+ article.getExternalUser().getId() + "의 게시글제목: " + article.getTitle() +" 조회 완료");
-            
-        } catch (SQLException e) {
-            logger.error("게시글을 DB에 select 도중 에러");
-            e.printStackTrace();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, rs);    
-            }
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        statement.setString(1, article.getExternalUser().getPk());
+        statement.setString(2, article.getTitle());
+        statement.setString(3, article.getContent());
+        rs = statement.executeQuery();
+        
+        if (rs.next()) {
+            newArticle.setPk(rs.getString("PK"));
+            newArticle.setTitle(rs.getString("TITLE"));
+            newArticle.setContent(rs.getString("CONTENT"));
         }
+  
+        rs.close();
+        statement.close();
+        
+        logger.debug("[select] user: "+ article.getExternalUser().getId() + "의 게시글제목: " + article.getTitle() +" 조회 완료");
         
         return newArticle;
     }
 
-    public List<ArticleVO> selectAll() {
+    public List<ArticleVO> selectAll(DBManager dbManager) throws SQLException {
         logger.debug("[selectAll] 전체 게시글 조회 시작");
-        
-        dbManager.connect();
+    
 
         List<ArticleVO> articles = new ArrayList<ArticleVO>();
         PreparedStatement statement = null;
@@ -162,35 +126,28 @@ public class ArticleDAO {
         
         String sql = "SELECT * FROM ARTICLE_TB";
         
-        try {
-            statement = dbManager.getJdbcConnection().prepareStatement(sql);
-            rs = statement.executeQuery();
-            
-            while (rs.next()) {
-                ArticleVO article = new ArticleVO();
-                
-                article.setPk(rs.getString("PK"));
-                article.setTitle(rs.getString("TITLE"));
-                article.setContent(rs.getString("CONTENT"));
-                
-                UserVO user = new UserVO();
-                user.setPk(rs.getString("USER_PK"));
-                article.setExternalUser(user);
-                
-                articles.add(article);
-            }
-
-            logger.debug("[selectAll] 전체 게시글 조회 완료");
-            
-        } catch (SQLException e) {
-            logger.error("게시글을 DB에 select 도중 에러");
-            e.printStackTrace();
-        } finally {
-            if (!dbManager.checkJdbcConnectionIsClosed()) {
-                dbManager.disconnect(statement, rs);    
-            }
-        }
+        statement = dbManager.getJdbcConnection().prepareStatement(sql);
+        rs = statement.executeQuery();
         
+        while (rs.next()) {
+            ArticleVO article = new ArticleVO();
+            
+            article.setPk(rs.getString("PK"));
+            article.setTitle(rs.getString("TITLE"));
+            article.setContent(rs.getString("CONTENT"));
+            
+            UserVO user = new UserVO();
+            user.setPk(rs.getString("USER_PK"));
+            article.setExternalUser(user);
+            
+            articles.add(article);
+        }
+
+        rs.close();
+        statement.close();
+        
+        logger.debug("[selectAll] 전체 게시글 조회 완료");
+
         return articles;
     }
     
