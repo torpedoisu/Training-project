@@ -26,6 +26,7 @@ public class AxiosServlet extends HttpServlet {
             BufferedReader reader = request.getReader();
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
+                System.out.println("[StringBuilder log]" + sb.toString());
             }
         } catch (Exception e) { 
         	e.printStackTrace();
@@ -72,6 +73,8 @@ public class AxiosServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
+        System.out.println("[axios] output string- " + jsonObject.toString());
+        
         out.flush();
         out.close();
     }

@@ -24,6 +24,7 @@ public class CommonServlet extends HttpServlet {
             BufferedReader reader = request.getReader();
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
+                System.out.println("[StringBuilder log]" + sb.toString());
             }
         } catch (Exception e) { 
         	e.printStackTrace();
@@ -31,7 +32,7 @@ public class CommonServlet extends HttpServlet {
 
         // JSON 파싱
         String jsonString = sb.toString();
-        System.out.println("jsonString - " + jsonString);
+        System.out.println("[Common] output String - " + jsonString);
         JSONObject jsonObject = new JSONObject(jsonString);
 
         // 응답 헤더 설정
