@@ -152,7 +152,7 @@ public class ArticleDAO {
     }
 
     public ArticleVO selectByPk(DBManager dbManager, String articlePk) throws SQLException{
-        logger.debug("[selectByPk] 상세 게시글pk - " + articlePk + "조회 시작");
+        logger.debug("[selectByPk] 상세 게시글pk - " + articlePk + " 조회 시작");
         
         ArticleVO article = null;
         PreparedStatement pstmt = null;
@@ -176,8 +176,23 @@ public class ArticleDAO {
             article.setExternalUser(userVo);
         }
         
-        logger.debug("[selectByPk] 상세 게시글pk - " + articlePk + "조회 완료");
+        logger.debug("[selectByPk] 상세 게시글pk - " + articlePk + " 조회 완료");
         return article;
+    }
+
+    public void delete(DBManager dbManager, ArticleVO article) throws SQLException{
+        logger.debug("[delete] 상세 게시글pk - " + article.getPk() + " 삭제 시작");
+        
+        PreparedStatement pstmt = null;
+        
+        String sql = "DELETE FROM ARTICLE_TB WHERE PK = ?";
+        pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
+        pstmt.setString(1, article.getPk());
+        pstmt.executeUpdate();
+        
+        pstmt.close();
+        
+        logger.debug("[delete] 상세 게시글 - " + article.getPk() + " 삭제 완료");
     }
     
 }

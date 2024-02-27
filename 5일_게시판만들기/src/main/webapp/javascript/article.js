@@ -34,7 +34,7 @@ function getArticleDetails(articlePk) {
             if (!error){
                 alert(error.response.data.statusDescription);
                 window.location.href = error.response.headers.path;
-            s}
+            }
         });
 }
 
@@ -75,19 +75,22 @@ function makeFileURL(file){
 
 
 
-function deleteArticle(articleId) {
-    
-    //TODO:
-    
-    axios.post('deleteArticle.do', { id: articleId })
+function deleteArticle(articlePk) {
+    console.log("게시글 지우기", articlePk);
+    axios.post('articleDelete.do', { pk: articlePk })
         .then(response => {
             // 게시물 삭제에 성공한 경우 추가적인 동작 수행
             console.log('게시물 삭제 성공');
+            if(response.headers.path) {
+                window.location.href = response.headers.path;
+            }
             // 예를 들어, 삭제 후에 어떤 작업을 수행하거나 페이지를 새로고침할 수 있습니다.
         })
         .catch(error => {
-            console.log(error);
-            alert('게시물 삭제에 실패했습니다.');
+            if (!error){
+                alert(error.response.data.statusDescription);
+                window.location.href = error.response.headers.path;
+            }
         });
 }
 

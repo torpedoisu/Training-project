@@ -79,4 +79,20 @@ public class ArticleFileDAO {
         
         return files;
     }
+
+    public void delete(DBManager dbManager, ArticleFileVO file) throws SQLException {
+        logger.debug("[delete] 파일pk: " + file.getPk() + " 삭제 시작");
+        
+        PreparedStatement pstmt = null;
+        
+        String sql = "DELETE FROM FILE_TB WHERE ARTICLE_PK = ?";
+        pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
+        pstmt.setString(1, file.getPk());
+        pstmt.executeUpdate();
+        
+        pstmt.close();
+        
+        logger.debug("[delete] 파일pk: " + file.getPk() + " 삭제 완료");
+        
+    }
 }

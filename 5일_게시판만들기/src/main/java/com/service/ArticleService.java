@@ -94,6 +94,8 @@ public class ArticleService {
             
             dbManager.commit();
             
+            logger.debug("Service - 게시글 트랜잭션 완료");
+            
         } catch (SQLException e) {
             logger.error("게시물 등록 중 예외 발생");
             e.printStackTrace();
@@ -104,7 +106,6 @@ public class ArticleService {
             }
         }
         
-        logger.debug("Service - 게시글 트랜잭션 완료");
     }
 
     /** 
@@ -146,6 +147,8 @@ public class ArticleService {
             
             dbManager.commit();
             
+            logger.debug("Service - 전체 게시글 조회 완료");
+            
         } catch (SQLException e) {
             logger.error("전체 게시물 조회 중 예외 발생");
             e.printStackTrace();
@@ -155,8 +158,6 @@ public class ArticleService {
                 dbManager.disconnect();    
             }
         }
-        
-        logger.debug("Service - 전체 게시글 조회 완료");
         
         return articles;
         
@@ -198,6 +199,8 @@ public class ArticleService {
             
             dbManager.commit();
             
+            logger.debug("Service - 게시글 상세 조회 트랜잭션 완료");
+            
         } catch (SQLException e) {
             logger.error("게시물 상세 조회 중 예외 발생");
             e.printStackTrace();
@@ -208,9 +211,51 @@ public class ArticleService {
             }
         }
         
-        logger.debug("Service - 게시글 상세 조회 트랜잭션 완료");
+        
         
         return article;
+        
+    }
+
+    public void delete(String articlePk) {
+        logger.debug("Service - 게시글 삭제 트랜잭션 시작");
+        
+        DBManager dbManager = new DBManager();
+        
+        dbManager.connect();
+        
+        ArticleVO article = null;
+        try {
+            ArticleDAO articleDao = new ArticleDAO();
+            article = articleDao.selectByPk(dbManager, articlePk);
+            
+            if (article == null) {
+                throw new CustomException("이미 삭제된 게시글입니다", HttpServletResponse.SC_BAD_REQUEST, "index.jsp");
+            }
+            
+            // 게시글과 연결된 파일이 있는지도 확인
+            ArticleFileDAO articleFileDao = new ArticleFileDAO();
+            List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article.getPk());
+            if (articleFilesVo.size() != 0) {
+                for (ArticleFileVO file : articleFilesVo) {
+                    articleFileDao.delete(dbManager, file);
+                }
+            }
+            
+            articleDao.delete(dbManager, article);
+            
+            dbManager.commit();
+            
+            logger.debug("Service - 게시글 삭제 트랜잭션 완료");
+        } catch (SQLException e) {
+            logger.error("게시글 삭제 중 예외 발생");
+            e.printStackTrace();
+            dbManager.rollback();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect();
+            }
+        }
         
     }
     

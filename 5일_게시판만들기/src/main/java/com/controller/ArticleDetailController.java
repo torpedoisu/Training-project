@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 import com.exception.CustomException;
@@ -18,12 +20,16 @@ import com.vo.ArticleVO;
 
 public class ArticleDetailController implements Controller {
 
+    public static Logger logger = LogManager.getLogger(ArticleDetailController.class);
+    
     /**
      * 게시글의 상세 내용을 반환하는 메서드
      * 
      * 예외 처리 - 파일이 첨부되지 않은 경우 확인
      */
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        logger.debug("ArticleDetailController 진입");
+        
         // 게시물 ID 파라미터 가져오기
         String articlePk = req.getParameter("pk");
 
@@ -62,6 +68,8 @@ public class ArticleDetailController implements Controller {
 
         req.setAttribute("path", "article.jsp");
         req.setAttribute("PrintWriter", out);
+        
+        logger.debug("ArticleDetailController 완료");
     }
 
     private String convertBlobToBase64(byte[] blobAsBytes) throws IOException {

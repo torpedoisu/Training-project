@@ -44,7 +44,7 @@ public class FrontController extends HttpServlet{
         list.put("/articleRegister.do", new ArticleRegisterController());
         list.put("/articlesLoad.do", new ArticlesLoadController());
         list.put("/articleDetail.do", new ArticleDetailController());
-        
+        list.put("/articleDelete.do", new ArticleDeleteController());
     }
 
     /**
