@@ -16,18 +16,19 @@ const AXIOS_SERVLET_URL = `${pathWithoutFileName}/axios`;
 
 // jQuery의 ajax
 function jQueryAjax() {
-	alert("jQeryAjax 시작");
-	
-	let jQueryAjaxUser = new User("jQuery", 10);
-	    
-	$.ajax({
+    console.log("jQeryAjax 시작");
+    alert("[jQeryAjax 예상 output] jQuery , 10");
+    
+    let jQueryAjaxUser = new User("jQuery", 10);
+        
+    $.ajax({
         url: COMMON_SERVLET_URL,
         type: "POST",
         data: JSON.stringify(jQueryAjaxUser),
         contentType: "application/json;charset=utf-8",
         success: (data) => {
             console.log('data', data);
-            alert('data - ' + data.name + ' ' + data.age);
+            alert(data.name + ' ' + data.age);
         },
         error: (jqXHR, textStatus, errorThrown) => {
             console.error(textStatus, errorThrown);
@@ -38,7 +39,8 @@ function jQueryAjax() {
 
 //바닐라 js로 ajax 구현
 function vanillaAjax() {
-	alert("vanillaAjax 시작");
+	console.log("vanillaAjax 시작");
+    alert("[vanillaAjax 예상 output] vanila , 15");
     
 	let vanillaUser = new User("vanilla", 15);
 	
@@ -53,8 +55,9 @@ function vanillaAjax() {
     xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
     xhr.onload = function() {
         if (xhr.status === 200) {
-            console.log(JSON.parse(xhr.responseText));
-            alert(xhr.responseText);
+            let jsonObj = JSON.parse(xhr.responseText);
+            console.log(jsonObj);
+            alert(jsonObj.name + ' ' + jsonObj.age);
         } else {
             console.error('Error:' + xhr.status + xhr.statusText);
             alert('Error:' + xhr.status + xhr.statusText)
@@ -68,7 +71,8 @@ function vanillaAjax() {
 
 // axios의 json 자동 변환
 function axiosJson() {
-	alert("axiosJson 시작");
+	console.log("axiosJson 시작");
+    alert("[axiosJson 예상 output] axios , 20");
     
 	let axiosUser = new User("axios", 20);
 	
@@ -79,7 +83,7 @@ function axiosJson() {
 	})
     .then((response) => {
         console.log('response data', response.data);
-        alert('response data - ' + response.data.name + ' ' + response.data.age);
+        alert(response.data.name + ' ' + response.data.age);
     })
     .catch((error) => {
         console.error('error', error);
