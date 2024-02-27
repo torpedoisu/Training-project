@@ -21,7 +21,7 @@ public class UserCheckSameController implements Controller{
         HttpSession session = req.getSession();
         UserVO user = (UserVO) session.getAttribute("user");
         
-        HttpUtil.forward(req, res, "index.jsp");
+        req.setAttribute("path", "index.jsp");
     }
 
 }

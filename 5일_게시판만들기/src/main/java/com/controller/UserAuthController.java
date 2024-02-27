@@ -28,7 +28,7 @@ public class UserAuthController implements Controller{
             throw new CustomException("다시 로그인 해주세요", HttpServletResponse.SC_BAD_REQUEST, "login.jsp");
         }
         
-        HttpUtil.forward(req, res, "index.jsp");
+        req.setAttribute("path", "index.jsp");
         
     }
 

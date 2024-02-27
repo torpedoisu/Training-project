@@ -59,7 +59,8 @@ public class UserRegisterController implements Controller{
         session.setAttribute("user", userInDB);
         
         res.setStatus(HttpServletResponse.SC_OK);
-        HttpUtil.forward(req, res, "index.jsp");
+        
+        req.setAttribute("path", "index.jsp");
     }
 
 }

@@ -52,7 +52,8 @@ public class ArticlesLoadController implements Controller{
         jsonResponse.put("articles", jsonArray);
         
         out.print(jsonResponse);
-        HttpUtil.forward(req, res, out, "index.jsp");
+        req.setAttribute("path", "index.jsp");
+        req.setAttribute("PrintWriter", out);
     }
 
 }

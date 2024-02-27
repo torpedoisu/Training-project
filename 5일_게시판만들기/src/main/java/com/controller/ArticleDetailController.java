@@ -67,7 +67,8 @@ public class ArticleDetailController implements Controller{
         PrintWriter out = res.getWriter();
         out.write(responseObject.toString());
         
-        HttpUtil.forward(req, res, out, "article.jsp");
+        req.setAttribute("path", "article.jsp");
+        req.setAttribute("PrintWriter", out);
     }
     
     private String convertBlobToBase64(byte[] blobAsBytes) throws IOException {

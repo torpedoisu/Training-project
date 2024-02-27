@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.global.HttpUtil;
+
 public class FrontController extends HttpServlet{
     private static final long serialVersionUID = 1L;
     String charset = null;
@@ -61,6 +63,8 @@ public class FrontController extends HttpServlet{
         logger.debug("FrontController - " + path + "로 라우팅 시작");
         
         subController.execute(req, res);
+        
+        HttpUtil.forward(req, res);
         return;
     }
 

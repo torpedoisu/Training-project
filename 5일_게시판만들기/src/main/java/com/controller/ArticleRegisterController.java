@@ -91,7 +91,7 @@ public class ArticleRegisterController implements Controller {
         ArticleService articleService = ArticleService.getInstance();
         articleService.registerArticle(user, title, content, files);
     
-        HttpUtil.forward(req, res, "index.jsp");
+        req.setAttribute("path", "index.jsp");
     }
     
     
