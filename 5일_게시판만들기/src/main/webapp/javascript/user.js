@@ -48,23 +48,6 @@ function register() {
         });
 }
 
-function loadIndexButtons() {
-    const user = sessionStorage.getItem('user');
-
-    console.log(user);
-    if (user) {
-        document.getElementById('logoutButton').style.display = 'block';
-        document.getElementById('loginButton').style.display = 'none';
-        document.getElementById('registerButton').style.display = 'none'
-        document.getElementById('postButton').style.display = 'block';
-    } else {
-        document.getElementById('logoutButton').style.display = 'none';
-        document.getElementById('loginButton').style.display = 'block'
-        document.getElementById('registerButton').style.display = 'block'
-        document.getElementById('postButton').style.display = 'none';
-    }
-}
-
 function logout() {
         axios.post('userLogout.do')
        .then(response => {

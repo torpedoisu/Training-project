@@ -8,43 +8,29 @@ function redirectToArticle(articlePk) {
     window.location.href = `article.jsp?pk=${articlePk}`;
 }
 
-function checkUserInSession() {
-    console.log("유저 로그인 상태인지 확인");
+function loadIndexBtn(data) {
+    console.log("인덱스 페이지 버튼 설정");
     
-    axios.get('userAuth.do')
-        .then(response => {
-            console.log('유저 로그인 상태');
-            document.getElementById('logoutButton').style.display = 'block';
-            document.getElementById('loginButton').style.display = 'none';
-            document.getElementById('registerButton').style.display = 'none';
-            document.getElementById('postButton').style.display = 'block';
-
-        })
-        .catch(error => {
-            console.log('유저 로그인 상태 아님');
-            document.getElementById('logoutButton').style.display = 'none';
-            document.getElementById('loginButton').style.display = 'block';
-            document.getElementById('registerButton').style.display = 'block';
-            document.getElementById('postButton').style.display = 'none';
-        });
+    let isExist = data.isExist;
+    if (isExist) {
+        document.getElementById('logoutButton').style.display = 'block';
+        document.getElementById('loginButton').style.display = 'none';
+        document.getElementById('registerButton').style.display = 'none';
+        document.getElementById('postButton').style.display = 'block';
+    } else {
+        document.getElementById('logoutButton').style.display = 'none';
+        document.getElementById('loginButton').style.display = 'block';
+        document.getElementById('registerButton').style.display = 'block';
+        document.getElementById('postButton').style.display = 'none';
+    }
+    
 }
 
-function loadArticles(){
-    console.log("게시글 로딩");
+function displayArticles(data) {
+    console.log("게시글 목록 불러오기");
     
-    axios.get('articlesLoad.do')
-        .then(response => {
-            console.log(response.data.articles);
-            displayArticles(response.data.articles);
-        })
-        .catch(error => {
-            console.log(error);
-            alert(error.response.data);
-            window.location.href = error.response.headers.path;
-        });
-}
-
-function displayArticles(articles) {
+    let articlesArr = data.articles;
+    
     // 테이블 요소 가져오기
     let table = document.getElementById("articleTableBody");
 
@@ -52,7 +38,7 @@ function displayArticles(articles) {
     table.innerHTML = "";
     
     // 게시글 추가
-    articles.forEach(article => {
+    articlesArr.forEach(article => {
         let newRow = table.insertRow();
         
         let userCell = newRow.insertCell(0);
@@ -65,5 +51,6 @@ function displayArticles(articles) {
         contentCell.innerHTML = article.content;
         actionCell.innerHTML = `<button onclick="redirectToArticle(${article.pk})">상세보기</button>`; // 버튼 추가
     });
+
 }
 

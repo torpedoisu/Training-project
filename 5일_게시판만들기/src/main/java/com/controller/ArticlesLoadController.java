@@ -13,8 +13,6 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.exception.CustomException;
-import com.global.HttpUtil;
 import com.service.ArticleService;
 import com.vo.ArticleVO;
 

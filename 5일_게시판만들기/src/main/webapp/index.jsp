@@ -5,16 +5,28 @@
   <meta charset="UTF-8">
   <title>게시판</title>
   
-  <script src="javascript/index.js"></script>
-  <script src="javascript/user.js" ></script>
+  <script src="javascript/indexAC.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <script>
-    window.onload = function() {
-          loadIndexButtons();
-          loadArticles();
-          checkUserInSession();
-      };
+  
+  const loadArticles = {
+      url: 'articlesLoad.do',
+      method: 'GET',
+      data: {},
+      callMethod: 'displayArticles' // axios 안에서 불러올 함수
+  }
+  
+  const checkUserInSession = {
+    url: 'userAuth.do',
+    method: 'GET',
+    data: {},
+    callMethod: 'loadIndexBtn' // axios 안에서 불러올 함수
+  }
+
+  processRequest(loadArticles);
+  processRequest(checkUserInSession);
+
   </script>
   
 </head>
