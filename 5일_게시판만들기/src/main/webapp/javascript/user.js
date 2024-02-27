@@ -48,18 +48,3 @@ function register() {
         });
 }
 
-function logout() {
-        axios.post('userLogout.do')
-       .then(response => {
-            console.log(response);
-            window.location.href = response.headers.path;
-        })
-        .catch(error => {
-            console.log(error);
-            alert(error.response.data.statusDescription);
-            window.location.href = error.response.headers.path;
-        });
-    sessionStorage.removeItem('user');
-    checkLoginStatus();
-
-}

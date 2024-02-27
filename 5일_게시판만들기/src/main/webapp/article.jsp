@@ -22,7 +22,7 @@
         <p id="articleUser"></p>
         <p id="articleContent"></p>
     </div>
-    <div id="delete>"></div>
-    <div id="articleFileLink"></div>
+    <button type="button" id="updateBtn" style="display: none">수정</div>
+    <button type="button" id="deleteBtn" style="display: none">삭제</div>
+    <div type="button" id="articleFileLink"></div>
 </body>
-</html>

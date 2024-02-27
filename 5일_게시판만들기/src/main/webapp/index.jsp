@@ -6,6 +6,7 @@
   <title>게시판</title>
   
   <script src="javascript/indexAC.js"></script>
+  <script src="javascript/index.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/index.css">
   <script>
@@ -18,25 +19,28 @@
   }
   
   const checkUserInSession = {
-    url: 'userAuth.do',
+    url: 'userAuthInIndex.do',
     method: 'GET',
     data: {},
     callMethod: 'loadIndexBtn' // axios 안에서 불러올 함수
   }
 
-  processRequest(loadArticles);
-  processRequest(checkUserInSession);
+  
+  
 
   </script>
   
 </head>
 <body>
     <h1>게시판</h1>
+    
     <table id="articleTable">
-
+    <script>processRequest(loadArticles);</script>
+    
     <button type="button" onclick="logout()" id="logoutButton" style="display: none">로그아웃</button>
     <button type="button" onclick="redirectToLogin()" id="loginButton" style="display: none">로그인</button>
     <button type="button" onclick="redirectToRegister()" id="registerButton" style="display: none">회원가입</button>
+    <script>processRequest(checkUserInSession);</script>
     
         <thead>
             <tr>

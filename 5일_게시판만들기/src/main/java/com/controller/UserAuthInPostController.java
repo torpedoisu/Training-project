@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import com.exception.CustomException;
 import com.vo.UserVO;
 
-public class UserAuthController implements Controller{
+public class UserAuthInPostController implements Controller{
 
     /**
      * 유저의 세션이 존재하는지 확인하는 메서드

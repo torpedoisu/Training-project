@@ -36,7 +36,8 @@ public class FrontController extends HttpServlet{
         list.put("/userRegister.do", new UserRegisterController());
         list.put("/userLogin.do", new UserLoginController());
         list.put("/userLogout.do", new UserLogoutController());
-        list.put("/userAuth.do", new UserAuthController());
+        list.put("/userAuthInPost.do", new UserAuthInPostController());
+        list.put("/userAuthInIndex.do", new UserAuthInIndexController());
         list.put("/userCheckSame.do", new UserCheckSameController());
         
         // 게시글 관련 컨트롤러

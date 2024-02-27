@@ -2,7 +2,7 @@
 function checkUserInPost() {
     console.log("유저 로그인 상태인지 확인");
     
-    axios.get('userAuth.do')
+    axios.get('userAuthInPost.do')
         .then(response => {
             console.log('유저 로그인 상태');
         })

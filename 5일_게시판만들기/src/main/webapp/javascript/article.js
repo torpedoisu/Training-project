@@ -27,18 +27,20 @@ function getArticleDetails(articlePk) {
     //TODO:
     axios.get(`articleDetail.do?pk=${articlePk}`)
         .then(response => {
-            const article = response.data;
-            displayArticleDetails(article);
+            displayArticleDetails(response.data);
         })
         .catch(error => {
             console.log(error);
-            alert(error.response.data.statusDescription);
-            window.location.href = error.response.headers.path;
+            if (!error){
+                alert(error.response.data.statusDescription);
+                window.location.href = error.response.headers.path;
+            s}
         });
 }
 
 function displayArticleDetails(article) {
     console.log(article);
+    
     const articleTitleElement = document.getElementById('articleTitle');
     const articleUserElement = document.getElementById('articleUser');
     const articleContentElement = document.getElementById('articleContent');
@@ -47,14 +49,15 @@ function displayArticleDetails(article) {
     articleUserElement.innerHTML= '작성자: ' + article.user;
     articleContentElement.innerHTML= article.content;
 
-    checkUserInArticle(article);
+    checkIfUserIsIdentical(article);
     
-    makeFile(article.file);
+   // makeFile(article.file);
 }
 
 
 
 function makeFileURL(file){
+    //TODO:
     const articleFileLinkElement = document.getElementById('articleFileLink');
         
     let decodedFile= atob(file);
@@ -88,7 +91,23 @@ function deleteArticle(articleId) {
         });
 }
 
-function checkIfUserIsIdentical() {
+function checkIfUserIsIdentical(article) {
     console.log("글 작성자가 유저인지 확인");
-    // TODO:
+    
+        axios.post('userCheckSame.do', { pk: article.pk })
+        .then(response => {
+            loadSameUserBtn(response.data.isSameUser);
+        })
+        .catch(error => {
+            console.log(error);
+            console.log("작성자가 아닌 유저");
+        });
+}
+
+function loadSameUserBtn(isSameUser) {
+    if (isSameUser) {
+        console.log("글을 작성한 유저 ");
+        document.getElementById('deleteBtn').style.display = 'block';
+        document.getElementById('updateBtn').style.display = 'block';
+    }
 }

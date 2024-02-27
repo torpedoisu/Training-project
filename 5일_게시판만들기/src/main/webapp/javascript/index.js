@@ -3,6 +3,11 @@ function redirectToPost() {
     window.location.href = "post.jsp";
 }
 
+function redirectToLogin() {
+    console.log("로그인 페이지로 redirect");
+    window.location.href = "login.jsp";
+}
+
 function redirectToArticle(articlePk) {
     console.log("게시글 상세 페이지로 redirect");
     window.location.href = `article.jsp?pk=${articlePk}`;
@@ -12,17 +17,21 @@ function loadIndexBtn(data) {
     console.log("인덱스 페이지 버튼 설정");
     
     let isExist = data.isExist;
+    
     if (isExist) {
+        console.log('유저가 세션에 존재함');
         document.getElementById('logoutButton').style.display = 'block';
         document.getElementById('loginButton').style.display = 'none';
         document.getElementById('registerButton').style.display = 'none';
         document.getElementById('postButton').style.display = 'block';
-    } else {
-        document.getElementById('logoutButton').style.display = 'none';
-        document.getElementById('loginButton').style.display = 'block';
-        document.getElementById('registerButton').style.display = 'block';
-        document.getElementById('postButton').style.display = 'none';
-    }
+        return;
+    } 
+    
+    console.log('유저가 세션에 존재하지 않음');
+    document.getElementById('logoutButton').style.display = 'none';
+    document.getElementById('loginButton').style.display = 'block';
+    document.getElementById('registerButton').style.display = 'block';
+    document.getElementById('postButton').style.display = 'none';
     
 }
 
@@ -54,3 +63,17 @@ function displayArticles(data) {
 
 }
 
+function logout() {
+        axios.post('userLogout.do')
+       .then(response => {
+            console.log(response);
+            window.location.href = response.headers.path;
+        })
+        .catch(error => {
+            console.log(error);
+            alert(error.response.data.statusDescription);
+            window.location.href = error.response.headers.path;
+        });
+    sessionStorage.removeItem('user');
+    //checkLoginStatus();
+}
