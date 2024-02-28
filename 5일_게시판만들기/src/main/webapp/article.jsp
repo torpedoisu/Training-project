@@ -22,7 +22,7 @@
         <p id="articleUser"></p>
         <p id="articleContent"></p>
     </div>
-    <button type="button" id="updateBtn" style="display: none">수정</div>
+    <button type="button" onclick="editArticle('<%= request.getParameter("pk") %>')" id="updateBtn" style="display: none">수정</div>
     <button type="button" onclick="deleteArticle('<%= request.getParameter("pk") %>')" id="deleteBtn" style="display: none">삭제</button>
     
     <br><br>

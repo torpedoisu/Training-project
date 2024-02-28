@@ -10,6 +10,11 @@ function checkUserInArticle(article) {
         });
 }
 
+function editArticle(articlePk) {
+    window.location.href = 'editArticle.jsp?pk=' + articlePk;
+}
+
+
 // 게시물 삭제 버튼 추가
 function createDeleteBtn(article) {
     const deleteButtonElement = document.getElementById('delete');
