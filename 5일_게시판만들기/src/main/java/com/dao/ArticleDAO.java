@@ -194,5 +194,24 @@ public class ArticleDAO {
         
         logger.debug("[delete] 상세 게시글 - " + article.getPk() + " 삭제 완료");
     }
+
+    public void update(DBManager dbManager, ArticleVO article) throws SQLException{
+        logger.debug("[update] 상세 게시글pk - " + article.getPk() + " 업데이트 시작");
+        
+        PreparedStatement pstmt = null;
+        
+        String sql = "UPDATE ARTICLE_TB SET TITLE = ?, CONTENT = ? WHERE PK = ?";
+        pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
+        pstmt.setString(1, article.getTitle());
+        pstmt.setString(2, article.getContent());
+        pstmt.setString(3, article.getPk());
+        
+        pstmt.executeUpdate();
+        
+        pstmt.close();
+        
+        logger.debug("[update] 상세 게시글 - " + article.getPk() + " 업데이트 완료");
+        
+    }
     
 }

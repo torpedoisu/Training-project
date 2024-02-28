@@ -182,7 +182,7 @@ public class ArticleService {
             // 파일 불러오기
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
 
-            List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article.getPk());
+            List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article);
             if (articleFilesVo.size() != 0 && articleFilesVo != null) {
                 article.setExternalFiles(articleFilesVo);
                 // 파일에도 게시글 넣어주기 (양방향
@@ -229,7 +229,7 @@ public class ArticleService {
             
             // 게시글과 연결된 파일이 있는지도 확인
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
-            List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article.getPk());
+            List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article);
             if (articleFilesVo.size() != 0) {
                 for (ArticleFileVO file : articleFilesVo) {
                     articleFileDao.delete(dbManager, file);
@@ -266,17 +266,33 @@ public class ArticleService {
             if (articleVo.getTitle() == null) {
                 throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
             }   
-            // 파일은 여러개일 수 있기 때문에 article_pk로 조회해서 해당되는 파일은 삭제하고 나머지 insert
+            
+            
+            
+            /* 파일은 여러개일 수 있고 같은 제목에 내용이 바뀔 수 있기 때문에 
+               article_pk로 조회해서 해당되는 파일은 삭제하고 나머지 insert
+            */
+            
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
-            List<ArticleFileVO> articleFilesVo = articleVo.getExternalFiles();
-            for (ArticleFileVO articleFile : articleFilesVo) {
-                articleFileDao.delete(dbManager, articleFile);
-                
+
+            // 1. 기존의 파일 삭제
+            List<ArticleFileVO> earlierFiles = articleFileDao.selectFilesByArticlePk(dbManager, articleVo);
+            for (ArticleFileVO earlierfile : earlierFiles) {
+                articleFileDao.delete(dbManager, earlierfile);
             }
             
-            // article은 중복되는 경우가 없기 때문에 바로 업데이트
+            // 2. article은 중복되는 경우가 없기 때문에 바로 업데이트
             ArticleDAO articleDao = new ArticleDAO();
-            articleDao.update(articleVo);
+            articleDao.update(dbManager, articleVo);
+            
+            // 3. 파일 저장을 위한 article pk 조회 후 저장 
+            ArticleVO newArticle = articleDao.select(dbManager, articleVo);
+            
+            // 4. 유저가 새로 등록한 파일 저장
+            List<ArticleFileVO> articleFilesVo = articleVo.getExternalFiles();
+            for (ArticleFileVO articleFile : articleFilesVo) {
+                articleFileDao.insert(dbManager, articleFile);
+            }
             
             dbManager.commit();
             

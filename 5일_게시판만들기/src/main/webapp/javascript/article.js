@@ -64,6 +64,9 @@ function getfileDetails(articlePk) {
         axios.get(`articleFileDetail.do?pk=${articlePk}`)
         .then(response => {
             const files = response.data.files;
+            
+            // 이전의 파일 링크 초기화
+            document.getElementById('articleFileLink').innerHTML = '';
             for (const fileTitle in files) {
                 makeFileURL(fileTitle, files[fileTitle]); // Base64 인코딩된 파일 데이터
             }

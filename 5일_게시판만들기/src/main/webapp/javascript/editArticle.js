@@ -16,7 +16,6 @@ function getArticleForEdit(articlePk) {
             console.log(error);
         });
 
-
 }
 
 function getfileDetailsForEdit() {
@@ -84,10 +83,11 @@ function saveArticleEdit() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
+    formData.append('pk', ARTICLE_PK);
     
     // 수정된 파일 추가
     for (let i = 0; i < fileList.length; i++) {
-        formData.append('file' + i, fileList[i]);
+        formData.append(fileList[i].name, fileList[i]);
     }
 
     axios.post('articleEdit.do', formData, {

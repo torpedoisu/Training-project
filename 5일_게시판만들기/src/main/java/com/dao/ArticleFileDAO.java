@@ -50,34 +50,6 @@ public class ArticleFileDAO {
         return file;
     }
 
-    public List<ArticleFileVO> selectFilesByArticlePk(DBManager dbManager, String articlePk) throws SQLException{
-        logger.debug("[selectFilesByArticlePk] 상세 게시글pk: " + articlePk + "에 대한 파일 조회 시작");
-
-        List<ArticleFileVO> files = new ArrayList<ArticleFileVO>();
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        
-        String sql = "SELECT * FROM FILE_TB WHERE ARTICLE_PK = ?";
-        
-        statement = dbManager.getJdbcConnection().prepareStatement(sql);
-        statement.setString(1, articlePk);
-        rs = statement.executeQuery();
-        
-        while (rs.next()) {
-            ArticleFileVO file = new ArticleFileVO();
-            file.setPk(rs.getString("PK"));
-            file.setFile(rs.getBytes("CONTENT"));
-            
-            files.add(file);
-        }
-
-        rs.close();
-        statement.close();
-        
-        logger.debug("[selectFilesByArticlePk] 상세 게시글pk: " + articlePk + "에 대한 파일 조회 완료");
-        
-        return files;
-    }
 
     public void delete(DBManager dbManager, ArticleFileVO file) throws SQLException {
         logger.debug("[delete] 파일pk: " + file.getPk() + " 삭제 시작");
@@ -124,6 +96,7 @@ public class ArticleFileDAO {
         
         logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getPk() + " 의 파일 조회 완료");
         
+        logger.debug("파일 " + articleFilesVo.size() + " 개 발견");
         return articleFilesVo;
     }
 }

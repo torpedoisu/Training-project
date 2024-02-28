@@ -51,6 +51,7 @@ public class ArticleEditController implements Controller {
         
         String title = null;
         String content = null;
+        String pk = null;
         byte[] fileBytes = null;
         
         ArticleVO articleVo = new ArticleVO();
@@ -90,6 +91,10 @@ public class ArticleEditController implements Controller {
                           content = formValue;
                           break;
                           
+                      case "pk":
+                          pk = formValue;
+                          break;
+                          
                       default:
                           throw new CustomException("잘못된 요청입니다", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
                   }
@@ -100,6 +105,7 @@ public class ArticleEditController implements Controller {
             // 게시글 오브젝트 설정
             articleVo.setTitle(title);
             articleVo.setContent(content);
+            articleVo.setPk(pk);
             
             // 양방향 설정
             articleVo.setExternalUser(user);
@@ -109,7 +115,7 @@ public class ArticleEditController implements Controller {
         
         
         ArticleService articleService = ArticleService.getInstance();
-        articleService.registerArticle(articleVo);
+        articleService.editArticle(articleVo);
     
         req.setAttribute("path", "index.jsp");
         
