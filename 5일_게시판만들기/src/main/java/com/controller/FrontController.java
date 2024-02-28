@@ -41,8 +41,9 @@ public class FrontController extends HttpServlet{
         
         // 게시글 관련 컨트롤러
         list.put("/articleRegister.do", new ArticleRegisterController());
-        list.put("/articlesLoad.do", new ArticlesLoadController());
+        list.put("/articleEdit.do", new ArticleEditController());
         
+        list.put("/articlesLoad.do", new ArticlesLoadController());
         list.put("/articleDetail.do", new ArticleDetailController());
         list.put("/articleFileDetail.do", new ArticleFileDetailController());
         

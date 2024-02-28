@@ -82,7 +82,6 @@ function saveArticleEdit() {
     const fileList = document.getElementById('editFile').files;
 
     const formData = new FormData();
-    formData.append('pk', ARTICLE_PK);
     formData.append('title', title);
     formData.append('content', content);
     
@@ -91,19 +90,21 @@ function saveArticleEdit() {
         formData.append('file' + i, fileList[i]);
     }
 
-    // 게시글 수정 요청 보내기
-    axios.post('articleUpdate.do', formData, {
+    axios.post('articleEdit.do', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     })
-    .then(response => {
-        console.log('게시물 수정 성공');
-        window.location.href ='';
-    })
-    .catch(error => {
-        console.log(error);
-    });
+        .then(response => {
+            console.log(response);
+            window.location.href = response.headers.path;
+        })
+        .catch(error => {
+            console.log(error);
+            alert(error.response.data.statusDescription);
+            window.location.href = error.response.headers.path;
+        });
 }
+
 
 

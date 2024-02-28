@@ -12,7 +12,7 @@
         const articlePk = urlParams.get('pk');
         getArticleForEdit(articlePk);
         // 작성자 확인 해야함
-    };
+    };s
   </script>
 </head>
 <body>

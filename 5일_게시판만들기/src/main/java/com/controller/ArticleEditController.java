@@ -22,9 +22,9 @@ import com.vo.ArticleFileVO;
 import com.vo.ArticleVO;
 import com.vo.UserVO;
 
-public class ArticleRegisterController implements Controller {
+public class ArticleEditController implements Controller {
     
-    public static Logger logger = LogManager.getLogger(ArticleRegisterController.class);
+    public static Logger logger = LogManager.getLogger(ArticleEditController.class);
     
     /**
      * 게시글을 등록하는 메서드 (유저 정보 얻기 위한 세션 사용)
@@ -36,7 +36,7 @@ public class ArticleRegisterController implements Controller {
      */
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        logger.debug("ArticleRegisterController 진입");
+        logger.debug("ArticleEditController 진입");
         
         HttpSession session = req.getSession();
  

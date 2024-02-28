@@ -46,39 +46,39 @@ public class ArticleService {
      * @param content - 게시글 본문
      * @param files - 파일이 저장된 List
      */
-    public void registerArticle(ArticleVO article) {
+    public void registerArticle(ArticleVO articleVo) {
         logger.debug("Service - 게시글 등록 트랜잭션 시작");
         
         DBManager dbManager = new DBManager();
         
         dbManager.connect();
         try {
-            if (article.getContent() == null) {
-                article.setContent("");
+            if (articleVo.getContent() == null) {
+                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
             }
-            if (article.getTitle() == null) {
-                article.setTitle("");
-            }
+            if (articleVo.getTitle() == null) {
+                throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
+            }   
             // 유저는 같은 제목을 등록할 수 없음
             ArticleDAO articleDao = new ArticleDAO();
-            ArticleVO articleInDB = articleDao.selectWithTitle(dbManager, article.getExternalUser(), article.getTitle());
+            ArticleVO articleInDB = articleDao.selectWithTitle(dbManager, articleVo.getExternalUser(), articleVo.getTitle());
             
             if (articleInDB.isExist()) {
                 throw new CustomException("이미 등록한 제목입니다. 다른 제목을 사용해주세요", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
             }
             
             // 게시글 등록
-            articleDao.insert(dbManager, article);
+            articleDao.insert(dbManager, articleVo);
             
             // 게시글의 fk를 위한 게시글 pk 조회
-            ArticleVO articleInDBWithPK = articleDao.select(dbManager, article);
+            ArticleVO articleInDBWithPK = articleDao.select(dbManager, articleVo);
             if (!articleInDBWithPK.isExist()) {
                 throw new CustomException("Service - db에 게시글 등록 후 pk 가져오던 중 오류", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
             }
-            article.setPk(articleInDBWithPK.getPk());
+            articleVo.setPk(articleInDBWithPK.getPk());
               
             // 파일 등록
-            List<ArticleFileVO> articleFilesVo = article.getExternalFiles();
+            List<ArticleFileVO> articleFilesVo = articleVo.getExternalFiles();
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
             int index = 1;
             for (ArticleFileVO articleFileVo : articleFilesVo) {
@@ -251,6 +251,46 @@ public class ArticleService {
             }
         }
         
+    }
+
+    public void editArticle(ArticleVO articleVo) {
+        logger.debug("Service - 게시글 수정 트랜잭션 시작");
+        
+        DBManager dbManager = new DBManager();
+        
+        dbManager.connect();
+        try {
+            if (articleVo.getContent() == null) {
+                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
+            }
+            if (articleVo.getTitle() == null) {
+                throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
+            }   
+            // 파일은 여러개일 수 있기 때문에 article_pk로 조회해서 해당되는 파일은 삭제하고 나머지 insert
+            ArticleFileDAO articleFileDao = new ArticleFileDAO();
+            List<ArticleFileVO> articleFilesVo = articleVo.getExternalFiles();
+            for (ArticleFileVO articleFile : articleFilesVo) {
+                articleFileDao.delete(dbManager, articleFile);
+                
+            }
+            
+            // article은 중복되는 경우가 없기 때문에 바로 업데이트
+            ArticleDAO articleDao = new ArticleDAO();
+            articleDao.update(articleVo);
+            
+            dbManager.commit();
+            
+            logger.debug("Service - 게시글 트랜잭션 완료");
+            
+        } catch (SQLException e) {
+            logger.error("게시물 등록 중 예외 발생");
+            e.printStackTrace();
+            dbManager.rollback();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect();    
+            }
+        }
     }
     
 }
