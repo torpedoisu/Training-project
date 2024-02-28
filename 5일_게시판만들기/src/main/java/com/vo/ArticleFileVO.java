@@ -5,6 +5,7 @@ import java.sql.Blob;
 
 public class ArticleFileVO {
     private BigInteger pk;
+    private String title;
     private byte[] file;
     private ArticleVO externalArticle;
     
@@ -30,5 +31,13 @@ public class ArticleFileVO {
     
     public void setExternalArticle(ArticleVO article) {
         this.externalArticle = article;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+        
     }
 }

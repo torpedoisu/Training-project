@@ -2,7 +2,6 @@ package com.dao;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,6 @@ import org.apache.log4j.Logger;
 import com.global.DBManager;
 import com.vo.ArticleFileVO;
 import com.vo.ArticleVO;
-import com.vo.UserVO;
 
 public class ArticleFileDAO {
 
@@ -34,7 +32,7 @@ public class ArticleFileDAO {
         
         PreparedStatement statement = null;
         
-        String fileSql = "INSERT INTO FILE_TB (ARTICLE_PK, CONTENT) VALUES (?, ?)";
+        String fileSql = "INSERT INTO FILE_TB (ARTICLE_PK, CONTENT, TITLE) VALUES (?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(fileSql);
         statement.setString(1, file.getExternalArticle().getPk()); // 게시글의 PK를 외래 키로 설정
@@ -42,6 +40,7 @@ public class ArticleFileDAO {
         //BLOB 등록
         InputStream inputStream = new ByteArrayInputStream(file.getFile());
         statement.setBinaryStream(2, inputStream, file.getFile().length);
+        statement.setString(3, file.getTitle());
         statement.executeUpdate();
         
         logger.debug("[insert] File 등록 완료");
@@ -94,5 +93,37 @@ public class ArticleFileDAO {
         
         logger.debug("[delete] 파일pk: " + file.getPk() + " 삭제 완료");
         
+    }
+
+    public List<ArticleFileVO> selectFilesByArticlePk(DBManager dbManager, ArticleVO articleVo) throws SQLException {
+        logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getPk() + " 의 파일 조회 시작");
+        
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<ArticleFileVO> articleFilesVo = new ArrayList<>();
+        
+        String sql = "SELECT * FROM FILE_TB WHERE ARTICLE_PK = ?";
+        
+        pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
+        pstmt.setString(1, articleVo.getPk());
+        rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            ArticleFileVO articleFileVo = new ArticleFileVO();
+            
+            articleFileVo.setFile(rs.getBytes("CONTENT"));
+            articleFileVo.setPk(rs.getString("PK"));
+            articleFileVo.setTitle(rs.getString("TITLE"));
+            articleFileVo.setExternalArticle(articleVo);
+            
+            articleFilesVo.add(articleFileVo);
+        }
+        
+        rs.close();
+        pstmt.close();
+        
+        logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getPk() + " 의 파일 조회 완료");
+        
+        return articleFilesVo;
     }
 }

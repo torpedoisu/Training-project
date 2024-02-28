@@ -3,7 +3,6 @@ package com.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,8 +17,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.exception.CustomException;
-import com.global.HttpUtil;
 import com.service.ArticleService;
+import com.vo.ArticleFileVO;
+import com.vo.ArticleVO;
 import com.vo.UserVO;
 
 public class ArticleRegisterController implements Controller {
@@ -51,9 +51,12 @@ public class ArticleRegisterController implements Controller {
         
         String title = null;
         String content = null;
-        List<byte[]> files = new ArrayList<byte[]>();
-        
         byte[] fileBytes = null;
+        
+        ArticleVO articleVo = new ArticleVO();
+
+
+        List<ArticleFileVO> articleFilesVo = new ArrayList<>();
         
         // multipart 헤더 맞는지 확인
         String contentType = req.getContentType();
@@ -61,12 +64,20 @@ public class ArticleRegisterController implements Controller {
             Collection<Part> parts = req.getParts();
             
             for (Part part : parts) {
+                
+                ArticleFileVO articleFileVo = new ArticleFileVO();
+                
                 // 파일인 경우 
                 if (part.getHeader("Content-Disposition").contains("filename=")) {
-                   Part file = req.getPart(part.getName());
-                   fileBytes = readPart(file);
-                   files.add(fileBytes);
-                   
+                    Part file = req.getPart(part.getName());
+                    fileBytes = readPart(file);
+                    
+                    articleFileVo.setTitle(part.getName());
+                    articleFileVo.setFile(fileBytes);
+                    // 양방향 설정
+                    articleFileVo.setExternalArticle(articleVo);
+                    
+                    articleFilesVo.add(articleFileVo);
                 // 파일이 아닌 경우 (텍스트인 경우)
                 } else {
                   String formValue = req.getParameter(part.getName());  
@@ -84,12 +95,21 @@ public class ArticleRegisterController implements Controller {
                   }
                 }
                
-            }
+            } //end of for
+            
+            // 게시글 오브젝트 설정
+            articleVo.setTitle(title);
+            articleVo.setContent(content);
+            
+            // 양방향 설정
+            articleVo.setExternalUser(user);
+            articleVo.setExternalFiles(articleFilesVo);
+            
         } //end of if
         
         
         ArticleService articleService = ArticleService.getInstance();
-        articleService.registerArticle(user, title, content, files);
+        articleService.registerArticle(articleVo);
     
         req.setAttribute("path", "index.jsp");
     }

@@ -46,6 +46,7 @@ public class ArticleDetailController implements Controller {
         responseObject.put("content", articleVo.getContent());
         responseObject.put("user", articleVo.getExternalUser().getId());
 
+        /*
         JSONObject fileObject = new JSONObject();
         List<ArticleFileVO> articleFiles = articleVo.getExternalFiles();
         // 파일(blob)을 Base64로 인코딩하여 JSON에 추가
@@ -62,7 +63,7 @@ public class ArticleDetailController implements Controller {
             }
         }
         responseObject.put("file", fileObject);
-
+*/
         PrintWriter out = res.getWriter();
         out.write(responseObject.toString());
 

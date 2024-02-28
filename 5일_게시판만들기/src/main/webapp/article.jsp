@@ -23,6 +23,10 @@
         <p id="articleContent"></p>
     </div>
     <button type="button" id="updateBtn" style="display: none">수정</div>
-    <button type="button" onclick="deleteArticle('<%= request.getParameter("pk") %>')" id="deleteBtn" style="display: none">삭제</div>
-    <div type="button" id="articleFileLink"></div>
+    <button type="button" onclick="deleteArticle('<%= request.getParameter("pk") %>')" id="deleteBtn" style="display: none">삭제</button>
+    
+    <br><br>
+    
+    <h3>파일</h3>
+    <ul id="articleFileLink"></ul>
 </body>

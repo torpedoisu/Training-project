@@ -18,15 +18,14 @@ function registerPost() {
     let title = document.getElementById('title').value;
     let content = document.getElementById('content').value;
     let fileList = document.getElementById('file').files;
-    
+
     const formData = new FormData();
     
     formData.append('title', title);
     formData.append('content', content);
     
-    
     for (let i = 0; i < fileList.length; i++) {
-        formData.append('file' + i, fileList[i], fileList[i].name);
+        formData.append(fileList[i].name, fileList[i]);
     }
     
     // formData에 잘 추가되었는지 확인

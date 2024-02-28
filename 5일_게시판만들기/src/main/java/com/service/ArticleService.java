@@ -46,24 +46,22 @@ public class ArticleService {
      * @param content - 게시글 본문
      * @param files - 파일이 저장된 List
      */
-    public void registerArticle(UserVO user, String title, String content, List<byte[]> files) {
+    public void registerArticle(ArticleVO article) {
         logger.debug("Service - 게시글 등록 트랜잭션 시작");
         
         DBManager dbManager = new DBManager();
         
         dbManager.connect();
         try {
-            content = (content == null) ? "" : content;
-            title = (title == null) ? "" : content;
-            
-            ArticleVO article = new ArticleVO();
-            article.setExternalUser(user);
-            article.setTitle(title);
-            article.setContent(content);
-    
+            if (article.getContent() == null) {
+                article.setContent("");
+            }
+            if (article.getTitle() == null) {
+                article.setTitle("");
+            }
             // 유저는 같은 제목을 등록할 수 없음
             ArticleDAO articleDao = new ArticleDAO();
-            ArticleVO articleInDB = articleDao.selectWithTitle(dbManager, user, title);
+            ArticleVO articleInDB = articleDao.selectWithTitle(dbManager, article.getExternalUser(), article.getTitle());
             
             if (articleInDB.isExist()) {
                 throw new CustomException("이미 등록한 제목입니다. 다른 제목을 사용해주세요", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
@@ -80,14 +78,10 @@ public class ArticleService {
             article.setPk(articleInDBWithPK.getPk());
               
             // 파일 등록
-            ArticleFileVO articleFileVo = new ArticleFileVO();
+            List<ArticleFileVO> articleFilesVo = article.getExternalFiles();
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
             int index = 1;
-            for (byte[] file: files) {
-                articleFileVo.setExternalArticle(article);
-                articleFileVo.setFile(file);
-                
-                // 파일 등록
+            for (ArticleFileVO articleFileVo : articleFilesVo) {
                 articleFileDao.insert(dbManager, articleFileVo);
                 logger.debug(index++ + "번째 파일 등록 완료");
             }

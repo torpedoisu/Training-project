@@ -12,7 +12,6 @@ function checkUserInArticle(article) {
 
 // 게시물 삭제 버튼 추가
 function createDeleteBtn(article) {
-        // 게시물 삭제 버튼 추가
     const deleteButtonElement = document.getElementById('delete');
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '게시물 삭제';
@@ -23,11 +22,12 @@ function createDeleteBtn(article) {
 }
 
 function getArticleDetails(articlePk) {
+    console.log('게시글 상세 정보 가져오기');
     
-    //TODO:
     axios.get(`articleDetail.do?pk=${articlePk}`)
         .then(response => {
             displayArticleDetails(response.data);
+            getfileDetails(response.data.pk);
         })
         .catch(error => {
             console.log(error);
@@ -51,29 +51,58 @@ function displayArticleDetails(article) {
 
     checkIfUserIsIdentical(article);
     
-   // makeFile(article.file);
 }
 
-
-
-function makeFileURL(file){
-    //TODO:
+function getfileDetails(articlePk) {
+    console.log('파일 정보 가져오기');
+            
+        axios.get(`articleFileDetail.do?pk=${articlePk}`)
+        .then(response => {
+            const files = response.data.files;
+            for (const fileTitle in files) {
+                makeFileURL(fileTitle, files[fileTitle]); // Base64 인코딩된 파일 데이터
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+function makeFileURL(fileTitle, base64Data){
+    console.log('파일 다운로드 링크 만들기');
     const articleFileLinkElement = document.getElementById('articleFileLink');
-        
-    let decodedFile= atob(file);
-    let blob = new Blob([decodedFile], { type: 'application/octet-stream' }); // Blob 객체 생성
-    let fileURL = URL.createObjectURL(blob); // Blob URL 생성
-    const fileName = '파일'; // 파일 이름 설정
-    let fileLink = document.createElement('a');
+    const blob = base64ToBlob(base64Data, 'application/octet-stream'); // Blob 객체 생성
+    const fileURL = URL.createObjectURL(blob); // Blob URL 생성
     
+    let fileLink = document.createElement('a');
     fileLink.href = fileURL;
-    fileLink.download = fileName;
-    fileLink.textContent = `파일 다운로드 (${file.name})`; // 다운로드 링크에 파일 이름 표시
+    fileLink.download = fileTitle;
+    
+    fileLink.textContent = fileTitle; // 다운로드 링크에 표시할 텍스트
+    
     articleFileLinkElement.appendChild(fileLink);
     articleFileLinkElement.appendChild(document.createElement('br')); // 각 파일마다 줄 바꿈 추가
 }
 
-
+function base64ToBlob(base64, contentType) {
+    console.log('디코딩 시작');
+    
+    const byteCharacters = atob(base64);
+    const byteArrays = [];
+    
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    
+    return new Blob(byteArrays, {type: contentType});
+}
 
 function deleteArticle(articlePk) {
     console.log("게시글 지우기", articlePk);

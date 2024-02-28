@@ -21,7 +21,6 @@ public class FrontController extends HttpServlet{
     
     public static Logger logger = LogManager.getLogger(FrontController.class);
     
-
     /*
      * - servlet에 설정해둔 인코딩 타입을 로딩
      * - 만들어놓은 컨트롤러 매핑하는 기능
@@ -43,7 +42,10 @@ public class FrontController extends HttpServlet{
         // 게시글 관련 컨트롤러
         list.put("/articleRegister.do", new ArticleRegisterController());
         list.put("/articlesLoad.do", new ArticlesLoadController());
+        
         list.put("/articleDetail.do", new ArticleDetailController());
+        list.put("/articleFileDetail.do", new ArticleFileDetailController());
+        
         list.put("/articleDelete.do", new ArticleDeleteController());
     }
 
