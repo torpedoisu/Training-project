@@ -129,7 +129,7 @@ public class ArticleService {
             // 게시글의 작성자 조회
             UserDAO userDao = new UserDAO();
             for (ArticleVO article : articles) {
-                String userPk = article.getExternalUser().getPk();
+                String userPk = article.getExternalUser().getUUID();
                 
                 if (userPk == null) {
                     throw new CustomException("ARTICLE_TB에서 user fk를 조회할 수 없습니다");
@@ -175,7 +175,7 @@ public class ArticleService {
             
             // 게시글의 작성자 조회
             UserDAO userDao = new UserDAO();
-            String userPk = article.getExternalUser().getPk();
+            String userPk = article.getExternalUser().getUUID();
                 
             UserVO user = userDao.selectUserWithPk(dbManager, userPk);
             article.setExternalUser(user);
@@ -228,7 +228,7 @@ public class ArticleService {
             
             // 게시글의 작성자 조회
             UserDAO userDao = new UserDAO();
-            String userPk = article.getExternalUser().getPk();
+            String userPk = article.getExternalUser().getUUID();
                 
             UserVO user = userDao.selectUserWithPk(dbManager, userPk);
             article.setExternalUser(user);

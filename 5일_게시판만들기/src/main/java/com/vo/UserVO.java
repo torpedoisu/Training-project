@@ -3,17 +3,26 @@ package com.vo;
 import java.math.BigInteger;
 import java.util.List;
 
+import com.global.UUIDFactory;
+
 public class UserVO {
-    private BigInteger pk = null;
+    private String uuid = null;
     private String id = null;
     private String pwd = null;
     private List<ArticleVO> externalArticles = null;
     
-    public String getPk() {
-        return String.valueOf(pk);
+    public static UserVO getNewInstanceWithUUID() {
+        UserVO userVo = new UserVO();
+        userVo.setUUID(UUIDFactory.generateUUID().toString());
+        
+        return userVo;
     }
-    public void setPk(String val) {
-        this.pk = new BigInteger(val);
+    
+    public String getUUID() {
+        return uuid;
+    }
+    public void setUUID(String val) {
+        this.uuid = val;
     }
     
     public String getId() {
@@ -46,7 +55,7 @@ public class UserVO {
      * @return  boolean
      */
     public boolean isExist() {
-        if (id == null || pwd == null) {
+        if (id == null || pwd == null || uuid == null) {
             return false;
         }
         return true;

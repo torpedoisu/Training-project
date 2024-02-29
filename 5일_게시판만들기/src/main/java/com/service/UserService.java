@@ -48,7 +48,7 @@ public class UserService {
         
         DBManager dbManager = new DBManager();
         
-        UserVO user = new UserVO();
+        UserVO user = UserVO.getNewInstanceWithUUID();
         
         dbManager.connect();
         try {
@@ -63,15 +63,6 @@ public class UserService {
                 throw new CustomException("이미 존재하는 id입니다 다른 id를 입력해주세요", HttpServletResponse.SC_CONFLICT, "userRegister.jsp");
             }
             userDao.insert(dbManager, user);
-            
-            // user의 pk 설정을 위한 로직
-            UserVO userInfoInDB = userDao.getUserWithIdEncPwd(dbManager, user.getId(), user.getPwd());
-            
-            if (!userInfoInDB.isExist()) {
-                throw new CustomException("Service - 회원 db에 저장 후 pk를 불러오다 오류", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "userRegister.jsp");
-            }
-            
-            user.setPk(userInfoInDB.getPk());
             
             dbManager.commit();
             

@@ -31,7 +31,7 @@ public class ArticleFileDAO {
 
         PreparedStatement statement = null;
 
-        String fileSql = "INSERT INTO FILE_TB (ARTICLE_PK, CONTENT, TITLE) VALUES (?, ?, ?)";
+        String fileSql = "INSERT INTO FILE_TB (ARTICLE_UUID, CONTENT, TITLE) VALUES (?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(fileSql);
         statement.setString(1, file.getExternalArticle().getPk()); // 게시글의 PK를 외래 키로 설정
@@ -55,7 +55,7 @@ public class ArticleFileDAO {
 
         PreparedStatement pstmt = null;
 
-        String sql = "DELETE FROM FILE_TB WHERE ARTICLE_PK = ?";
+        String sql = "DELETE FROM FILE_TB WHERE ARTICLE_UUID = ?";
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
         pstmt.setString(1, file.getPk());
         pstmt.executeUpdate();
@@ -73,7 +73,7 @@ public class ArticleFileDAO {
         ResultSet rs = null;
         List<ArticleFileVO> articleFilesVo = new ArrayList<>();
 
-        String sql = "SELECT * FROM FILE_TB WHERE ARTICLE_PK = ?";
+        String sql = "SELECT * FROM FILE_TB WHERE ARTICLE_UUID = ?";
 
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
         pstmt.setString(1, articleVo.getPk());
@@ -83,7 +83,7 @@ public class ArticleFileDAO {
             ArticleFileVO articleFileVo = new ArticleFileVO();
 
             articleFileVo.setFile(rs.getBytes("CONTENT"));
-            articleFileVo.setPk(rs.getString("PK"));
+            articleFileVo.setPk(rs.getString("UUID"));
             articleFileVo.setTitle(rs.getString("TITLE"));
             articleFileVo.setExternalArticle(articleVo);
 

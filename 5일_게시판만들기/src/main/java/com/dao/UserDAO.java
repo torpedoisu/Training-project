@@ -26,11 +26,12 @@ public class UserDAO {
         
         PreparedStatement statement = null;
 
-        String sql = "INSERT INTO USER_TB (ID, PWD) VALUES (?, ?)";
+        String sql = "INSERT INTO USER_TB (UUID, ID, PWD) VALUES (?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(sql);
-        statement.setString(1, user.getId());
-        statement.setString(2, user.getPwd());
+        statement.setString(1, user.getUUID());
+        statement.setString(2, user.getId());
+        statement.setString(3, user.getPwd());
         statement.executeUpdate();
         statement.close();
         
@@ -62,7 +63,7 @@ public class UserDAO {
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            user.setPk(rs.getString("PK"));
+            user.setUUID(rs.getString("UUID"));
             user.setId(rs.getString("ID"));
             user.setPwd(rs.getString("PWD"));
         }
@@ -97,7 +98,7 @@ public class UserDAO {
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            user.setPk(rs.getString("PK"));
+            user.setUUID(rs.getString("UUID"));
             user.setId(rs.getString("ID"));
             user.setPwd(rs.getString("PWD"));
         }
@@ -123,14 +124,14 @@ public class UserDAO {
         ResultSet rs = null;
         UserVO user = new UserVO();
         
-        String sql = "SELECT * FROM USER_TB WHERE PK = ?";
+        String sql = "SELECT * FROM USER_TB WHERE UUID = ?";
         
         statement = dbManager.getJdbcConnection().prepareStatement(sql);
         statement.setString(1, userPk);
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            user.setPk(rs.getString("PK"));
+            user.setUUID(rs.getString("UUID"));
             user.setId(rs.getString("ID"));
             user.setPwd(rs.getString("PWD"));
         }

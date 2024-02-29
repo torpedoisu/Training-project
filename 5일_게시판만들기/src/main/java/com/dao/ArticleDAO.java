@@ -30,10 +30,10 @@ public class ArticleDAO {
         
         PreparedStatement statement = null;
         
-        String sql = "INSERT INTO ARTICLE_TB (USER_PK, TITLE, CONTENT) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO ARTICLE_TB (USER_UUID, TITLE, CONTENT) VALUES (?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(sql);
-        statement.setString(1, article.getExternalUser().getPk());
+        statement.setString(1, article.getExternalUser().getUUID());
         statement.setString(2, article.getTitle());
         statement.setString(3, article.getContent());
         statement.executeUpdate();
@@ -60,15 +60,15 @@ public class ArticleDAO {
         PreparedStatement statement = null;
         ResultSet rs = null;
         
-        String sql = "SELECT * FROM ARTICLE_TB WHERE USER_PK = ? AND TITLE = ?";
+        String sql = "SELECT * FROM ARTICLE_TB WHERE USER_UUID = ? AND TITLE = ?";
 
         statement = dbManager.getJdbcConnection().prepareStatement(sql);
-        statement.setString(1, user.getPk());
+        statement.setString(1, user.getUUID());
         statement.setString(2, title);
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            article.setPk(rs.getString("PK"));
+            article.setPk(rs.getString("UUID"));
             article.setTitle(rs.getString("TITLE"));
             article.setContent(rs.getString("CONTENT"));
         }
@@ -95,16 +95,16 @@ public class ArticleDAO {
         PreparedStatement statement = null;
         ResultSet rs = null;
         
-        String sql = "SELECT * FROM ARTICLE_TB WHERE USER_PK = ? AND TITLE = ? AND CONTENT = ?";
+        String sql = "SELECT * FROM ARTICLE_TB WHERE USER_UUID = ? AND TITLE = ? AND CONTENT = ?";
 
         statement = dbManager.getJdbcConnection().prepareStatement(sql);
-        statement.setString(1, article.getExternalUser().getPk());
+        statement.setString(1, article.getExternalUser().getUUID());
         statement.setString(2, article.getTitle());
         statement.setString(3, article.getContent());
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            newArticle.setPk(rs.getString("PK"));
+            newArticle.setPk(rs.getString("UUID"));
             newArticle.setTitle(rs.getString("TITLE"));
             newArticle.setContent(rs.getString("CONTENT"));
         }
@@ -132,12 +132,12 @@ public class ArticleDAO {
         while (rs.next()) {
             ArticleVO article = new ArticleVO();
             
-            article.setPk(rs.getString("PK"));
+            article.setPk(rs.getString("UUID"));
             article.setTitle(rs.getString("TITLE"));
             article.setContent(rs.getString("CONTENT"));
             
             UserVO user = new UserVO();
-            user.setPk(rs.getString("USER_PK"));
+            user.setUUID(rs.getString("USER_PK"));
             article.setExternalUser(user);
             
             articles.add(article);
@@ -159,20 +159,20 @@ public class ArticleDAO {
         ResultSet rs = null;
         
         
-        String sql = "SELECT PK, TITLE, USER_PK, CONTENT FROM ARTICLE_TB WHERE PK = ?";
+        String sql = "SELECT UUID, TITLE, USER_UUID, CONTENT FROM ARTICLE_TB WHERE UUID = ?";
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
         pstmt.setString(1, articlePk);
         rs = pstmt.executeQuery();
         
         if (rs.next()) {
             article = new ArticleVO();
-            article.setPk(rs.getString("PK"));
+            article.setPk(rs.getString("UUID"));
             article.setTitle(rs.getString("TITLE"));
             article.setContent(rs.getString("CONTENT"));
             
             // 유저 정보 세팅
             UserVO userVo = new UserVO();
-            userVo.setPk(rs.getString("USER_PK"));
+            userVo.setUUID(rs.getString("USER_UUID"));
             article.setExternalUser(userVo);
         }
         
@@ -185,7 +185,7 @@ public class ArticleDAO {
         
         PreparedStatement pstmt = null;
         
-        String sql = "DELETE FROM ARTICLE_TB WHERE PK = ?";
+        String sql = "DELETE FROM ARTICLE_TB WHERE UUID = ?";
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
         pstmt.setString(1, article.getPk());
         pstmt.executeUpdate();
@@ -200,7 +200,7 @@ public class ArticleDAO {
         
         PreparedStatement pstmt = null;
         
-        String sql = "UPDATE ARTICLE_TB SET TITLE = ?, CONTENT = ? WHERE PK = ?";
+        String sql = "UPDATE ARTICLE_TB SET TITLE = ?, CONTENT = ? WHERE UUID = ?";
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
         pstmt.setString(1, article.getTitle());
         pstmt.setString(2, article.getContent());
