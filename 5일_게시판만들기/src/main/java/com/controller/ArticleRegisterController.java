@@ -70,7 +70,7 @@ public class ArticleRegisterController implements Controller {
                 // 파일인 경우 
                 if (part.getHeader("Content-Disposition").contains("filename=")) {
                     Part file = req.getPart(part.getName());
-                    fileBytes = readPart(file);
+                    fileBytes = this.readPart(file);
                     
                     articleFileVo.setTitle(part.getName());
                     articleFileVo.setFile(fileBytes);
@@ -130,10 +130,12 @@ public class ArticleRegisterController implements Controller {
         byte[] buffer = new byte[1024];
         int bytesRead;
      
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
+        while ((bytesRead = inputStream.read(buffer)) != -1) { // inputstream에서 데이터를 읽어 buffer에 저장하기
+            outputStream.write(buffer, 0, bytesRead); // buffer의 0부터 bytesRead만큼 읽어서 outputStream에 저장 
         }
         
+        inputStream.close();
+        outputStream.close();
         return outputStream.toByteArray();
     }
 

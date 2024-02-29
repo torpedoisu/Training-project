@@ -53,11 +53,11 @@ public class ArticleService {
         
         dbManager.connect();
         try {
-            if (articleVo.getContent() == null) {
-                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
-            }
-            if (articleVo.getTitle() == null) {
+            if (articleVo.getContent().trim().isEmpty()) {
                 throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
+            }
+            if (articleVo.getTitle().trim().isEmpty()) {
+                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
             }   
             // 유저는 같은 제목을 등록할 수 없음
             ArticleDAO articleDao = new ArticleDAO();
@@ -260,11 +260,11 @@ public class ArticleService {
         
         dbManager.connect();
         try {
-            if (articleVo.getContent() == null) {
-                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
+            if (articleVo.getContent().trim().isEmpty()) {
+                throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp?pk=" + articleVo.getPk());
             }
-            if (articleVo.getTitle() == null) {
-                throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp");
+            if (articleVo.getTitle().trim().isEmpty()) {
+                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp?pk=" + articleVo.getPk());
             }   
             
             

@@ -18,13 +18,13 @@
 </head>
 <body>
 <h1>게시물 수정 페이지</h1>
-    <div id="editArticle">
+    <form id="editArticle">
     <script>processRequest(loadArticle);</script>
-        <input type="text" id="editTitle">
-        <textarea id="editContent"></textarea>
+        <input type="text" id="editTitle" required>
+        <textarea id="editContent" required></textarea>
         <input type="file" id="editFile" multiple onchange="updateFileList(this.files)">
         <ul id="editFileList"></ul>
         <button type="button" id="saveEditBtn" onclick="saveArticleEdit(<%= request.getParameter("pk") %>)">저장</button>
-    </div>
+    </form>
 </body>
 </html>
