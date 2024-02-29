@@ -34,7 +34,7 @@ public class ArticleDetailController implements Controller {
         String articlePk = req.getParameter("pk");
 
         ArticleService articleService = ArticleService.getInstance();
-        ArticleVO articleVo = articleService.getArticle(articlePk);
+        ArticleVO articleVo = articleService.getArticleAndFiles(articlePk);
 
         if (articleVo == null) {
             throw new CustomException("삭제된 게시글입니다", HttpServletResponse.SC_BAD_REQUEST, "index.jsp");
@@ -46,24 +46,20 @@ public class ArticleDetailController implements Controller {
         responseObject.put("content", articleVo.getContent());
         responseObject.put("user", articleVo.getExternalUser().getId());
 
-        /*
+        
         JSONObject fileObject = new JSONObject();
         List<ArticleFileVO> articleFiles = articleVo.getExternalFiles();
-        // 파일(blob)을 Base64로 인코딩하여 JSON에 추가
+        
+        // 파일(바이트 배열)을 Base64로 인코딩하여 JSON에 추가
         if ((articleFiles != null) && (articleFiles.size() != 0)) {
-            int index = 0;
             for (ArticleFileVO articleFile : articleFiles) {
-                String base64EncodedFile = this.convertBlobToBase64(articleFile.getFile());
+                String encodedFile = Base64.getEncoder().encodeToString(articleFile.getFile());
 
-                System.out.println("디코딩 전 base64 - " + base64EncodedFile);
-                String s = new String(Base64.getDecoder().decode(base64EncodedFile));
-                System.out.println("디코딩 후 base64 - " + s);
-
-                fileObject.put("file" + index++, base64EncodedFile);
+                fileObject.put(articleFile.getTitle(), encodedFile);
             }
         }
-        responseObject.put("file", fileObject);
-*/
+        responseObject.put("files", fileObject);
+
         PrintWriter out = res.getWriter();
         out.write(responseObject.toString());
 
@@ -73,8 +69,5 @@ public class ArticleDetailController implements Controller {
         logger.debug("ArticleDetailController 완료");
     }
 
-    private String convertBlobToBase64(byte[] blobAsBytes) throws IOException {
-        return Base64.getEncoder().encodeToString(blobAsBytes);
-    }
 
 }

@@ -157,7 +157,7 @@ public class ArticleService {
         
     }
 
-    public ArticleVO getArticle(String articlePk) {
+    public ArticleVO getArticleAndFiles(String articlePk) {
         logger.debug("Service - 게시물 상세 조회 트랜잭션 시작");
         DBManager dbManager = new DBManager();
         
@@ -165,6 +165,7 @@ public class ArticleService {
         
         ArticleVO article = null;
         try {
+            // 게시글 정보 조회
             ArticleDAO articleDao = new ArticleDAO();
             article = articleDao.selectByPk(dbManager, articlePk);
             
@@ -185,7 +186,7 @@ public class ArticleService {
             List<ArticleFileVO> articleFilesVo = articleFileDao.selectFilesByArticlePk(dbManager, article);
             if (articleFilesVo.size() != 0 && articleFilesVo != null) {
                 article.setExternalFiles(articleFilesVo);
-                // 파일에도 게시글 넣어주기 (양방향
+                // 파일에도 게시글 넣어주기 (양방향)
                 for (ArticleFileVO articleFile : articleFilesVo) {
                     articleFile.setExternalArticle(article);
                 }
@@ -205,12 +206,51 @@ public class ArticleService {
             }
         }
         
-        
-        
         return article;
         
     }
 
+    public ArticleVO getArticle(String articlePk) {
+        logger.debug("Service - 게시물 상세 조회 트랜잭션 시작");
+        DBManager dbManager = new DBManager();
+        
+        dbManager.connect();
+        
+        ArticleVO article = null;
+        try {
+            // 게시글 정보 조회
+            ArticleDAO articleDao = new ArticleDAO();
+            article = articleDao.selectByPk(dbManager, articlePk);
+            
+            if (article == null) {
+                throw new CustomException("게시글 조회가 실패했습니다", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "index.jsp");
+            }
+            
+            // 게시글의 작성자 조회
+            UserDAO userDao = new UserDAO();
+            String userPk = article.getExternalUser().getPk();
+                
+            UserVO user = userDao.selectUserWithPk(dbManager, userPk);
+            article.setExternalUser(user);
+            
+            dbManager.commit();
+            
+            logger.debug("Service - 게시글 상세 조회 트랜잭션 완료");
+            
+        } catch (SQLException e) {
+            logger.error("게시물 상세 조회 중 예외 발생");
+            e.printStackTrace();
+            dbManager.rollback();
+        } finally {
+            if (!dbManager.checkJdbcConnectionIsClosed()) {
+                dbManager.disconnect();    
+            }
+        }
+        
+        return article;
+        
+    }
+    
     public void delete(String articlePk) {
         logger.debug("Service - 게시글 삭제 트랜잭션 시작");
         

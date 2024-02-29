@@ -29,25 +29,16 @@ function displayArticleDetails(article) {
 }
 
 function getfileDetails(data) {
-    let articlePk = data.pk;
+    console.log('파일 가져오기 시작');
+    const files = data.files;
+
+    // 이전의 파일 링크 초기화
+    document.getElementById('articleFileLink').innerHTML = '';
     
-    console.log('파일 정보 가져오기');
-
-        axios.get(`articleFileDetail.do?pk=${articlePk}`)
-        .then(response => {
-            const files = response.data.files;
-
-            // 이전의 파일 링크 초기화
-            document.getElementById('articleFileLink').innerHTML = '';
-            
-            for (const fileTitle in files) {
-                makeFileURL(fileTitle, files[fileTitle]); // Base64 인코딩된 파일 데이터
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
+    for (const fileTitle in files) {
+        makeFileURL(fileTitle, files[fileTitle]); // Base64 인코딩된 파일 데이터
+    }
+  }
 
 /*
     ========[초기화 함수에서 사용하는 함수]========
