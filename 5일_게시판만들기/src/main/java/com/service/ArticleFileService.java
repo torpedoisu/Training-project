@@ -34,7 +34,7 @@ public class ArticleFileService {
         DBManager dbManager = new DBManager();
         
         ArticleVO articleVo = new ArticleVO();
-        articleVo.setPk(articlePk);
+        articleVo.setUUID(articlePk);
         
         List<ArticleFileVO> articleFiles = null;
         try {

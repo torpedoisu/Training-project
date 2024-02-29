@@ -47,7 +47,7 @@ function displayArticles(data) {
         userCell.innerHTML = article.user;
         titleCell.innerHTML = article.title;
         contentCell.innerHTML = article.content;
-        actionCell.innerHTML = `<button onclick="redirectToArticle(${article.pk})">상세보기</button>`; // 버튼 추가
+        actionCell.innerHTML = `<button onclick="redirectToArticle('${article.pk}')">상세보기</button>`; // 버튼 추가
     });
 
 }

@@ -53,7 +53,7 @@ public class ArticleRegisterController implements Controller {
         String content = null;
         byte[] fileBytes = null;
         
-        ArticleVO articleVo = new ArticleVO();
+        ArticleVO articleVo = ArticleVO.getNewInstanceWithUUID();
 
 
         List<ArticleFileVO> articleFilesVo = new ArrayList<>();

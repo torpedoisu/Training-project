@@ -70,13 +70,6 @@ public class ArticleService {
             // 게시글 등록
             articleDao.insert(dbManager, articleVo);
             
-            // 게시글의 fk를 위한 게시글 pk 조회
-            ArticleVO articleInDBWithPK = articleDao.select(dbManager, articleVo);
-            if (!articleInDBWithPK.isExist()) {
-                throw new CustomException("Service - db에 게시글 등록 후 pk 가져오던 중 오류", HttpServletResponse.SC_BAD_REQUEST, "post.jsp");
-            }
-            articleVo.setPk(articleInDBWithPK.getPk());
-              
             // 파일 등록
             List<ArticleFileVO> articleFilesVo = articleVo.getExternalFiles();
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
@@ -301,10 +294,10 @@ public class ArticleService {
         dbManager.connect();
         try {
             if (articleVo.getContent().trim().isEmpty()) {
-                throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp?pk=" + articleVo.getPk());
+                throw new CustomException("본문을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp?pk=" + articleVo.getUUID());
             }
             if (articleVo.getTitle().trim().isEmpty()) {
-                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp?pk=" + articleVo.getPk());
+                throw new CustomException("제목을 입력해주세요", HttpServletResponse.SC_BAD_REQUEST, "editArticle.jsp?pk=" + articleVo.getUUID());
             }   
             
             

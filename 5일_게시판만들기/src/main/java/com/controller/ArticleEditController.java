@@ -105,7 +105,7 @@ public class ArticleEditController implements Controller {
             // 게시글 오브젝트 설정
             articleVo.setTitle(title);
             articleVo.setContent(content);
-            articleVo.setPk(pk);
+            articleVo.setUUID(pk);
             
             // 양방향 설정
             articleVo.setExternalUser(user);

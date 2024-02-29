@@ -30,12 +30,13 @@ public class ArticleDAO {
         
         PreparedStatement statement = null;
         
-        String sql = "INSERT INTO ARTICLE_TB (USER_UUID, TITLE, CONTENT) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO ARTICLE_TB (UUID, TITLE, CONTENT, USER_UUID) VALUES (?, ?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(sql);
-        statement.setString(1, article.getExternalUser().getUUID());
+        statement.setString(1, article.getUUID());
         statement.setString(2, article.getTitle());
         statement.setString(3, article.getContent());
+        statement.setString(4, article.getExternalUser().getUUID());
         statement.executeUpdate();
         
         statement.close();
@@ -68,7 +69,7 @@ public class ArticleDAO {
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            article.setPk(rs.getString("UUID"));
+            article.setUUID(rs.getString("UUID"));
             article.setTitle(rs.getString("TITLE"));
             article.setContent(rs.getString("CONTENT"));
         }
@@ -104,7 +105,7 @@ public class ArticleDAO {
         rs = statement.executeQuery();
         
         if (rs.next()) {
-            newArticle.setPk(rs.getString("UUID"));
+            newArticle.setUUID(rs.getString("UUID"));
             newArticle.setTitle(rs.getString("TITLE"));
             newArticle.setContent(rs.getString("CONTENT"));
         }
@@ -132,12 +133,12 @@ public class ArticleDAO {
         while (rs.next()) {
             ArticleVO article = new ArticleVO();
             
-            article.setPk(rs.getString("UUID"));
+            article.setUUID(rs.getString("UUID"));
             article.setTitle(rs.getString("TITLE"));
             article.setContent(rs.getString("CONTENT"));
             
             UserVO user = new UserVO();
-            user.setUUID(rs.getString("USER_PK"));
+            user.setUUID(rs.getString("USER_UUID"));
             article.setExternalUser(user);
             
             articles.add(article);
@@ -166,7 +167,7 @@ public class ArticleDAO {
         
         if (rs.next()) {
             article = new ArticleVO();
-            article.setPk(rs.getString("UUID"));
+            article.setUUID(rs.getString("UUID"));
             article.setTitle(rs.getString("TITLE"));
             article.setContent(rs.getString("CONTENT"));
             
@@ -181,22 +182,22 @@ public class ArticleDAO {
     }
 
     public void delete(DBManager dbManager, ArticleVO article) throws SQLException{
-        logger.debug("[delete] 상세 게시글pk - " + article.getPk() + " 삭제 시작");
+        logger.debug("[delete] 상세 게시글pk - " + article.getUUID() + " 삭제 시작");
         
         PreparedStatement pstmt = null;
         
         String sql = "DELETE FROM ARTICLE_TB WHERE UUID = ?";
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
-        pstmt.setString(1, article.getPk());
+        pstmt.setString(1, article.getUUID());
         pstmt.executeUpdate();
         
         pstmt.close();
         
-        logger.debug("[delete] 상세 게시글 - " + article.getPk() + " 삭제 완료");
+        logger.debug("[delete] 상세 게시글 - " + article.getUUID() + " 삭제 완료");
     }
 
     public void update(DBManager dbManager, ArticleVO article) throws SQLException{
-        logger.debug("[update] 상세 게시글pk - " + article.getPk() + " 업데이트 시작");
+        logger.debug("[update] 상세 게시글pk - " + article.getUUID() + " 업데이트 시작");
         
         PreparedStatement pstmt = null;
         
@@ -204,13 +205,13 @@ public class ArticleDAO {
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
         pstmt.setString(1, article.getTitle());
         pstmt.setString(2, article.getContent());
-        pstmt.setString(3, article.getPk());
+        pstmt.setString(3, article.getUUID());
         
         pstmt.executeUpdate();
         
         pstmt.close();
         
-        logger.debug("[update] 상세 게시글 - " + article.getPk() + " 업데이트 완료");
+        logger.debug("[update] 상세 게시글 - " + article.getUUID() + " 업데이트 완료");
         
     }
     

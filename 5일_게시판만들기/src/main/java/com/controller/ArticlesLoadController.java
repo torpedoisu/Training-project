@@ -38,7 +38,7 @@ public class ArticlesLoadController implements Controller{
         JSONArray jsonArray = new JSONArray();
         for (ArticleVO article : articles) {
             JSONObject jsonArticle = new JSONObject();
-            jsonArticle.put("pk", article.getPk());
+            jsonArticle.put("pk", article.getUUID());
             jsonArticle.put("user", article.getExternalUser().getId());
             jsonArticle.put("title", article.getTitle());
             jsonArticle.put("content", article.getContent());

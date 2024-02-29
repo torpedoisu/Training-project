@@ -24,23 +24,20 @@
     data: {},
     callMethod: 'loadIndexBtn' // axios 안에서 불러올 함수
   }
-
-  
-  
-
   </script>
   
 </head>
 <body>
     <h1>게시판</h1>
     
-    <table id="articleTable">
     <script>processRequest(loadArticles);</script>
+    <script>processRequest(checkUserInSession);</script>
+    
+    <table id="articleTable">
     
     <button type="button" onclick="logout()" id="logoutButton" style="display: none">로그아웃</button>
     <button type="button" onclick="redirectToLogin()" id="loginButton" style="display: none">로그인</button>
     <button type="button" onclick="redirectToRegister()" id="registerButton" style="display: none">회원가입</button>
-    <script>processRequest(checkUserInSession);</script>
     
         <thead>
             <tr>
@@ -51,8 +48,8 @@
             </tr>
         </thead>
         <tbody id="articleTableBody"></tbody>
-        <button type="button" onclick="redirectToPost()" id="postButton" style="display: none">게시글 작성</button>
         
-
+        <button type="button" onclick="redirectToPost()" id="postButton" style="display: none">게시글 작성</button>
+    </table>
 </body>
 </html>

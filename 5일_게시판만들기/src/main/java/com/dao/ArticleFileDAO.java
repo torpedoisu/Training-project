@@ -34,7 +34,7 @@ public class ArticleFileDAO {
         String fileSql = "INSERT INTO FILE_TB (ARTICLE_UUID, CONTENT, TITLE) VALUES (?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(fileSql);
-        statement.setString(1, file.getExternalArticle().getPk()); // 게시글의 PK를 외래 키로 설정
+        statement.setString(1, file.getExternalArticle().getUUID()); // 게시글의 PK를 외래 키로 설정
 
         //BLOB 등록
         InputStream inputStream = new ByteArrayInputStream(file.getFile());
@@ -67,7 +67,7 @@ public class ArticleFileDAO {
     }
 
     public List<ArticleFileVO> selectFilesByArticlePk(DBManager dbManager, ArticleVO articleVo) throws SQLException {
-        logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getPk() + " 의 파일 조회 시작");
+        logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getUUID() + " 의 파일 조회 시작");
         
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -76,7 +76,7 @@ public class ArticleFileDAO {
         String sql = "SELECT * FROM FILE_TB WHERE ARTICLE_UUID = ?";
 
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
-        pstmt.setString(1, articleVo.getPk());
+        pstmt.setString(1, articleVo.getUUID());
         rs = pstmt.executeQuery();
 
         while (rs.next()) {
@@ -93,7 +93,7 @@ public class ArticleFileDAO {
         rs.close();
         pstmt.close();
 
-        logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getPk() + " 의 파일 조회 완료");
+        logger.debug("[selectFilesByArticlePk] articlePk: " + articleVo.getUUID() + " 의 파일 조회 완료");
 
         logger.debug("파일 " + articleFilesVo.size() + " 개 발견");
         return articleFilesVo;
