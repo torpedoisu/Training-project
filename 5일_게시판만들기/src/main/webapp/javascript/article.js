@@ -1,4 +1,4 @@
-function checkUserInArticle(article) {
+/*function checkUserInArticle(article) {
     console.log("글을 작성한 유저가 맞는지 확인");
     
     axios.get('')
@@ -9,11 +9,6 @@ function checkUserInArticle(article) {
             console.log(error);
         });
 }
-
-function editArticle(articlePk) {
-    window.location.href = 'editArticle.jsp?pk=' + articlePk;
-}
-
 
 // 게시물 삭제 버튼 추가
 function createDeleteBtn(article) {
@@ -26,20 +21,22 @@ function createDeleteBtn(article) {
     deleteButtonElement.appendChild(deleteButton);
 }
 
-function getArticleDetails(articlePk) {
-    console.log('게시글 상세 정보 가져오기');
+*/
+
+/*
+    ========[초기화 함수]========
+*/
+
+function checkIfUserIsIdentical(article) {
+    console.log("글 작성자가 유저인지 확인");
     
-    axios.get(`articleDetail.do?pk=${articlePk}`)
+        axios.post('userCheckSame.do', { pk: article.pk })
         .then(response => {
-            displayArticleDetails(response.data);
-            getfileDetails(response.data.pk);
+            loadSameUserBtn(response.data.isSameUser);
         })
         .catch(error => {
             console.log(error);
-            if (!error){
-                alert(error.response.data.statusDescription);
-                window.location.href = error.response.headers.path;
-            }
+            console.log("작성자가 아닌 유저");
         });
 }
 
@@ -53,12 +50,12 @@ function displayArticleDetails(article) {
     articleTitleElement.innerHTML = article.title;
     articleUserElement.innerHTML= '작성자: ' + article.user;
     articleContentElement.innerHTML= article.content;
-
-    checkIfUserIsIdentical(article);
     
 }
 
-function getfileDetails(articlePk) {
+function getfileDetails(data) {
+    let articlePk = data.pk;
+    
     console.log('파일 정보 가져오기');
             
         axios.get(`articleFileDetail.do?pk=${articlePk}`)
@@ -75,6 +72,10 @@ function getfileDetails(articlePk) {
             console.log(error);
         });
 }
+
+/*
+    ========[초기화 함수들에서 사용하는 함수]========
+*/
 function makeFileURL(fileTitle, base64Data){
     console.log('파일 다운로드 링크 만들기');
     const articleFileLinkElement = document.getElementById('articleFileLink');
@@ -112,6 +113,21 @@ function base64ToBlob(base64, contentType) {
     return new Blob(byteArrays, {type: contentType});
 }
 
+function loadSameUserBtn(isSameUser) {
+    if (isSameUser) {
+        console.log("글을 작성한 유저 ");
+        document.getElementById('deleteBtn').style.display = 'block';
+        document.getElementById('updateBtn').style.display = 'block';
+    }
+}
+
+/*
+    ========[버튼에 있는 함수들]========
+*/
+function redirectToEditArticle(articlePk) {
+    window.location.href = 'editArticle.jsp?pk=' + articlePk;
+}
+
 function deleteArticle(articlePk) {
     console.log("게시글 지우기", articlePk);
     axios.post('articleDelete.do', { pk: articlePk })
@@ -131,23 +147,3 @@ function deleteArticle(articlePk) {
         });
 }
 
-function checkIfUserIsIdentical(article) {
-    console.log("글 작성자가 유저인지 확인");
-    
-        axios.post('userCheckSame.do', { pk: article.pk })
-        .then(response => {
-            loadSameUserBtn(response.data.isSameUser);
-        })
-        .catch(error => {
-            console.log(error);
-            console.log("작성자가 아닌 유저");
-        });
-}
-
-function loadSameUserBtn(isSameUser) {
-    if (isSameUser) {
-        console.log("글을 작성한 유저 ");
-        document.getElementById('deleteBtn').style.display = 'block';
-        document.getElementById('updateBtn').style.display = 'block';
-    }
-}
