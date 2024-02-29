@@ -7,9 +7,13 @@
   <script src="javascript/post.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    window.onload = function() {
-          checkUserInPost();
-    };
+    const checkUserInPost = {
+      const checkUserInSession = {
+        url: 'userAuthInIndex.do',
+        method: 'GET',
+        data: {},
+        callMethod:  // axios 안에서 불러올 함수
+    }
   </script>
   
   <style>
@@ -24,6 +28,7 @@
 </head>
 <body>
   <h1>게시글 작성</h1>
+  <script>processRequest(checkUserInPost)</script>
   <form id="articleForm">
     <label for="title">제목:</label><br>
     <input type="text" id="title" name="title" required><br><br>
