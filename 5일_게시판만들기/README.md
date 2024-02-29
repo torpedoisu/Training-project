@@ -22,9 +22,11 @@
 
 <br>
 
-## 1.1. 파일 구조
+## 1.1. 프로젝 파일 구조
 
-#### 1.1.1 com.global 패키지
+### 1.1.1. Controller와 Model
+
+#### 1.1.1.1. com.global 패키지
 
 `DBManager.java`
 
@@ -38,7 +40,7 @@
 
 - HTTP 요청 수행 시 공통적으로 수행되는 기능을 모듈화 한 클래스 
 
-#### 1.1.2 com.exception 패키지
+#### 1.1.1.2. com.exception 패키지
 
 `CustomException.java`
 
@@ -52,7 +54,7 @@
 
 - 일종의 예외에 대한 필터로 작동
 
-#### 1.1.3 com.controller 패키지
+#### 1.1.1.3. com.controller 패키지
 
 `FrontController.java`
 
@@ -62,59 +64,57 @@
 
 `Controller.java`
 
-- 서브 컨트롤러가 구현해야 하는 규약을 정의한 인터페이스 
+- 서브 컨트롤러가 구현해야 하는 규약을 정의한 인터페이스
 
-- Cotroller 구현체
+- 구현체
   
-  - `ArticleDeleteController.java` - ''/articleDelete.do'
+  - `ArticleDetailController.java`, `ArticleDeleteController.java`, `ArticleEditController.java`, `ArtricleRegisterContoller.java`, `ArticlesLoadController.java`, `UserAuthInIndexController.java`, `UserAuthInPostController.java`, `UserCheckSameController.java`, `UserLoginController.java`, `UserLogoutController.java`, UserRegisterController.java` 
+
+#### 1.1.1.4. com.service 패키지
+
+- `ArticleFileService.java`, `ArticleService.java`, `UserService.java`
+
+#### 1.1.1.5. com.dao 패키지
+
+- `ArticleDAO.java`, `ArticleFileDAO.java`, `UserDAO.java`
+
+#### 1.1.1.6. com.vo 패키지
+
+- `ArticleFileVO.java` , `ArticleVO.java`, `UserVO.java`
+
+
+
+</br>
+
+
+
+### 1.1.2. View
+
+#### 1.1.2.1. jsp
+
+- `editArticle.jsp`,  `login.jsp`
+
+- `article.jsp` 상세 게시글 보기 페이지 (단일)
+
+- `userRegister.jsp` 회원 가입 페이지
+
+- `index.jsp` 게시글 목록 페이지
+
+- `post.jsp` 게시글 수정 페이지
+
+#### 1.1.2.2. javascript
+
+- `article.js`, `editArticle.js`, `index.js`, `login.js`, `post.js`, `userRegister.js`
+
+- AC 파일 사용하여 페이지 로드시 필요한 로직을 모듈화
   
-  - `ArticleDetailController.java` '/articleDetail.do'
-  
-  - `ArticleEditController.java` '/articleEdit.do'
-  
-  - `ArticleRegisterController.java`  '/articleRegister.do'
-  
-  - `ArticlesLoadController.java` '/articlesLoad.do'
-  
-  - `UserAuthInIndexController.java` '/userAuthInIndex.do'
-  
-  - `UserAuthInPostController.java` '/userAuthInPost.do'
-  
-  - `UserCheckSameController.java` '/userCheckSame.do'
-  
-  - `UserLoginController.java` '/userLogin.do'
-  
-  - `UserLogoutController.java` '/userLogout.do'
-  
-  - `UserRegisterController.java` '/userRegister.do' 
+  - `articleAC.js`,` editArticleAC.js`,` indexAC.js`,  `postAC.js`
 
-#### 1.1.4 com.service 패키지
 
-`ArticleFileService.java`
-
-`ArticleService.java`
-
-`UserService.java`
-
-#### 1.1.5 com.dao 패키지
-
-`ArticleFileDAO`
-
-`ArticleDAO`
-
-`UserDAO`
-
-#### 1.1.6 com.vo 패키지
-
-`ArticleFileVO`
-
-`ArticleVO`
-
-`UserVO`
 
 <br>
 
-## 
+
 
 ## 1.2. 실행 환경
 
