@@ -3,18 +3,27 @@ package com.vo;
 import java.math.BigInteger;
 import java.sql.Blob;
 
+import com.global.UUIDFactory;
+
 public class ArticleFileVO {
-    private BigInteger pk;
-    private String title;
-    private byte[] file;
-    private ArticleVO externalArticle;
+    private String uuid = null;
+    private String title = null;
+    private byte[] file = null;
+    private ArticleVO externalArticle = null;
     
-    public String getPk() {
-        return String.valueOf(pk);
+    public static ArticleFileVO getNewInstanceWithUUID() {
+        ArticleFileVO articleFileVo = new ArticleFileVO();
+        articleFileVo.setUUID(UUIDFactory.generateUUID().toString());
+        
+        return articleFileVo;
     }
     
-    public void setPk(String pk) {
-        this.pk = new BigInteger(pk);
+    public String getUUID() {
+        return uuid;
+    }
+    
+    public void setUUID(String val) {
+        this.uuid = val;
     }
     
     public byte[] getFile() {
@@ -36,8 +45,8 @@ public class ArticleFileVO {
     public String getTitle() {
         return this.title;
     }
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String val) {
+        this.title = val;
         
     }
 }

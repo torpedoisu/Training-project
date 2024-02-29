@@ -308,18 +308,16 @@ public class ArticleService {
             
             ArticleFileDAO articleFileDao = new ArticleFileDAO();
 
-            // 1. 기존의 파일 삭제
+            
+            // 1. article은 중복되는 경우가 없기 때문에 바로 업데이트
+            ArticleDAO articleDao = new ArticleDAO();
+            articleDao.update(dbManager, articleVo);
+
+            // 2. 기존의 파일 삭제
             List<ArticleFileVO> earlierFiles = articleFileDao.selectFilesByArticlePk(dbManager, articleVo);
             for (ArticleFileVO earlierfile : earlierFiles) {
                 articleFileDao.delete(dbManager, earlierfile);
             }
-            
-            // 2. article은 중복되는 경우가 없기 때문에 바로 업데이트
-            ArticleDAO articleDao = new ArticleDAO();
-            articleDao.update(dbManager, articleVo);
-            
-            // 3. 파일 저장을 위한 article pk 조회 후 저장 
-            ArticleVO newArticle = articleDao.select(dbManager, articleVo);
             
             // 4. 유저가 새로 등록한 파일 저장
             List<ArticleFileVO> articleFilesVo = articleVo.getExternalFiles();

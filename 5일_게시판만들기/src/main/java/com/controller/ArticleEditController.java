@@ -66,19 +66,21 @@ public class ArticleEditController implements Controller {
             
             for (Part part : parts) {
                 
-                ArticleFileVO articleFileVo = new ArticleFileVO();
+
                 
                 // 파일인 경우 
                 if (part.getHeader("Content-Disposition").contains("filename=")) {
                     Part file = req.getPart(part.getName());
                     fileBytes = readPart(file);
                     
-                    articleFileVo.setTitle(part.getName());
-                    articleFileVo.setFile(fileBytes);
-                    // 양방향 설정
+                    ArticleFileVO articleFileVo = new ArticleFileVO();
                     articleFileVo.setExternalArticle(articleVo);
                     
+                    articleFileVo.setTitle(part.getName());
+                    articleFileVo.setFile(fileBytes);
+                    
                     articleFilesVo.add(articleFileVo);
+                    
                 // 파일이 아닌 경우 (텍스트인 경우)
                 } else {
                   String formValue = req.getParameter(part.getName());  

@@ -31,15 +31,18 @@ public class ArticleFileDAO {
 
         PreparedStatement statement = null;
 
-        String fileSql = "INSERT INTO FILE_TB (ARTICLE_UUID, CONTENT, TITLE) VALUES (?, ?, ?)";
+        String fileSql = "INSERT INTO FILE_TB (UUID, ARTICLE_UUID, TITLE, CONTENT) VALUES (?, ?, ?, ?)";
 
         statement = dbManager.getJdbcConnection().prepareStatement(fileSql);
-        statement.setString(1, file.getExternalArticle().getUUID()); // 게시글의 PK를 외래 키로 설정
 
+        statement.setString(1, file.getUUID()); // 게시글의 PK를 외래 키로 설정
+        statement.setString(2, file.getExternalArticle().getUUID()); // 게시글의 PK를 외래 키로 설정
+        statement.setString(3, file.getTitle());
+        
         //BLOB 등록
         InputStream inputStream = new ByteArrayInputStream(file.getFile());
-        statement.setBinaryStream(2, inputStream, file.getFile().length);
-        statement.setString(3, file.getTitle());
+        statement.setBinaryStream(4, inputStream, file.getFile().length);
+        
         statement.executeUpdate();
 
         logger.debug("[insert] File 등록 완료");
@@ -51,18 +54,18 @@ public class ArticleFileDAO {
 
 
     public void delete(DBManager dbManager, ArticleFileVO file) throws SQLException {
-        logger.debug("[delete] 파일pk: " + file.getPk() + " 삭제 시작");
+        logger.debug("[delete] 파일pk: " + file.getUUID() + " 삭제 시작");
 
         PreparedStatement pstmt = null;
 
         String sql = "DELETE FROM FILE_TB WHERE ARTICLE_UUID = ?";
         pstmt = dbManager.getJdbcConnection().prepareStatement(sql);
-        pstmt.setString(1, file.getPk());
+        pstmt.setString(1, file.getUUID());
         pstmt.executeUpdate();
 
         pstmt.close();
 
-        logger.debug("[delete] 파일pk: " + file.getPk() + " 삭제 완료");
+        logger.debug("[delete] 파일pk: " + file.getUUID() + " 삭제 완료");
 
     }
 
@@ -83,7 +86,7 @@ public class ArticleFileDAO {
             ArticleFileVO articleFileVo = new ArticleFileVO();
 
             articleFileVo.setFile(rs.getBytes("CONTENT"));
-            articleFileVo.setPk(rs.getString("UUID"));
+            articleFileVo.setUUID(rs.getString("UUID"));
             articleFileVo.setTitle(rs.getString("TITLE"));
             articleFileVo.setExternalArticle(articleVo);
 

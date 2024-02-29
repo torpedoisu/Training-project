@@ -65,7 +65,7 @@ public class ArticleRegisterController implements Controller {
             
             for (Part part : parts) {
                 
-                ArticleFileVO articleFileVo = new ArticleFileVO();
+                ArticleFileVO articleFileVo = ArticleFileVO.getNewInstanceWithUUID();
                 
                 // 파일인 경우 
                 if (part.getHeader("Content-Disposition").contains("filename=")) {
