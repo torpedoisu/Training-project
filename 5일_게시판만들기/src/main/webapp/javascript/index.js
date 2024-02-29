@@ -1,18 +1,7 @@
-function redirectToPost() {
-    console.log("게시글 작성 페이지로 redirect");
-    window.location.href = "post.jsp";
-}
 
-function redirectToLogin() {
-    console.log("로그인 페이지로 redirect");
-    window.location.href = "login.jsp";
-}
-
-function redirectToArticle(articlePk) {
-    console.log("게시글 상세 페이지로 redirect");
-    window.location.href = `article.jsp?pk=${articlePk}`;
-}
-
+/*
+    ========[초기화 함수]========
+*/
 function loadIndexBtn(data) {
     console.log("인덱스 페이지 버튼 설정");
     
@@ -63,17 +52,33 @@ function displayArticles(data) {
 
 }
 
+/*
+    ========[버튼에 있는 함수들]========
+*/
 function logout() {
-        axios.post('userLogout.do')
-       .then(response => {
-            console.log(response);
-            window.location.href = response.headers.path;
-        })
-        .catch(error => {
-            console.log(error);
-            alert(error.response.data.statusDescription);
-            window.location.href = error.response.headers.path;
-        });
-    sessionStorage.removeItem('user');
-    //checkLoginStatus();
+    axios.post('userLogout.do')
+   .then(response => {
+        console.log(response);
+        window.location.href = response.headers.path;
+    })
+    .catch(error => {
+        console.log(error);
+        alert(error.response.data.statusDescription);
+        window.location.href = error.response.headers.path;
+    });
+}
+
+function redirectToPost() {
+    console.log("게시글 작성 페이지로 redirect");
+    window.location.href = "post.jsp";
+}
+
+function redirectToLogin() {
+    console.log("로그인 페이지로 redirect");
+    window.location.href = "login.jsp";
+}
+
+function redirectToArticle(articlePk) {
+    console.log("게시글 상세 페이지로 redirect");
+    window.location.href = `article.jsp?pk=${articlePk}`;
 }

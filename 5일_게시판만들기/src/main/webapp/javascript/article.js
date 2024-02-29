@@ -1,32 +1,7 @@
-/*function checkUserInArticle(article) {
-    console.log("글을 작성한 유저가 맞는지 확인");
-    
-    axios.get('')
-        .then(response => {
-            createDeleteBtn(article);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
-
-// 게시물 삭제 버튼 추가
-function createDeleteBtn(article) {
-    const deleteButtonElement = document.getElementById('delete');
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = '게시물 삭제';
-    deleteButton.addEventListener('click', function() {
-        deleteArticle(article.pk);
-    });
-    deleteButtonElement.appendChild(deleteButton);
-}
-
-*/
 
 /*
     ========[초기화 함수]========
 */
-
 function checkIfUserIsIdentical(article) {
     console.log("글 작성자가 유저인지 확인");
     
@@ -74,7 +49,7 @@ function getfileDetails(data) {
 }
 
 /*
-    ========[초기화 함수들에서 사용하는 함수]========
+    ========[초기화 함수에서 사용하는 함수]========
 */
 function makeFileURL(fileTitle, base64Data){
     console.log('파일 다운로드 링크 만들기');

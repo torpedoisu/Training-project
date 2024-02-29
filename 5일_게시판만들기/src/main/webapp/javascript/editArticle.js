@@ -1,27 +1,16 @@
-let ARTICLE_PK = null;
 
-function getArticleForEdit(articlePk) {
-    console.log('게시글 수정 정보 가져오기');
-    ARTICLE_PK = articlePk;
-    // 게시글 정보 가져오기
-    axios.get(`articleDetail.do?pk=${ARTICLE_PK}`)
-        .then(response => {
-            const article = response.data;
-            document.getElementById('editTitle').value = article.title;
-            document.getElementById('editContent').value = article.content;
-            // 기존 파일 정보 가져오기 및 표시
-            getfileDetailsForEdit();
-        })
-        .catch(error => {
-            console.log(error);
-        });
-
+/*
+    ========[초기화 함수]========
+*/
+function loadArticleDetails(article){
+    document.getElementById('editTitle').value = article.title;
+    document.getElementById('editContent').value = article.content;
 }
 
-function getfileDetailsForEdit() {
+function getfileDetailsForEdit(article) {
     console.log('파일 정보 가져오기');
             
-    axios.get(`articleFileDetail.do?pk=${ARTICLE_PK}`)
+    axios.get(`articleFileDetail.do?pk=${article.pk}`)
     .then(response => {
         const files = response.data.files;
         for (const fileTitle in files) {
@@ -33,6 +22,9 @@ function getfileDetailsForEdit() {
     });
 }
 
+/*
+    ========[초기화 함수에서 사용하는 함수]========
+*/
 function displayEditFileList(fileTitle, base64Data) {
     console.log('파일 목록에 파일 추가:', fileTitle);
 
@@ -54,6 +46,9 @@ function displayEditFileList(fileTitle, base64Data) {
     fileListContainer.appendChild(fileListItem);
 }
 
+/*
+    ========[버튼에 있는 함수들]========
+*/
 function updateFileList(files) {
     let fileList = document.getElementById('editFileList');
     
@@ -75,7 +70,7 @@ function updateFileList(files) {
     }
 }
 
-function saveArticleEdit() {
+function saveArticleEdit(articlePk) {
     const title = document.getElementById('editTitle').value;
     const content = document.getElementById('editContent').value;
     const fileList = document.getElementById('editFile').files;
@@ -83,7 +78,7 @@ function saveArticleEdit() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('pk', ARTICLE_PK);
+    formData.append('pk', articlePk);
     
     // 수정된 파일 추가
     for (let i = 0; i < fileList.length; i++) {
@@ -95,15 +90,15 @@ function saveArticleEdit() {
             'Content-Type': 'multipart/form-data'
         }
     })
-        .then(response => {
-            console.log(response);
-            window.location.href = response.headers.path;
-        })
-        .catch(error => {
-            console.log(error);
-            alert(error.response.data.statusDescription);
-            window.location.href = error.response.headers.path;
-        });
+    .then(response => {
+        console.log(response);
+        window.location.href = response.headers.path;
+    })
+    .catch(error => {
+        console.log(error);
+        alert(error.response.data.statusDescription);
+        window.location.href = error.response.headers.path;
+    });
 }
 
 
