@@ -51,6 +51,7 @@ function getfileDetails(data) {
 /*
     ========[초기화 함수에서 사용하는 함수]========
 */
+// makeFileURL에서 사용
 function makeFileURL(fileTitle, base64Data){
     console.log('파일 다운로드 링크 만들기');
     const articleFileLinkElement = document.getElementById('articleFileLink');
@@ -67,6 +68,7 @@ function makeFileURL(fileTitle, base64Data){
     articleFileLinkElement.appendChild(document.createElement('br')); // 각 파일마다 줄 바꿈 추가
 }
 
+// makeFileURL에서 사용
 function base64ToBlob(base64, contentType) {
     console.log('디코딩 시작');
     
@@ -88,6 +90,7 @@ function base64ToBlob(base64, contentType) {
     return new Blob(byteArrays, {type: contentType});
 }
 
+// checkIfUserIsIdentical에서 사용
 function loadSameUserBtn(isSameUser) {
     if (isSameUser) {
         console.log("글을 작성한 유저 ");

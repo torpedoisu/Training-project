@@ -8,7 +8,6 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const checkUserInPost = {
-      const checkUserInSession = {
         url: 'userAuthInIndex.do',
         method: 'GET',
         data: {},

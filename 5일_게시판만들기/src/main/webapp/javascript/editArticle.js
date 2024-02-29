@@ -25,6 +25,7 @@ function getfileDetailsForEdit(article) {
 /*
     ========[초기화 함수에서 사용하는 함수]========
 */
+// getfileDetailsForEdit에서 사용
 function displayEditFileList(fileTitle, base64Data) {
     console.log('파일 목록에 파일 추가:', fileTitle);
 

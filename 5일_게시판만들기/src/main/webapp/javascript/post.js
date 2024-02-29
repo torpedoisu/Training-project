@@ -1,21 +1,4 @@
 /*
-    ========[초기화 함수]========
-*/
-function checkUserInPost() {
-    console.log("유저 로그인 상태인지 확인");
-    
-    axios.get('userAuthInPost.do')
-        .then(response => {
-            console.log('유저 로그인 상태');
-        })
-        .catch(error => {
-            console.log('유저 로그인 상태 아님');
-            alert(error.response.data.statusDescription);
-            window.location.href = error.response.headers.path;
-        });
-}
-
-/*
     ========[버튼에 있는 함수들]========
 */
 function registerPost() {
@@ -75,24 +58,14 @@ function updateFileList(files) {
     }
 }
 
+/*
+    ========[버튼 함수가 사용하는 함수]========
+*/
+// updateFileList에서 사용
 function removeFile(listItem) {
     const fileList = document.getElementById('fileList');
     const fileInput = document.getElementById('file')
     fileList.removeChild(listItem);
     fileInput.value = ''; 
     updateFileList(fileInput.files);
-}
-
-/*
-    ========[버튼 함수가 사용하는 함수]========
-*/
-function convertFileToBlob(file) {
-    return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const blob = new Blob([reader.result], { type: file.type });
-            resolve(blob);
-        };
-        reader.readAsArrayBuffer(file);
-    });
 }
