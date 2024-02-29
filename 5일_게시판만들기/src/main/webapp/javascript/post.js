@@ -13,6 +13,7 @@ function registerPost() {
     formData.append('content', content);
     
     for (let i = 0; i < fileList.length; i++) {
+        // 파일의 원본바이트로 전송됨
         formData.append(fileList[i].name, fileList[i]);
     }
     
