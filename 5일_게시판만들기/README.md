@@ -22,11 +22,17 @@
 
 <br>
 
-## 1.1. 프로젝 파일 구조
+## 1.1. 프로젝트 파일 구조
 
 ### 1.1.1. Controller와 Model
 
 #### 1.1.1.1. com.global 패키지
+
+`UUIDFactory.java`
+
+- DB의 PK 생성을 위한 클래스 
+
+- 버전 1 규약을 따르는 UUID 생성
 
 `DBManager.java`
 
@@ -82,11 +88,7 @@
 
 - `ArticleFileVO.java` , `ArticleVO.java`, `UserVO.java`
 
-
-
 </br>
-
-
 
 ### 1.1.2. View
 
@@ -110,11 +112,7 @@
   
   - `articleAC.js`,` editArticleAC.js`,` indexAC.js`,  `postAC.js`
 
-
-
 <br>
-
-
 
 ## 1.2. 실행 환경
 
