@@ -93,7 +93,6 @@ public class DBManager {
     }
     
     public void rollback() {
-     // �ѹ� ���� 
         try {
             logger.debug("트랜잭션 롤백 시작...");
             
