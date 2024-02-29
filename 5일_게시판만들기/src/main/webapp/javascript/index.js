@@ -68,6 +68,9 @@ function logout() {
     });
 }
 
+/*
+    ========[이동 관련 함수]========
+*/
 function redirectToPost() {
     console.log("게시글 작성 페이지로 redirect");
     window.location.href = "post.jsp";
@@ -81,4 +84,9 @@ function redirectToLogin() {
 function redirectToArticle(articlePk) {
     console.log("게시글 상세 페이지로 redirect");
     window.location.href = `article.jsp?pk=${articlePk}`;
+}
+
+function redirectToRegister() {
+    console.log("회원가입 페이지로 redirect");
+    window.location.href = "userRegister.jsp";
 }
