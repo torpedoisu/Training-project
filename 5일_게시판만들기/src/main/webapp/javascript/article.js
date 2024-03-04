@@ -25,7 +25,6 @@ function displayArticleDetails(article) {
     articleTitleElement.innerHTML = article.title;
     articleUserElement.innerHTML= '작성자: ' + article.user;
     articleContentElement.innerHTML= article.content;
-    
 }
 
 function getfileDetails(data) {

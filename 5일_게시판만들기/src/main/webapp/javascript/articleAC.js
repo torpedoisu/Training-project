@@ -10,6 +10,7 @@ function processRequest(loader) {
         if (typeof loader.callMethod == 'object') {
             loader.callMethod.forEach((doMethod) => {
                 console.log('실행 - ', doMethod);
+                // 전역적으로 메서드가 실행되었기에 전역 객체 window의 프로퍼티로 호출 가능
                 window[doMethod](response.data);
             });
         }
