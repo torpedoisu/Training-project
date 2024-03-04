@@ -24,7 +24,7 @@
         <textarea id="editContent" required></textarea>
         <input type="file" id="editFile" multiple onchange="updateFileList(this.files)">
         <ul id="editFileList"></ul>
-        <button type="button" id="saveEditBtn" onclick="saveArticleEdit(<%= request.getParameter("pk") %>)">저장</button>
+        <button type="button" id="saveEditBtn" onclick="saveArticleEdit('<%= request.getParameter("pk") %>')">저장</button>
     </form>
 </body>
 </html>

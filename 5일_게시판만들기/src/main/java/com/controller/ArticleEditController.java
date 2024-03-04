@@ -73,7 +73,7 @@ public class ArticleEditController implements Controller {
                     Part file = req.getPart(part.getName());
                     fileBytes = readPart(file);
                     
-                    ArticleFileVO articleFileVo = new ArticleFileVO();
+                    ArticleFileVO articleFileVo = ArticleFileVO.getNewInstanceWithUUID();
                     articleFileVo.setExternalArticle(articleVo);
                     
                     articleFileVo.setTitle(part.getName());

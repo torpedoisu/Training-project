@@ -74,7 +74,7 @@
 
 - 구현체
   
-  - `ArticleDetailController.java`, `ArticleDeleteController.java`, `ArticleEditController.java`, `ArtricleRegisterContoller.java`, `ArticlesLoadController.java`, `UserAuthInIndexController.java`, `UserAuthInPostController.java`, `UserCheckSameController.java`, `UserLoginController.java`, `UserLogoutController.java`, UserRegisterController.java` 
+  - `ArticleDetailController.java`, `ArticleDeleteController.java`, `ArticleEditController.java`, `ArtricleRegisterContoller.java`, `ArticlesLoadController.java`, `UserAuthInIndexController.java`, `UserAuthInPostController.java`, `UserCheckSameController.java`, `UserLoginController.java`, `UserLogoutController.java`, `UserRegisterController.java` 
 
 #### 1.1.1.4. com.service 패키지
 
